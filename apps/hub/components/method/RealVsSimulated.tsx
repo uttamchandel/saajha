@@ -72,6 +72,20 @@ export default function RealVsSimulated({ f, disclosure }: { f: MethodFigures; d
       lead: "Browser inference.",
       body: <>The federated model runs on your device, with the same backbone file the states used.</>,
     },
+    {
+      lead: "A live state node uses this model.",
+      body: (
+        <>
+          KisanVaani, the farmer layer, runs as a separate deployment. It downloads this site&apos;s latest release, refuses a
+          file whose fingerprint does not match, and lets the model decide every paddy photo a farmer sends; its own model
+          check matches Python on every test photo.{" "}
+          <a href="https://saajha-node.vercel.app/demo" className="text-carbon underline underline-offset-4">
+            Try it as a farmer
+          </a>
+          .
+        </>
+      ),
+    },
   ];
 
   const simulated: Item[] = [

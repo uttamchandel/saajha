@@ -10,8 +10,10 @@ const anekTamil = Anek_Tamil({ subsets: ["tamil"], axes: ["wdth"], variable: "--
 export const metadata: Metadata = {
   title: "Saajha — states share what they've learned, not who their farmers are",
   description:
-    "A federated learning layer for India's agricultural DPI: one state's expert-verified crop diagnoses improve every state's model, and no farmer record crosses a state border.",
+    "The shared layer of Saajha, a federated network for Indian agriculture: states' nodes train a crop-disease model together and share approved advice, and no farmer record crosses a state border.",
 };
+
+const NODE_URL = process.env.NEXT_PUBLIC_NODE_URL ?? "https://saajha-node.vercel.app";
 
 const NAV = [
   { href: "/", label: "The flip" },
@@ -35,6 +37,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                   {n.label}
                 </Link>
               ))}
+              <a href={NODE_URL} className="font-semibold text-carbon underline-offset-4 hover:underline">
+                State node: KisanVaani ↗
+              </a>
             </nav>
           </div>
         </header>
