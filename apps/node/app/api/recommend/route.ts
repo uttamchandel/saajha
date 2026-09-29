@@ -12,6 +12,16 @@ import { LANG_NAME_FOR_PROMPT } from "@/lib/i18n-full";
 import { AGRONOMY_TABLE, scoreCrops, type WaterSource } from "@/lib/agronomy";
 import { getSoilProfile, type SoilProfile } from "@/lib/soil-profile";
 import type { CropRecommendation, RecommendResponse, SoilSnapshot } from "@/lib/types";
+import { practices, soilScore, soilStatus, type SoilStatus } from "@/lib/regen";
+
+// Adds the soil-over-seasons score to every crop and the practices this plot's numbers trigger.
+function withRegen(resp: RecommendResponse, status: SoilStatus): RecommendResponse {
+  const recommendations = resp.recommendations.map((r) => {
+    const s = soilScore(r.crop, status);
+    return { ...r, soilScore: s.score, soilReasons: s.reasons };
+  });
+  return { ...resp, recommendations, regen: { status, practices: practices(status, recommendations.map((r) => r.crop)) } };
+}
 
 type RecommendBody = {
   lat?: number;
@@ -111,9 +121,11 @@ export async function POST(req: NextRequest) {
     if (shc.n != null && Number.isFinite(shc.n)) soil.nitrogen = shc.n;
   }
 
+  const status = soilStatus(soil, profile.weather, waterSource, hasShc ? shc : undefined, profile.shcNote);
+
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return NextResponse.json(fallbackResponse(profile, soil, season, waterSource));
+    return NextResponse.json(withRegen(fallbackResponse(profile, soil, season, waterSource), status));
   }
 
   try {
@@ -125,7 +137,7 @@ export async function POST(req: NextRequest) {
       }),
       config: {
         systemInstruction:
-          "You are KisanVaani's crop-planning agronomist — an ICAR/State Agricultural University Package-of-Practices expert advising an Indian smallholder. Recommend ONLY crops from the provided agronomy table. Be honest: score crops for THIS specific plot, not generically. Every 'why' bullet MUST cite the actual measured numbers you were given (pH, clay %, soil type, forecast mm, °C). If farmer-entered Soil Health Card values are present they override satellite estimates. Keep advice practical and low-cost for a smallholder.",
+          "You are KisanVaani's crop-planning agronomist — an ICAR/State Agricultural University Package-of-Practices expert advising an Indian smallholder. Recommend ONLY crops from the provided agronomy table. Be honest: score crops for THIS specific plot, not generically. Every 'why' bullet MUST cite the actual measured numbers you were given (pH, clay %, soil type, forecast mm, °C). If farmer-entered Soil Health Card values are present they override satellite estimates. Keep advice practical and low-cost for a smallholder. Plan regeneratively: weigh what each crop does to this soil over the next seasons (legumes fix nitrogen, crop residue kept in the field rebuilds organic carbon, water-hungry crops strain rainfed land), prefer integrated pest management, and never suggest burning residue.",
         responseMimeType: "application/json",
         responseSchema: SCHEMA,
         temperature: 0.35,
@@ -141,10 +153,10 @@ export async function POST(req: NextRequest) {
       summaryVoice: clean.summaryVoice,
       source: "gemini",
     };
-    return NextResponse.json(response);
+    return NextResponse.json(withRegen(response, status));
   } catch (err) {
     console.error("recommend gemini error:", err instanceof Error ? err.message : err);
-    return NextResponse.json(fallbackResponse(profile, soil, season, waterSource));
+    return NextResponse.json(withRegen(fallbackResponse(profile, soil, season, waterSource), status));
   }
 }
 

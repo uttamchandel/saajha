@@ -29,6 +29,8 @@ export type AlertsResponse = {
   source: "open-meteo" | "cached";
 };
 
+import type { Practice, SoilStatus } from "@/lib/regen";
+
 export type SoilSnapshot = {
   ph: number | null;
   nitrogen: number | null; // cg/kg from SoilGrids, converted for display
@@ -59,6 +61,9 @@ export type CropRecommendation = {
   why: string[]; // grounded reasons referencing the actual soil/weather values
   risks: string[];
   inputs: { seed: string; fertilizer: string; irrigation: string };
+  /** 0-100: what this crop does to this plot's soil over the next seasons (lib/regen.ts heuristic). */
+  soilScore?: number;
+  soilReasons?: string[];
 };
 
 export type RecommendResponse = {
@@ -67,6 +72,8 @@ export type RecommendResponse = {
   recommendations: CropRecommendation[];
   summaryVoice: string; // 60-word spoken-style summary in requested language
   source: "gemini" | "cached";
+  /** Regenerative plan for this plot: soil status and the practices it triggers (lib/regen.ts). */
+  regen?: { status: SoilStatus; practices: Practice[] };
 };
 
 export type EscalationStatus = "pending" | "assigned" | "expert_replied" | "closed";

@@ -641,6 +641,40 @@ export default function RecommendClient() {
                       </button>
                     </div>
 
+                    {rec.regen && (
+                      <div className="rounded-2xl bg-white border border-leaf/40 p-5 shadow-sm rise">
+                        <div className="flex items-center gap-2">
+                          <Sprout className="w-4 h-4 text-leaf" aria-hidden />
+                          <h3 className="font-display text-lg font-semibold text-forest">Rebuild your soil</h3>
+                        </div>
+                        <div className="mt-2 flex flex-wrap gap-1.5 text-[11px]">
+                          {rec.regen.status.ocPct != null && (
+                            <span className="rounded-full bg-paper-warm px-2 py-0.5">
+                              Organic carbon {rec.regen.status.ocPct}% · {rec.regen.status.oc}
+                            </span>
+                          )}
+                          {rec.regen.status.n && (
+                            <span className="rounded-full bg-paper-warm px-2 py-0.5">
+                              Nitrogen {rec.regen.status.n} ({rec.regen.status.nFrom === "card" ? "your card" : "district cards"})
+                            </span>
+                          )}
+                          {rec.regen.status.waterShort && <span className="rounded-full bg-amber-100 text-amber-800 px-2 py-0.5">Little rain ahead, rainfed</span>}
+                        </div>
+                        <ul className="mt-3 space-y-2 text-sm">
+                          {rec.regen.practices.map((pr) => (
+                            <li key={pr.id}>
+                              <span className="font-semibold text-ink">{pr.title}.</span> <span className="text-ink-soft">{pr.why}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <p className="mt-3 text-[11px] text-ink-soft">
+                          Each crop below has two scores: how well it suits your plot this season, and what it does to the soil over the
+                          next seasons. The soil score is a rule-based guide from your soil numbers (Soil Health Card rating limits), not a
+                          prediction.
+                        </p>
+                      </div>
+                    )}
+
                     {rec.recommendations.map((r, i) => (
                       <div
                         key={`${r.crop}-${i}`}
@@ -677,19 +711,33 @@ export default function RecommendClient() {
                               </div>
                             </div>
                           </div>
-                          <div className="text-right shrink-0">
-                            <div className="font-display text-2xl font-semibold text-forest">{r.suitabilityScore}</div>
-                            <div className="text-[10px] text-ink-soft -mt-0.5">suitability</div>
-                            <div className="h-1.5 w-24 rounded-full bg-forest/10 overflow-hidden mt-1">
-                              <div
-                                className="h-full rounded-full grow-bar"
-                                style={{
-                                  width: `${r.suitabilityScore}%`,
-                                  background: i === 0 ? "var(--turmeric)" : "var(--leaf-bright)",
-                                  animationDelay: `${200 + i * 120}ms`,
-                                }}
-                              />
+                          <div className="shrink-0 grid grid-cols-2 gap-4 text-right">
+                            <div>
+                              <div className="font-display text-2xl font-semibold text-forest">{r.suitabilityScore}</div>
+                              <div className="text-[10px] text-ink-soft -mt-0.5">this season</div>
+                              <div className="h-1.5 w-20 rounded-full bg-forest/10 overflow-hidden mt-1">
+                                <div
+                                  className="h-full rounded-full grow-bar"
+                                  style={{
+                                    width: `${r.suitabilityScore}%`,
+                                    background: i === 0 ? "var(--turmeric)" : "var(--leaf-bright)",
+                                    animationDelay: `${200 + i * 120}ms`,
+                                  }}
+                                />
+                              </div>
                             </div>
+                            {r.soilScore != null && (
+                              <div>
+                                <div className="font-display text-2xl font-semibold text-forest">{r.soilScore}</div>
+                                <div className="text-[10px] text-ink-soft -mt-0.5">soil, next seasons</div>
+                                <div className="h-1.5 w-20 rounded-full bg-forest/10 overflow-hidden mt-1">
+                                  <div
+                                    className="h-full rounded-full grow-bar bg-forest"
+                                    style={{ width: `${r.soilScore}%`, animationDelay: `${260 + i * 120}ms` }}
+                                  />
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -708,6 +756,13 @@ export default function RecommendClient() {
                             </li>
                           ))}
                         </ul>
+
+                        {r.soilReasons && r.soilReasons.length > 0 && (
+                          <div className="mt-3 rounded-xl bg-leaf-mist/40 px-3 py-2 text-xs text-forest">
+                            <span className="font-semibold">For the soil: </span>
+                            {r.soilReasons.join(" ")}
+                          </div>
+                        )}
 
                         {r.risks.length > 0 && (
                           <details className="mt-3 group">
