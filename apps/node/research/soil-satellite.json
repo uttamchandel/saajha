@@ -1,0 +1,98 @@
+{
+ "verdict": "The demo can run 100% on live, keyless, verified-today APIs: ISRIC SoilGrids v2.0 (point soil properties + WRB soil classification, CORS *), the Government of India Soil Health Card GraphQL endpoint at soilhealth4.dac.gov.in (district-wise N/P/K/OC/pH/micronutrient status, data updated 2026-07-07 — yesterday — genuine live govt data, keyless, CORS-friendly), and NASA POWER agroclimate (daily temp/rain/humidity/solar for any Indian lat/lon). Satellite sources (Bhuvan, Bhoonidhi, MNCFC) are login/token-gated and are production-roadmap/deck material only. The one trap: SoilGrids returns null on nodata pixels (both suggested test points did!) — the demo must retry with a ~0.05° offset or fall back to district defaults; use lon=77.10&lat=23.25 (Bhopal, Vertisols/black soil, pH 7.4) as the golden demo point.",
+ "demo_plan": "Build one Next.js server route, e.g. /api/soil-profile?lat=23.25&lon=77.10, that does three parallel server-side fetches (all keyless, all verified live today):\n1) SoilGrids properties: GET https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=phh2o&property=nitrogen&property=soc&property=clay&property=sand&property=cec&depth=0-5cm&depth=5-15cm&value=mean&value=uncertainty — parse properties.layers[].depths[].values.mean and DIVIDE by layers[].unit_measure.d_factor (phh2o/clay/sand/soc/cec: d_factor 10; nitrogen: 100). CRITICAL: values.mean can be null on nodata pixels (77.08,23.20 and Ludhiana 75.85,30.90 both returned null) — on null, retry at lat/lon +0.05, then fall back to embedded district defaults. Golden demo point: lon=77.10&lat=23.25 → pH 7.4, clay 38.7%, CEC 40.5 cmol/kg.\n2) SoilGrids classification: GET https://rest.isric.org/soilgrids/v2.0/classification/query?lon={lon}&lat={lat}&number_classes=3 → wrb_class_name (\"Vertisols\" at demo point) + wrb_class_probability [[\"Vertisols\",43],...]. Map WRB class → Indian soil type via the crosswalk in embed_data (Vertisols→black/regur etc.) — this powers the \"your soil is black cotton soil\" farmer-facing line.\n3) NASA POWER: GET https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M,T2M_MAX,T2M_MIN,PRECTOTCORR,RH2M,ALLSKY_SFC_SW_DWN&community=AG&longitude={lon}&latitude={lat}&start=20260601&end=20260707&format=JSON → properties.parameter.T2M[\"20260601\"]=33.71 etc.; fill_value is -999 (filter it). For crop-suitability normals use /api/temporal/climatology/point with the same params.\n4) Soil Health Card (the credibility centerpiece — live Indian govt data): POST https://soilhealth4.dac.gov.in/ with JSON body {\"query\":\"query { getNutrientDashboardForPortal(state: \\\"63f8e729dbc0f7fe0670d050\\\", cycle: \\\"2025-26\\\") }\"} → array of every district in MP with results.n/p/k {High,Low,Medium} sample counts, OC, pH {Alkaline,Acidic,Neutral}, EC {Saline,NonSaline}, S/Fe/Zn/Cu/B/Mn {Sufficient,Deficient}, district{_id,name,code}, updatedAt (2026-07-07). Get state ids from {\"query\":\"query { getState }\"}; cycles from getCycles ([\"2026-27\"]; \"2025-26\" also works). Compute e.g. \"72% of Bhopal samples are low in nitrogen, 63% zinc-deficient\" and feed it to Gemini. Cache the response as a JSON seed file at build time so the demo survives if the endpoint hiccups, but fetch live first — \"live from soilhealth.dac.gov.in, updated yesterday\" is a killer demo line. CORS reflects any origin, so even client-side fetch works, but keep it server-side.\nMerge all four into one soil-profile JSON and pass to Gemini with the embed_data soil-type/crop table as grounding for the crop recommendation.",
+ "production_plan": "Production keeps SoilGrids + NASA POWER as the global-fallback layer (both are officially open, no key, production-grade with fair-use caching — cache SoilGrids per 250m cell, it's static data). The India-first upgrades: (1) Soil Health Card — the soilhealth4.dac.gov.in GraphQL endpoint is the same backend the official dashboard uses but is undocumented; production should formalize via a data-sharing request to DA&FW (Dept of Agriculture & Farmers Welfare) or pull the published SHC datasets on data.gov.in with a free registered API key (api.data.gov.in was unreachable from this session's network so unverified today; registration is instant and free). Keep the GraphQL path as the live feed with the seed snapshot as fallback since govt endpoints change without notice. (2) Satellite: register (free) at bhuvan-app1.nrsc.gov.in/api/ for a Bhuvan token — gives LULC, NDVI/vegetation WMS layers and village-level services; genuinely programmatic but token-gated, so production-only. Bhoonidhi (bhoonidhi.nrsc.gov.in) for raw ResourceSat/Sentinel scene downloads (login required, batch pipeline not runtime API). MNCFC/FASAL crop-forecast products are PDF/report-grade — deck citation only. (3) Zonation: the Planning Commission 15-zone scheme (embedded) for coarse logic; ICAR-NARP's 127 agro-climatic sub-zones (via ICAR/KVK datasets) for district-precision recommendations in production.",
+ "embed_data": "{\"indian_soil_types\":{\"alluvial\":{\"states\":[\"Punjab\",\"Haryana\",\"Uttar Pradesh\",\"Bihar\",\"West Bengal\",\"Assam\",\"coastal deltas of AP/TN/Odisha\"],\"traits\":\"pH 6.5-7.8, deep, fertile, variable texture; rich in K, often low N & OC\",\"crops\":[\"rice\",\"wheat\",\"sugarcane\",\"maize\",\"pulses\",\"mustard\",\"jute\",\"potato\"]},\"black_regur\":{\"states\":[\"Maharashtra\",\"Madhya Pradesh\",\"Gujarat\",\"Telangana\",\"N Karnataka\",\"W Andhra Pradesh\"],\"traits\":\"WRB Vertisols; clay 30-60%, high CEC (30-50), pH 7.2-8.5, moisture-retentive, self-ploughing cracks; low N/P/OC\",\"crops\":[\"cotton\",\"soybean\",\"sorghum (jowar)\",\"pigeon pea (tur)\",\"chickpea\",\"wheat\",\"sunflower\",\"citrus\"]},\"red\":{\"states\":[\"Tamil Nadu\",\"S Karnataka\",\"Andhra Pradesh\",\"Odisha\",\"Jharkhand\",\"Chhattisgarh\",\"E Madhya Pradesh\"],\"traits\":\"pH 5.5-7.0, sandy-loam, iron-rich, low N/P/humus, drains fast\",\"crops\":[\"groundnut\",\"ragi (finger millet)\",\"bajra\",\"pulses\",\"potato\",\"castor\",\"tobacco\"]},\"laterite\":{\"states\":[\"Kerala\",\"coastal Karnataka\",\"Goa\",\"E Odisha\",\"parts of WB/Assam/Meghalaya\"],\"traits\":\"pH 4.5-6.0 acidic, heavily leached, low fertility, rich Fe/Al; needs liming+manure\",\"crops\":[\"tea\",\"coffee\",\"rubber\",\"cashew\",\"coconut\",\"tapioca\",\"pineapple\"]},\"arid_desert\":{\"states\":[\"Rajasthan\",\"Kutch (Gujarat)\",\"SW Haryana\",\"SW Punjab\"],\"traits\":\"sandy, pH 7.6-8.5, saline patches, very low OC (<0.3%), high infiltration\",\"crops\":[\"bajra (pearl millet)\",\"guar (cluster bean)\",\"moth bean\",\"mustard (irrigated)\",\"date palm\"]},\"saline_alkaline_usar\":{\"states\":[\"pockets of UP/Haryana/Punjab (Indo-Gangetic)\",\"coastal AP/TN/Gujarat\"],\"traits\":\"pH >8.5 or EC >4 dS/m; needs gypsum/drainage reclamation\",\"crops\":[\"salt-tolerant rice varieties\",\"barley\",\"dhaincha (green manure)\",\"sugar beet\"]},\"peaty_marshy\":{\"states\":[\"Kuttanad (Kerala)\",\"Sundarbans (WB)\",\"coastal Odisha\"],\"traits\":\"high organic matter, waterlogged, acidic\",\"crops\":[\"rice (below-sea-level paddy)\",\"coconut\"]},\"forest_mountain\":{\"states\":[\"Himachal Pradesh\",\"Uttarakhand\",\"J&K/Ladakh valleys\",\"NE hill states\"],\"traits\":\"acidic, humus-rich top layer, shallow on slopes\",\"crops\":[\"apple\",\"stone fruits\",\"tea\",\"maize\",\"off-season vegetables\",\"spices (large cardamom, ginger)\"]}},\"wrb_to_indian_soil\":{\"Vertisols\":\"black_regur\",\"Fluvisols\":\"alluvial\",\"Cambisols\":\"alluvial\",\"Luvisols\":\"red\",\"Lixisols\":\"red\",\"Nitisols\":\"red\",\"Ferralsols\":\"laterite\",\"Plinthosols\":\"laterite\",\"Acrisols\":\"laterite\",\"Arenosols\":\"arid_desert\",\"Calcisols\":\"arid_desert\",\"Solonchaks\":\"saline_alkaline_usar\",\"Solonetz\":\"saline_alkaline_usar\",\"Gleysols\":\"peaty_marshy\",\"Histosols\":\"peaty_marshy\",\"Leptosols\":\"forest_mountain\",\"Umbrisols\":\"forest_mountain\"},\"agro_climatic_zones_15\":[{\"n\":1,\"zone\":\"Western Himalayan Region\",\"states\":\"J&K, HP, Uttarakhand\",\"key_crops\":\"apple, maize, rice, off-season veg\"},{\"n\":2,\"zone\":\"Eastern Himalayan Region\",\"states\":\"NE states, Sikkim, N WB hills\",\"key_crops\":\"rice, tea, ginger, large cardamom\"},{\"n\":3,\"zone\":\"Lower Gangetic Plains\",\"states\":\"West Bengal\",\"key_crops\":\"rice, jute, potato\"},{\"n\":4,\"zone\":\"Middle Gangetic Plains\",\"states\":\"E UP, Bihar\",\"key_crops\":\"rice, wheat, maize, sugarcane\"},{\"n\":5,\"zone\":\"Upper Gangetic Plains\",\"states\":\"C & W UP\",\"key_crops\":\"wheat, rice, sugarcane\"},{\"n\":6,\"zone\":\"Trans-Gangetic Plains\",\"states\":\"Punjab, Haryana, Delhi, N Rajasthan\",\"key_crops\":\"wheat, rice, cotton, mustard\"},{\"n\":7,\"zone\":\"Eastern Plateau & Hills\",\"states\":\"Jharkhand, Chhattisgarh, W Odisha\",\"key_crops\":\"rice, millets, pulses\"},{\"n\":8,\"zone\":\"Central Plateau & Hills\",\"states\":\"MP, SE Rajasthan, Bundelkhand UP\",\"key_crops\":\"soybean, wheat, gram, sorghum\"},{\"n\":9,\"zone\":\"Western Plateau & Hills\",\"states\":\"Maharashtra, W MP\",\"key_crops\":\"cotton, sorghum, sugarcane, oranges\"},{\"n\":10,\"zone\":\"Southern Plateau & Hills\",\"states\":\"Karnataka, Telangana, Rayalaseema AP, W TN\",\"key_crops\":\"ragi, groundnut, cotton, coffee\"},{\"n\":11,\"zone\":\"East Coast Plains & Hills\",\"states\":\"coastal TN, AP, Odisha\",\"key_crops\":\"rice, groundnut, coconut\"},{\"n\":12,\"zone\":\"West Coast Plains & Ghats\",\"states\":\"Kerala, coastal Karnataka, Goa, Konkan\",\"key_crops\":\"rice, coconut, spices, rubber, cashew\"},{\"n\":13,\"zone\":\"Gujarat Plains & Hills\",\"states\":\"Gujarat\",\"key_crops\":\"groundnut, cotton, bajra, cumin\"},{\"n\":14,\"zone\":\"Western Dry Region\",\"states\":\"W Rajasthan\",\"key_crops\":\"bajra, guar, moth bean\"},{\"n\":15,\"zone\":\"The Islands Region\",\"states\":\"Andaman & Nicobar, Lakshadweep\",\"key_crops\":\"coconut, rice, arecanut\"}],\"zones_source_note\":\"15-zone scheme = Planning Commission of India (1989); ICAR-NARP separately defines 127 finer agro-climatic sub-zones\",\"shc_api_seeds\":{\"endpoint\":\"POST https://soilhealth4.dac.gov.in/\",\"state_ids\":{\"MADHYA PRADESH\":\"63f8e729dbc0f7fe0670d050\",\"PUNJAB\":\"63f2495789e288769575a424\"},\"cycles_verified\":[\"2025-26\",\"2026-27\"],\"district_ids_sample\":{\"ANUPPUR\":\"63f8e729dbc0f7fe0670d053\",\"ASHOKNAGAR\":\"63f8e7c3dbc0f7fe0670dc1f\",\"BALAGHAT\":\"63f8e8aadbc0f7fe0670eded\"}},\"golden_demo_point\":{\"lon\":77.10,\"lat\":23.25,\"place\":\"near Bhopal, MP\",\"soilgrids_verified\":{\"wrb\":\"Vertisols (43%)\",\"pH\":7.4,\"clay_pct\":38.7,\"cec_cmol_kg\":40.5}}}",
+ "findings": [
+  {
+   "source_name": "ISRIC SoilGrids v2.0 — properties query",
+   "url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=77.10&lat=23.25&property=phh2o&property=nitrogen&property=soc&property=clay&property=sand&property=cec&depth=0-5cm&depth=5-15cm&value=mean&value=uncertainty",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched live. GeoJSON Feature; properties.layers[] each has name, unit_measure{d_factor,mapped_units,target_units}, depths[]{label:'0-5cm', values:{mean,uncertainty}}. At 77.10,23.25 got phh2o mean=74 (÷d_factor 10 = pH 7.4), clay=387 (38.7%), cec=405 (40.5 cmol/kg). CORS header access-control-allow-origin: * confirmed via preflight with Origin kisanvaani.vercel.app. Keyless.",
+   "use": "demo",
+   "notes": "TRAP: both obvious test points (77.08,23.20 and Ludhiana 75.85,30.90) returned values.mean=null (nodata pixels). Demo MUST null-check and retry with ~0.05 deg offset or fall back to district defaults. Repeat property= and depth= params (not comma lists). Divide mean by d_factor (10 for most; 100 for nitrogen). Fair-use rate limit — cache per point."
+  },
+  {
+   "source_name": "ISRIC SoilGrids v2.0 — WRB soil classification",
+   "url": "https://rest.isric.org/soilgrids/v2.0/classification/query?lon=77.10&lat=23.25&number_classes=3",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched live: {wrb_class_name:'Vertisols', wrb_class_value:29, wrb_class_probability:[['Vertisols',43],['Cambisols',17],['Fluvisols',8]]}. Vertisols = black cotton (regur) soil — correct for Bhopal region.",
+   "use": "demo",
+   "notes": "Map wrb_class_name to Indian soil type via crosswalk in embed_data to get the farmer-facing 'black soil / kali mitti' line and the crop shortlist."
+  },
+  {
+   "source_name": "Soil Health Card GraphQL (DA&FW, Govt of India)",
+   "url": "POST https://soilhealth4.dac.gov.in/ (also /graphql) — queries: getState, getCycles, getNutrientDashboardForPortal(state:\"<ObjectId>\", cycle:\"2025-26\")",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched live. getState returned 34 states with _id/name/code (MP=63f8e729dbc0f7fe0670d050). getCycles returned ['2026-27']. getNutrientDashboardForPortal(state:MP, cycle:'2025-26') returned every MP district with results.{n,p,k:{High,Low,Medium}, OC:{High,Low,Medium}, pH:{Alkaline,Acidic,Neutral}, EC:{Saline,NonSaline}, S,Fe,Zn,Cu,B,Mn:{Sufficient,Deficient}}, district{_id,name,code}, updatedAt='2026-07-07T17:27:08Z' — updated YESTERDAY. CORS preflight reflects arbitrary origin (access-control-allow-origin echoed kisanvaani.vercel.app). Keyless.",
+   "use": "demo",
+   "notes": "This is the actual backend of the official SHC public dashboard — real live Indian govt nutrient data, the credibility centerpiece. Undocumented/unofficial, so cache a seed snapshot at build time as fallback. Values are sample COUNTS per class — compute percentages (e.g. % of district samples Low in N). Unknown query names return masked error 'Unable to connect to the server'; passing state NAME instead of ObjectId returns a mongodb-objectid validation error."
+  },
+  {
+   "source_name": "NASA POWER API (agroclimatology community)",
+   "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M,T2M_MAX,T2M_MIN,PRECTOTCORR,RH2M,ALLSKY_SFC_SW_DWN&community=AG&longitude=77.08&latitude=23.20&start=20260601&end=20260615&format=JSON",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched live. properties.parameter.T2M = {'20260601':33.71,...}, T2M_MAX up to 44.0C, PRECTOTCORR mm/day, RH2M %, ALLSKY_SFC_SW_DWN MJ/m2/day; header.fill_value=-999; parameters block gives units/longname. API v2.9.4. Keyless.",
+   "use": "demo",
+   "notes": "Use /api/temporal/climatology/point (same params minus start/end) for long-term monthly normals — better input for crop suitability than one recent fortnight. Filter -999 fill values."
+  },
+  {
+   "source_name": "Soil Health Card portal (soilhealth.dac.gov.in)",
+   "url": "https://soilhealth.dac.gov.in/",
+   "access": "open",
+   "verified": true,
+   "verification_note": "HTTP 200 on fetch. Public dashboard site; no documented public REST API — the GraphQL endpoint above is what powers it.",
+   "use": "deck-citation",
+   "notes": "Cite the scheme (Soil Health Card, DA&FW) in the deck; the GraphQL finding is the programmatic path."
+  },
+  {
+   "source_name": "data.gov.in Open Government Data API",
+   "url": "https://api.data.gov.in/resource/{resource-id}?api-key={key}&format=json&limit=10",
+   "access": "api-key",
+   "verified": false,
+   "verification_note": "api.data.gov.in returned HTTP 000 (connection failed, IPv4 retry too) from this session's network — could not verify today. Portal hosts SHC and soil-testing datasets; free instant registration gives an API key.",
+   "use": "production",
+   "notes": "Do NOT put in today's demo path since unverified. Production: register free key, pull SHC district datasets as the formalized alternative to the undocumented GraphQL."
+  },
+  {
+   "source_name": "ISRO Bhuvan APIs (NRSC)",
+   "url": "https://bhuvan-app1.nrsc.gov.in/api/",
+   "access": "registration",
+   "verified": false,
+   "verification_note": "API portal page fetched (HTTP 200) — content is login/token gated (17x 'login', 'Token' references). No keyless endpoint usable today; actual data APIs require registered token.",
+   "use": "production",
+   "notes": "Free registration gives tokens for LULC, NDVI/vegetation WMS, village info services. Genuinely programmatic for production, deck-citation for satellite roadmap today."
+  },
+  {
+   "source_name": "ISRO Bhoonidhi (EO data download)",
+   "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/index.html",
+   "access": "registration",
+   "verified": false,
+   "verification_note": "Page returns HTTP 200 but it is a login-based satellite scene download portal (ResourceSat, Sentinel mirrors), not a runtime query API.",
+   "use": "deck-citation",
+   "notes": "Mention as production imagery pipeline source only."
+  },
+  {
+   "source_name": "MNCFC / FASAL crop forecasting",
+   "url": "https://www.mncfc.gov.in/",
+   "access": "unknown",
+   "verified": false,
+   "verification_note": "HTTP 000 — site unreachable from this session. Known to publish crop-area/production forecast reports (PDF), no public API.",
+   "use": "deck-citation",
+   "notes": "Name-drop in deck as the national crop-forecast authority; nothing programmatic for demo or near-term production."
+  },
+  {
+   "source_name": "Agro-climatic zones of India (15-zone Planning Commission scheme)",
+   "url": "https://icar.org.in/ (ICAR, HTTP 200) / https://agriwelfare.gov.in/ (HTTP 200) — zone list embedded from standard classification, no single API",
+   "access": "open",
+   "verified": false,
+   "verification_note": "Did not fetch a page containing the literal 15-zone list; ICAR and DA&FW sites confirmed reachable for citation. The 15-zone list (embedded in embed_data) is the stable 1989 Planning Commission classification reproduced in all govt/ICAR literature.",
+   "use": "deck-citation",
+   "notes": "Attribute to 'Planning Commission of India (1989)' not ICAR — ICAR-NARP is the separate 127-sub-zone scheme; saying 'ICAR 15 zones' in the deck would be a judgable citation error."
+  }
+ ]
+}

@@ -1,0 +1,143 @@
+{
+ "verdict": "Simulate WhatsApp in-app with a pixel-faithful UI and document the Cloud API production path — do NOT attempt live integration for today's submission. Live Meta Cloud API via the free developer test number is technically reachable in ~1-3h (no business verification needed), but it is demo-poison: the test number can only exchange messages with up to 5 OTP-verified allowlisted phone numbers (judges can never message it), the temporary token expires every 24h (a deployed Vercel demo breaks overnight), and test-number templates don't carry to production. Twilio's WhatsApp sandbox is same-day usable but requires every participant to text a join code to a shared branded US number with 72h session expiry — worse theater than a clean simulator. SMS with a link is legally impossible today for a new entity: TRAI DLT requires entity (~₹5,900, 3-7 days) + header (1-2 days) + template (2-4 days) approval, and since Oct 1 2024 any URL in an SMS must additionally be whitelisted on the DLT portal or carriers block the message. The one genuinely live, zero-signup integration you CAN ship today: wa.me click-to-chat deep links (verified working) — a \"Share via WhatsApp\" button that opens real WhatsApp with prefilled advisory text.",
+ "demo_plan": "1) Build the WhatsApp simulator in-app (no external calls needed for the channel itself; Gemini answers server-side). Pixel-faithful spec: header bar #008069 (current WhatsApp green; legacy teal #075E54) with business avatar, name + verified badge, subtitle \"Business Account\", back arrow and video/call icons; chat wallpaper #EFEAE2 with faint doodle pattern (legacy #ECE5DD); yellow E2E-encryption notice chip at top (\"Messages and calls are end-to-end encrypted\"); centered date chip (\"TODAY\"); outgoing bubbles #D9FDD3 (legacy #DCF8C6) right-aligned with tail on first bubble of a group, incoming white #FFFFFF left-aligned; 11px gray timestamp bottom-right inside bubble followed by ticks (single gray = sent, double gray = delivered, double blue #53BDEB = read); voice-note bubble = play triangle + static waveform bars + duration + 1x/1.5x/2x speed pill + sender avatar with mic badge (green mic = unheard); quick replies rendered as full-width rounded buttons in WhatsApp link-blue (#00A5F4) below the bubble — cap at 3 buttons because the real Cloud API caps interactive reply buttons at 3 (verified in Meta docs), which makes the simulator provably API-faithful; input bar = rounded white pill (emoji, paperclip, camera) + green circular mic button that morphs to send arrow; \"typing…\" indicator under the business name. 2) Ship one REAL integration today: a \"Get this on WhatsApp\" button using the verified wa.me deep link — https://wa.me/<E164_no_plus>?text=<urlencoded advisory> (verified: 302 → api.whatsapp.com/send, opens real WhatsApp with prefilled text, zero signup, works on any judge's phone/desktop). 3) SMS: simulate a phone-frame SMS thread showing the advisory link; label it \"SMS via DLT-registered header (production)\" and show the DLT compliance path in the command center — do not send real SMS (Fast2SMS Quick SMS is ₹5/msg with per-message human approval and URL delivery is unreliable under TRAI whitelisting; Twilio international is $0.0832/SMS, replaces sender ID with a random shortcode, and prohibits shortened URLs to India). 4) In the docs/deck panel, print the real production endpoints (verified live: POST https://graph.facebook.com/v23.0/<PHONE_NUMBER_ID>/messages returns proper Graph JSON error without token) to prove the path is real.",
+ "production_plan": "WhatsApp (primary channel): Meta WhatsApp Business Cloud API direct (free per-conversation pricing tiers; utility conversations cheap in India). Path: Meta developer app → WhatsApp product → dedicated business phone number → Meta Business verification (days to ~2 weeks) → display-name approval → System User permanent token (replaces 24h temp token) → webhook (POST from Meta) on a public HTTPS endpoint (Vercel route handler works). Send: POST https://graph.facebook.com/v23.0/<PHONE_NUMBER_ID>/messages with {messaging_product:\"whatsapp\", to, type, ...}; supports text, image, audio, documents, location and interactive reply buttons (max 3) / list messages. Inbound farmer media: webhook delivers message with media ID → GET https://graph.facebook.com/v23.0/<MEDIA_ID> returns {url, mime_type, id} (URL valid 5 min, media ID 7 days) → download with Bearer token → farmer voice notes arrive as audio/ogg OPUS (mono, ≤16MB) — feed straight to Gemini for STT/translation; crop photos arrive as image/jpeg. Business-initiated messages outside the 24h customer-service window require pre-approved templates. SMS (link-sharing channel): register on any one operator DLT portal (syncs across operators, e.g. Airtel/Jio/Vi) — entity ~₹5,900 one-time, 3-7 business days; header (sender ID like KISANV) 1-2 days; content templates 2-4 days; whitelist the kisanvaani domain/URL pattern as CTA (24-48h, free) per TRAI's Aug 2024 directive (enforced Oct 1 2024 — non-whitelisted URLs are carrier-blocked). Then send via an Indian aggregator (MSG91/Fast2SMS/Exotel, roughly ₹0.15-0.30/SMS transactional) with DLT entity ID + template ID on every API call. Total realistic lead time to first compliant SMS with a link: ~1-2 weeks. Avoid Twilio for India domestic SMS (sender ID replaced, $0.0832/msg, shortened URLs prohibited).",
+ "embed_data": "{\"whatsappUiSpec\":{\"colors\":{\"headerGreen\":\"#008069\",\"headerTealLegacy\":\"#075E54\",\"brandGreen\":\"#25D366\",\"wallpaper\":\"#EFEAE2\",\"wallpaperLegacy\":\"#ECE5DD\",\"bubbleOut\":\"#D9FDD3\",\"bubbleOutLegacy\":\"#DCF8C6\",\"bubbleIn\":\"#FFFFFF\",\"readTicks\":\"#53BDEB\",\"linkBlue\":\"#00A5F4\",\"timestampGray\":\"#667781\",\"encryptionChip\":\"#FFF3C2\"},\"components\":{\"businessHeader\":[\"avatar\",\"name\",\"verifiedBadge\",\"subtitle:Business Account\",\"typingIndicator\"],\"encryptionNotice\":\"Messages and calls are end-to-end encrypted\",\"dateChip\":\"TODAY\",\"ticks\":[\"sent:1gray\",\"delivered:2gray\",\"read:2blue\"],\"voiceNote\":[\"playButton\",\"waveformBars\",\"duration\",\"speedToggle:1x/1.5x/2x\",\"avatarMicBadge\"],\"quickReplies\":{\"maxButtons\":3,\"style\":\"full-width rounded, link-blue text, below bubble\"},\"listMessage\":{\"maxRows\":10,\"opens\":\"bottom sheet\"},\"inputBar\":[\"emoji\",\"paperclip\",\"camera\",\"micMorphsToSendArrow\"]}},\"channelFacts\":{\"metaCloudApi\":{\"sendEndpoint\":\"POST https://graph.facebook.com/v23.0/{PHONE_NUMBER_ID}/messages\",\"mediaEndpoint\":\"GET https://graph.facebook.com/v23.0/{MEDIA_ID} -> {url(5min),mime_type,id}\",\"voiceNoteFormat\":\"audio/ogg OPUS mono <=16MB\",\"testNumber\":{\"maxRecipients\":5,\"recipientsNeedOtp\":true,\"tempTokenExpiry\":\"24h\",\"publicInboundAllowed\":false},\"interactiveButtonsMax\":3,\"businessVerificationForProd\":\"days-2 weeks\"},\"waMeDeepLink\":\"https://wa.me/{E164noPlus}?text={urlencoded} (302 -> api.whatsapp.com/send, verified live, zero signup)\",\"twilioSandbox\":{\"joinNumber\":\"+14155238886\",\"join\":\"join <code>\",\"sessionExpiry\":\"72h\",\"rateLimit\":\"1 msg/3s\",\"templates\":3,\"inboundMediaFields\":[\"NumMedia\",\"MediaUrl0\",\"MediaContentType0\",\"ProfileName\",\"WaId\"]},\"indiaSmsDlt\":{\"entityFee\":\"~Rs 5,900 one-time\",\"entityApproval\":\"3-7 business days\",\"headerApproval\":\"1-2 days\",\"templateApproval\":\"2-4 days\",\"urlWhitelisting\":\"mandatory since 2024-10-01, 24-48h, non-whitelisted links carrier-blocked\",\"aggregatorPrice\":\"~Rs 0.15-0.30/SMS\",\"fast2smsQuickSms\":\"Rs 5/SMS, no DLT, per-message human approval\",\"twilioIntlToIndia\":\"$0.0832/SMS, sender ID replaced with random shortcode, shortened URLs prohibited\"}}}",
+ "findings": [
+  {
+   "source_name": "Meta WhatsApp Cloud API — Get Started",
+   "url": "https://developers.facebook.com/docs/whatsapp/cloud-api/get-started",
+   "access": "registration",
+   "verified": true,
+   "verification_note": "Fetched doc page. Confirms: free Meta dev account + app with WhatsApp product is enough to start; no business verification for testing; example endpoint https://graph.facebook.com/v23.0/<TEST_BUSINESS_PHONE_NUMBER_ID>/messages; webhooks deliver incoming messages and statuses.",
+   "use": "deck-citation",
+   "notes": "Free test number is provisioned in the app dashboard's API Setup panel."
+  },
+  {
+   "source_name": "Meta Graph API messages endpoint (liveness probe)",
+   "url": "https://graph.facebook.com/v23.0/{PHONE_NUMBER_ID}/messages",
+   "access": "api-key",
+   "verified": true,
+   "verification_note": "curl POST without token returned live Graph JSON error {error:{type:GraphMethodException,code:100,error_subcode:33,fbtrace_id:...}} — endpoint alive and responding; requires Bearer access token for real sends.",
+   "use": "production",
+   "notes": "Payload fields: messaging_product:'whatsapp', to, type, plus type-specific object."
+  },
+  {
+   "source_name": "Meta Cloud API — Send Messages reference",
+   "url": "https://developers.facebook.com/docs/whatsapp/cloud-api/guides/send-messages",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched. Supports text, image, audio, video, document, location, interactive reply buttons ('up to three predefined replies') and interactive lists within the 24h service window; JSON fields messaging_product/recipient_type/to/type confirmed.",
+   "use": "production",
+   "notes": "The 3-button cap is the number to replicate in the simulator's quick replies for API fidelity."
+  },
+  {
+   "source_name": "Meta Cloud API — Media reference (inbound voice notes/images)",
+   "url": "https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched. GET https://graph.facebook.com/<VER>/<MEDIA_ID> returns {url, mime_type, id}; media URL expires in 5 minutes, media ID downloadable for 7 days; download requires Authorization header; voice notes are audio/ogg 'OPUS codecs only, mono input only', 16MB cap.",
+   "use": "production",
+   "notes": "Confirms farmer voice notes + crop photos are fully receivable via webhook → media fetch → Gemini pipeline."
+  },
+  {
+   "source_name": "Meta test phone number limitations (WANotifier helpdesk)",
+   "url": "https://help.wanotifier.com/en/article/test-phone-number-limitations-in-direct-setup-kt0ly2/",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched. Test number can only message recipients pre-added in the Meta portal; arbitrary customers cannot message the test number; templates created on test number don't carry to production. Corroborated by search: max 5 recipients, each OTP-verified, temp token expires every 24h.",
+   "use": "deck-citation",
+   "notes": "This is why live integration fails as a judged demo: judges' phones can never talk to the test number."
+  },
+  {
+   "source_name": "Meta webhooks / echo-bot test endpoint doc",
+   "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/webhooks/set-up-whatsapp-echo-bot",
+   "access": "open",
+   "verified": false,
+   "verification_note": "Found via search only, not fetched this session. Meta's own docs include an echo-bot walkthrough, confirming inbound messages from allowlisted recipients DO reach webhooks in test setups (message types include text, image, audio).",
+   "use": "deck-citation",
+   "notes": "Inbound works for the 5 allowlisted numbers, contradicting a broad reading of the WANotifier 'no inbound' claim — inbound is blocked only for non-allowlisted numbers."
+  },
+  {
+   "source_name": "Twilio WhatsApp Sandbox",
+   "url": "https://www.twilio.com/docs/whatsapp/sandbox",
+   "access": "registration",
+   "verified": true,
+   "verification_note": "Fetched. Same-day activation with just a Twilio account: users text 'join <sandbox-code>' to +14155238886; sessions expire after 3 days; rate limit 1 msg/3s; only 3 fixed pre-approved templates; sandbox number carries Twilio branding.",
+   "use": "rejected",
+   "notes": "Rejected for demo: join-code friction, shared branded US number, 72h expiry. Fine as a private dev testbed only."
+  },
+  {
+   "source_name": "Twilio inbound message webhook parameters",
+   "url": "https://www.twilio.com/docs/messaging/guides/webhook-request",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched. Inbound webhook POST includes NumMedia, MediaUrl{N}, MediaContentType{N}, plus WhatsApp-specific ProfileName, WaId, Forwarded, FrequentlyForwarded — so images/voice notes arrive as fetchable media URLs.",
+   "use": "deck-citation",
+   "notes": "Voice notes arrive with audio content type via MediaUrl0; form-encoded POST."
+  },
+  {
+   "source_name": "Twilio SMS guidelines — India",
+   "url": "https://www.twilio.com/en-us/guidelines/in/sms",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched. Domestic India traffic requires DLT company + sender ID registration before Twilio provisioning (alphanumeric ~10 business days); international route needs no DLT but sender ID is replaced with a random 5-9 digit shortcode; shortened URLs are prohibited content for India.",
+   "use": "deck-citation",
+   "notes": "Kills Twilio as a today-option for branded link SMS to Indian farmers."
+  },
+  {
+   "source_name": "Twilio SMS pricing — India",
+   "url": "https://www.twilio.com/en-us/sms/pricing/in",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched. Outbound SMS to India from international numbers: $0.0832 per message (~Rs 7).",
+   "use": "deck-citation",
+   "notes": "~25-50x the cost of DLT-registered Indian aggregator routes (~Rs 0.15-0.30)."
+  },
+  {
+   "source_name": "TRAI URL whitelisting mandate (effective 2024-10-01)",
+   "url": "https://www.smsgatewaycenter.com/blog/url-whitelisting-for-sms-messages-starting-october-1-2024/",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched. From Oct 1 2024 carriers block bulk SMS containing any URL/APK/OTT link not whitelisted by the sender on a DLT portal; whitelisting on one operator syncs to all; approval 24-48 working hours. Primary source PIB press release PRID=2058943 returned 403 to automated fetch (exists per search).",
+   "use": "deck-citation",
+   "notes": "Even a DLT-registered sender cannot send the kisanvaani.app link until the URL itself is whitelisted — cite this as why the demo simulates SMS."
+  },
+  {
+   "source_name": "Fast2SMS Quick SMS (no-DLT route)",
+   "url": "https://www.fast2sms.com/help/send-sms-without-dlt-registration/",
+   "access": "registration",
+   "verified": true,
+   "verification_note": "Fetched. Quick SMS route sends without DLT at Rs 5/SMS with per-message manual human approval by Fast2SMS staff; delivers to DND and non-DND; URL policy not stated on page.",
+   "use": "rejected",
+   "notes": "Rejected: manual approval latency makes it undemoable live, Rs 5/msg, and URL delivery is unreliable post-TRAI-whitelisting. Their /dlt page (also fetched) confirms DLT is otherwise mandatory."
+  },
+  {
+   "source_name": "DLT registration costs & timelines (2Factor/MSG91 aggregator guidance)",
+   "url": "https://2factor.in/v3/dlt/trai-mandatory-dlt-registration/",
+   "access": "open",
+   "verified": false,
+   "verification_note": "From search results only (msg91.com/help DLT page 404'd on old URL). Consistent figures across sources: entity registration ~Rs 5,900 (Rs 5,000+GST) one-time per operator portal, entity approval 3-7 business days, header 1-2 days, content template 2-4 business days.",
+   "use": "deck-citation",
+   "notes": "Use as the production-timeline citation: ~1-2 weeks from zero to first compliant link-bearing SMS."
+  },
+  {
+   "source_name": "wa.me click-to-chat deep link",
+   "url": "https://wa.me/{E164_number_no_plus}?text={urlencoded_text}",
+   "access": "open",
+   "verified": true,
+   "verification_note": "curl verified this session: https://wa.me/919999999999?text=Namaste%20KisanVaani returned 302 → https://api.whatsapp.com/send/?phone=...&text=... and api.whatsapp.com/send returned 200. No signup, no API key, opens real WhatsApp with prefilled message.",
+   "use": "demo",
+   "notes": "The one live WhatsApp integration shippable today: 'Get this advisory on WhatsApp' share button in the deployed demo."
+  },
+  {
+   "source_name": "WhatsApp visual conventions for simulator (colors/components)",
+   "url": "https://about.meta.com/brand/resources/whatsapp/whatsapp-brand/",
+   "access": "open",
+   "verified": false,
+   "verification_note": "Not fetched; spec compiled from well-established public values: header #008069 (legacy #075E54), brand green #25D366, wallpaper #EFEAE2/#ECE5DD, outgoing bubble #D9FDD3/#DCF8C6, read ticks #53BDEB. The 3-button quick-reply cap IS verified against fetched Meta send-messages docs.",
+   "use": "demo",
+   "notes": "Full component spec (ticks, voice-note player with speed toggle, E2E chip, business header, input pill) is in embed_data.whatsappUiSpec."
+  }
+ ]
+}

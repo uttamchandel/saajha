@@ -1,0 +1,619 @@
+{
+ "bacterial_leaf_blight": {
+  "class_key": "bacterial_leaf_blight",
+  "name_en": "Bacterial leaf blight",
+  "cause": "Xanthomonas oryzae pv. oryzae",
+  "symptoms": [
+   "Water-soaked to yellow stripes start at the leaf tip or edge and have a wavy margin.",
+   "Leaf edges turn straw-yellow to white and dry back from the tip and curl, leaving the midrib intact.",
+   "Milky, dew-drop-like bacterial ooze shows on young lesions early in the morning.",
+   "Kresek: 1–3 weeks after transplanting, seedlings roll up, turn grey-green to yellow and die.",
+   "Quick test: dip a cut diseased leaf in a glass of clear water; it turns cloudy within 1–2 hours."
+  ],
+  "ipm": [
+   "Drain the field, except at the flowering stage.",
+   "Avoid excess nitrogen, and skip the N top-dressing at booting if the disease is moderate.",
+   "Do not let water flow from affected fields into healthy ones.",
+   "Spray fresh cow-dung extract (20 g in 1 litre of water, settled and sieved) at first symptoms, and again after 15 days.",
+   "Remove weeds, and plough under stubble, straw, ratoons and volunteer seedlings that carry the bacteria.",
+   "TNAU also lists sprays of neem oil 3% or NSKE 5%."
+  ],
+  "chemical": [
+   {
+    "text": "Application of bleaching powder @ 5 kg/ha in the irrigation water is recommended in the kresek stage.",
+    "source": 0
+   },
+   {
+    "text": "Seed treatment with bleaching powder (100g/l) and zinc sulfate (2%)",
+    "source": 0
+   }
+  ],
+  "prevention": [
+   "Grow a resistant or tolerant variety. This is the cheapest and most reliable control (TNAU lists IR 20, IR 72, Ponmani and TKM 6).",
+   "Use disease-free seed and raise nurseries in isolated upland conditions.",
+   "Do not clip seedling tips at transplanting, because the bacteria enter through cuts.",
+   "Use balanced fertilizer, avoid excess nitrogen and keep proper plant spacing.",
+   "Let fallow fields dry out between seasons."
+  ],
+  "sources": [
+   {
+    "publisher": "TNAU Agritech Portal (Expert System for Paddy)",
+    "title": "Bacterial leaf blight (Xanthomonas oryzae pv. oryzae): symptoms and management strategies",
+    "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisblb.html"
+   },
+   {
+    "publisher": "TNAU Agritech Portal (Crop Protection)",
+    "title": "Rice: Bacterial leaf blight",
+    "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/rice_3.html"
+   },
+   {
+    "publisher": "IRRI Rice Knowledge Bank",
+    "title": "Bacterial blight fact sheet",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight"
+   },
+   {
+    "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+    "title": "Agro Advisory Service for Rice: 1st fortnight of October 2018",
+    "url": "https://web.archive.org/web/20251010164342/https://icar-nrri.in/wp-content/uploads/2018/10/AAS_October_18_I_english.pdf"
+   },
+   {
+    "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+    "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+    "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+   },
+   {
+    "publisher": "Down To Earth",
+    "title": "Union agriculture ministry prohibits use of TB antibiotics on crops (draft order, 17 Dec 2021)",
+    "url": "https://www.downtoearth.org.in/agriculture/union-agriculture-ministry-prohibits-use-of-tb-antibiotics-on-crops-80785"
+   },
+   {
+    "publisher": "DPPQS / CIB&RC, Ministry of Agriculture & Farmers Welfare",
+    "title": "List of pesticides which are banned, refused registration and restricted in use (updated 31.03.2024)",
+    "url": "https://ppqs.gov.in/sites/default/files/list_of_pesticides_which_are_banned_refused_registration_and_restricted_in_use_0.pdf"
+   }
+  ],
+  "notes": "FACT-CHECK (26 Sep 2026): I fetched all 7 sources. Both chemical lines appear word for word on the TNAU expert-system page (source 0), so both are kept. CHANGES: (1) The icar-nrri.in URLs did not resolve, so both NRRI sources now point to Internet Archive snapshots of the same PDFs, which loaded. (2) Symptom 2: 'often leaving the midrib green' is now 'leaving the midrib intact', to match TNAU. (3) Corrected the NRRI description in these notes. Every other symptom, IPM and prevention line checked out against TNAU or IRRI. EXCLUDED, antibiotic sprays: TNAU recommends 'Streptomycin sulphate + Tetracycline combination 300 g + Copper oxychloride 1.25kg/ha', Streptocyclin and Agrimycin. ICAR-NRRI Aug 2022 recommends Plantomycin @ 1 g/litre with Copper oxychloride @ 1 g/litre. ICAR-NRRI Oct 2018 recommends Plantomycin @ 1 g/litre alone, OR Streptocycline 150 mg + Copper oxychloride 1 g/litre. I believe Plantomycin is a streptomycin + tetracycline brand, but no fetched page states its composition. The Down To Earth page confirms that the MoA&FW draft order of 17 Dec 2021 proposed banning import and manufacture of streptomycin + tetracycline for agriculture from 1 Feb 2022, and all agricultural use from 1 Jan 2024. I could not verify that a final notification was issued. Streptomycin and tetracycline do NOT appear on the CIB&RC list dated 31.03.2024 (I checked the PDF text). I excluded the antibiotics anyway, as a precaution against antimicrobial resistance. Copper oxychloride appears only as a tank-mix partner of the antibiotic in the fetched sources, so it has no chemical line. EXCLUDED, banned: TNAU's seed soak in Ceresan or wettable ceresan. Ceresan is an organomercurial, and Ethyl Mercury Chloride, Methoxy Ethyl Mercury Chloride and Phenyl Mercury Acetate are on the CIB&RC banned list (verified). Bleaching powder is a TNAU recommendation; I did not check whether it has a CIB&RC label claim. The bleaching-powder seed treatment has no soak duration on the page. Diagnosis caution: kresek can look like stem-borer dead heart. IRRI says to squeeze the base of the seedling: yellowish ooze, and a plant that does not pull out easily, means kresek. Yield loss: up to 60% per TNAU, up to 70% per IRRI (both verified)."
+ },
+ "bacterial_leaf_streak": {
+  "class_key": "bacterial_leaf_streak",
+  "name_en": "Bacterial leaf streak",
+  "cause": "Xanthomonas oryzae pv. oryzicola",
+  "symptoms": [
+   "Thin, dark-green, water-soaked streaks appear between leaf veins, from tillering to booting.",
+   "The streaks turn yellow to orange-brown and look translucent when held against the light.",
+   "In humid weather, tiny yellow or amber droplets of bacterial ooze form along the streaks.",
+   "In severe cases the streaks merge and whole leaves turn brown to greyish-white and dry."
+  ],
+  "ipm": [
+   "Spray fresh cow-dung water extract, or lemongrass or mint extract at 20%.",
+   "Apply fertilizer at the recommended dose and avoid excess nitrogen.",
+   "Keep good drainage in seedbeds and fields, and drain the field during severe floods.",
+   "After harvest, destroy ratoons, straw and volunteer seedlings.",
+   "Remove weed hosts regularly."
+  ],
+  "chemical": [],
+  "prevention": [
+   "Grow resistant varieties. TNAU calls this the most effective control and lists IR 20 and TKM 6.",
+   "Treat seed with hot water before sowing, because the bacteria are carried in seed.",
+   "Raise nurseries in isolated upland conditions, and do not clip seedling tips at transplanting.",
+   "Keep proper plant spacing.",
+   "Dry the field during the fallow period to kill bacteria in soil and residues."
+  ],
+  "sources": [
+   {
+    "publisher": "TNAU Agritech Portal (Expert System for Paddy)",
+    "title": "Bacterial leaf streak (Xanthomonas oryzae pv. oryzicola): symptoms and management strategies",
+    "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisbls.html"
+   },
+   {
+    "publisher": "TNAU Agritech Portal (Crop Protection)",
+    "title": "Rice: Bacterial Leaf Streak",
+    "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/rice_8.html"
+   },
+   {
+    "publisher": "IRRI Rice Knowledge Bank",
+    "title": "Bacterial leaf streak fact sheet",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-leaf-streak"
+   },
+   {
+    "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+    "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+    "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+   },
+   {
+    "publisher": "Down To Earth",
+    "title": "Union agriculture ministry prohibits use of TB antibiotics on crops (draft order, 17 Dec 2021)",
+    "url": "https://www.downtoearth.org.in/agriculture/union-agriculture-ministry-prohibits-use-of-tb-antibiotics-on-crops-80785"
+   }
+  ],
+  "notes": "FACT-CHECK (26 Sep 2026): I fetched all 5 sources. The card has no chemical lines to verify. CHANGES: (1) The icar-nrri.in URL did not resolve, so the NRRI source now points to an Internet Archive snapshot of the same PDF, which loaded. Every symptom, IPM and prevention line checked out against TNAU (both pages) or IRRI. The card stays IPM only. Every dosed chemical recommendation I found uses the streptomycin + tetracycline antibiotic. TNAU gives a 300 g + copper oxychloride 1.25 kg/ha spray, a 40 ppm seed soak for 12 hours, and 100–150 ppm foliar sprays. ICAR-NRRI Aug 2022 gives Plantomycin @ 1 g/L with copper oxychloride @ 1 g/L. All were verified on the pages and excluded for the same reason as in bacterial leaf blight: a draft order of Dec 2021 (verified via Down To Earth) proposed a complete ban on agricultural use from 1 Jan 2024. The final notification is unverified, and the combination is not on the CIB&RC list dated 31.03.2024. IRRI says a copper-based fungicide applied at heading can help in severe cases, but gives no dose, so there is no line for it. No fetched BLS page gives a hot-water treatment temperature or duration. TNAU says 'Burn the stubbles'; I left that out because stubble burning is restricted in several states (not re-verified). Diagnosis caution from IRRI: early on, BLS looks like bacterial blight. It can also be confused with narrow brown spot, whose lesions are not translucent and produce no ooze. IRRI reports yield loss of 8–17% in the wet season and 1–3% in the dry season, and says mature plants recover easily (verified)."
+ },
+ "bacterial_panicle_blight": {
+  "class_key": "bacterial_panicle_blight",
+  "name_en": "Bacterial panicle blight",
+  "cause": "Burkholderia glumae (LSU AgCenter also lists B. gladioli)",
+  "symptoms": [
+   "Grains on young panicles become two-toned, with brown discoloration on the lower third to half of the grain.",
+   "Panicle branches stay green up to the infected grain while the grain stops filling.",
+   "Affected heads stay upright as the grain stops filling.",
+   "Diseased plants appear in roughly circular patches, worst in the middle.",
+   "The flag-leaf sheath sometimes shows sheath-rot-like lesions."
+  ],
+  "ipm": [
+   "Have suspect panicles examined early, because fungi growing on dead grain soon hide the typical symptoms.",
+   "Avoid excessive nitrogen.",
+   "Do not spend money on sprays, because no pesticide is currently recommended for this disease."
+  ],
+  "chemical": [],
+  "prevention": [
+   "Do not save or sow seed from fields that were badly affected the previous season.",
+   "Plant early so heading avoids late-season hot weather and hot nights.",
+   "Where available, choose varieties with partial resistance."
+  ],
+  "sources": [
+   {
+    "publisher": "LSU AgCenter (Louisiana State University)",
+    "title": "Rice Bacterial Panicle Blight Disease Management",
+    "url": "https://www.lsuagcenter.com/~/media/files/bacterial-panicle-blight.pdf"
+   },
+   {
+    "publisher": "Crossref (metadata record for Plant Disease, American Phytopathological Society)",
+    "title": "Emergence of Bacterial Panicle Blight Caused by Burkholderia glumae in North India (Mondal, Mani & Verma, Plant Disease, 2015)",
+    "url": "https://api.crossref.org/works/10.1094/PDIS-01-15-0094-PDN"
+   }
+  ],
+  "notes": "FACT-CHECK (26 Sep 2026): the card has no chemical lines to verify. CHANGES: (1) REMOVED source https://apsjournals.apsnet.org/doi/full/10.1094/PDIS-01-15-0094-PDN, which returned HTTP 403 to curl and WebFetch and was refused by the browser. It is replaced by the Crossref metadata record, which loaded and confirms the title, the authors (Mondal, Mani, Verma), the journal (Plant Disease) and the date (Sept 2015). That record supports only the fact that the paper exists, not its contents. (2) Symptom 1 said hulls turn 'light to medium brown'; LSU only says two-toned grain with brown discoloration on the lower third to half, so I reworded it. (3) Symptom 3 reworded to match LSU ('heads stay upright as grain stops filling'). Every other line checked out against the LSU PDF. SOURCES ARE THIN. The only management source is a US extension fact sheet (LSU AgCenter, Louisiana). I found no Indian (TNAU, ICAR-IIRR, ICAR-NRRI) advisory, no Indian variety resistance list and no CIB&RC label claim; the label check was not exhaustive. LSU says no pesticides are currently recommended and none are labeled, which is a US statement. Search snippets, which I could not verify, say the disease appeared in epidemic form in Uttar Pradesh, Haryana and Delhi NCR in Sept–Nov 2014 on basmati and non-basmati rice. Do not suggest streptomycin or tetracycline antibiotics: they are under a proposed phase-out (see bacterial leaf blight). Diagnosis caution: LSU says BPB is confused with straighthead, sheath rot and scab (verified). Our own judgment, not from a source: in India, a photo classifier may also confuse it with neck blast, false smut or grain discoloration, so the app should recommend confirmation by a KVK or agricultural university lab before any action."
+ },
+ "blast": {
+  "class_key": "blast",
+  "name_en": "Rice blast",
+  "cause": "Magnaporthe oryzae (anamorph Pyricularia oryzae; syn. P. grisea)",
+  "symptoms": [
+   "Early spots are small white to grey-green flecks on leaves.",
+   "Leaf spots are spindle- or diamond-shaped, with a grey or ash-coloured centre and a brown border.",
+   "Spots merge and leaves dry, so a badly hit nursery or field looks burnt.",
+   "Nodes turn black and the stem breaks at the node (node blast).",
+   "The neck turns grey-brown to black and the panicle breaks and hangs; early neck infection gives no grain."
+  ],
+  "ipm": [
+   "Treat seed with Pseudomonas fluorescens talc at 10 g per kg of seed before sowing.",
+   "Before transplanting, soak seedling roots for 30 minutes in P. fluorescens: 2.5 kg mixed into water standing 2.5 cm deep over 25 m² of nursery.",
+   "From 45 days after transplanting, spray P. fluorescens talc at 0.5% three times, 10 days apart.",
+   "Split nitrogen into three doses, avoid excess N, and delay N top-dressing when blast appears.",
+   "Remove grass weeds from bunds and channels, because they carry the blast fungus.",
+   "Avoid dry nurseries, and keep the field flooded where possible."
+  ],
+  "chemical": [
+   {
+    "text": "Tricyclazole 75 WP @ 0.6 g/litre of water",
+    "source": 2
+   },
+   {
+    "text": "Tebuconazole 50%+ Trifloxystrobin 25% (Nativo 75 WG) @ 0.4g/litre",
+    "source": 2
+   },
+   {
+    "text": "azoxystrobin + difenoconazole 100 ml/acre when initial symptoms are noticed",
+    "source": 1
+   },
+   {
+    "text": "Treat the seeds with Captan or Thiram or Carbendazim or Tricyclazole at 2 g/kg",
+    "source": 1
+   }
+  ],
+  "prevention": [
+   "Grow a blast-resistant variety suited to your area (TNAU lists CO 51, CO 52, CO 53, CO 55, CO 56, ASD 18 and IR 64).",
+   "Use clean, treated seed, because the fungus survives in seed and stubble.",
+   "Avoid late planting.",
+   "On silicon-deficient soils, apply a silicon fertilizer such as calcium silicate.",
+   "Remove infected straw and stubble after harvest instead of leaving it in the field."
+  ],
+  "sources": [
+   {
+    "publisher": "TNAU Agritech Portal (Expert System for Paddy)",
+    "title": "Blast (Pyricularia oryzae): symptoms and management strategies",
+    "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisblast.html"
+   },
+   {
+    "publisher": "TNAU Agritech Portal (Crop Protection)",
+    "title": "Rice: Blast, other management",
+    "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_1.html"
+   },
+   {
+    "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+    "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+    "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+   },
+   {
+    "publisher": "IRRI Rice Knowledge Bank",
+    "title": "Blast (leaf and collar) fact sheet",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar"
+   },
+   {
+    "publisher": "District Rupnagar, Govt. of Punjab (NIC portal)",
+    "title": "Bans use of 10 insecticides which were a constraint in the export of Basmati Rice (Aug 2022)",
+    "url": "https://rupnagar.nic.in/bans-use-of-10-insecticides-which-were-a-constraint-in-the-export-of-basmati-rice/"
+   },
+   {
+    "publisher": "Global Agriculture (trade news)",
+    "title": "Punjab High Court Grants Stay on Ban of 12 Insecticides for Basmati Paddy",
+    "url": "https://www.global-agriculture.com/india-region/punjab-high-court-grants-stay-on-ban-of-12-insecticides-for-basmati-paddy/"
+   },
+   {
+    "publisher": "DPPQS / CIB&RC, Ministry of Agriculture & Farmers Welfare",
+    "title": "List of pesticides which are banned, refused registration and restricted in use (updated 31.03.2024)",
+    "url": "https://ppqs.gov.in/sites/default/files/list_of_pesticides_which_are_banned_refused_registration_and_restricted_in_use_0.pdf"
+   },
+   {
+    "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+    "title": "Agro Advisory Service for Rice: 1st fortnight of October 2018",
+    "url": "https://web.archive.org/web/20251010164342/https://icar-nrri.in/wp-content/uploads/2018/10/AAS_October_18_I_english.pdf"
+   }
+  ],
+  "notes": "FACT-CHECK (26 Sep 2026): all 4 chemical lines are VERIFIED word for word. Tricyclazole 0.6 g/L and Nativo 0.4 g/L are on the NRRI Aug 2022 PDF, read from an archive snapshot because icar-nrri.in did not resolve. Azoxystrobin + difenoconazole 100 ml/acre and the 2 g/kg seed treatment are on the TNAU other-management page; TNAU's expert system also gives 2.0 g/kg seed. CHANGES: (1) The NRRI 2022 source URL now points to its Internet Archive snapshot. (2) Added the NRRI Oct 2018 archive snapshot as source 7, because these notes cite it. (3) Symptom 1 no longer says 'bluish-green': neither TNAU nor IRRI says that; both say white to grey-green. (4) The silicon prevention line no longer says 'before planting', which IRRI's blast sheet does not state. Every other line checked out. DOSE DISAGREEMENTS (verified): Tricyclazole is 0.6 g/L (NRRI 2018 and 2022), 1 g/L (TNAU expert system) or '75 WP @ 200 g' per acre (TNAU other-management page). Carbendazim is 2 g/L of 50 WP (NRRI 2018), 1 g/L (TNAU) or 100 g/acre (TNAU), so its foliar spray is left out. Edifenphos 50 EC is 2 ml/L (NRRI 2022) or 1 ml/L (TNAU), so it is left out; it is not on the CIB&RC list, but I did not check its current registration. TNAU's iprobenphos (IBP) 200 ml/acre is not carried over. TNAU gives no formulation strength for azoxystrobin + difenoconazole, so follow the product label. None of the kept molecules (tricyclazole, tebuconazole, trifloxystrobin, azoxystrobin, difenoconazole, captan, thiram, carbendazim) appears on the CIB&RC banned or restricted list dated 31.03.2024; I checked the PDF text. BASMATI WARNING (verified): the Rupnagar page (Aug 2022) lists tricyclazole, carbendazim, propiconazole, isoprothiolane and others as banned on basmati in Punjab for 60 days. The Global Agriculture report of 14 Aug 2025 says the Punjab & Haryana High Court stayed the 10 May 2025 Punjab notification covering 12 molecules, including tricyclazole, tebuconazole (the active in Nativo), carbendazim and hexaconazole. Basmati growers should check the current state advisory before spraying. TNAU spray tips (verified): do not use lower or higher doses; spray before 11 AM or after 3 PM. TNAU says 'Burning of straw and stubbles after harvest'; I softened this to removal because residue burning is restricted in several states."
+ },
+ "brown_spot": {
+  "class_key": "brown_spot",
+  "name_en": "Brown spot (sesame leaf spot)",
+  "cause": "Helminthosporium oryzae (syn. Drechslera oryzae; sexual stage Cochliobolus miyabeanus)",
+  "symptoms": [
+   "Small oval or round dark-brown spots on leaves, like sesame seeds, often with a yellow halo.",
+   "Mature spots have a grey or light-brown centre and a reddish-brown margin.",
+   "Many spots merge and the leaf dries; affected nurseries look scorched from a distance.",
+   "Dark brown to black spots on the glumes, with discoloured, poorly filled grain."
+  ],
+  "ipm": [
+   "Test the soil and apply the recommended fertilizer, because brown spot is worst on poor, nutrient-deficient soils.",
+   "Keep the field irrigated and avoid water stress.",
+   "Treat seed with Pseudomonas fluorescens at 10 g/kg, then dip seedlings for 30 minutes in 2.5 kg/ha dissolved in 100 litres of water.",
+   "Remove weed hosts and infected crop debris from the field.",
+   "Hot-water treat seed at 53–54°C for 10–12 minutes, after pre-soaking it in cold water for 8 hours."
+  ],
+  "chemical": [
+   {
+    "text": "Spray Mancozeb (2.0g/lit) - 2 to 3 times at 10 - 15 day intervals",
+    "source": 0
+   }
+  ],
+  "prevention": [
+   "Use disease-free seed, because the fungus survives in seed for more than 4 years.",
+   "Grow resistant or moderately resistant varieties (TNAU lists CO 51, CO 52, CO 53, CO 55, CO 56, ASD 18 and IR 64).",
+   "On silicon-deficient soils, apply calcium silicate slag before planting.",
+   "Avoid excess nitrogen; TNAU advises slow-release nitrogen fertilizers."
+  ],
+  "sources": [
+   {
+    "publisher": "TNAU Agritech Portal (Expert System for Paddy)",
+    "title": "Brown Spot (Helminthosporium oryzae): symptoms and management strategies",
+    "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisbrownspot.html"
+   },
+   {
+    "publisher": "TNAU Agritech Portal (Crop Protection)",
+    "title": "Rice: Brown spot, other management",
+    "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_2.html"
+   },
+   {
+    "publisher": "IRRI Rice Knowledge Bank",
+    "title": "Brown spot fact sheet",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/brown-spot"
+   },
+   {
+    "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+    "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+    "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+   },
+   {
+    "publisher": "DPPQS / CIB&RC, Ministry of Agriculture & Farmers Welfare",
+    "title": "List of pesticides which are banned, refused registration and restricted in use (updated 31.03.2024)",
+    "url": "https://ppqs.gov.in/sites/default/files/list_of_pesticides_which_are_banned_refused_registration_and_restricted_in_use_0.pdf"
+   }
+  ],
+  "notes": "FACT-CHECK (26 Sep 2026): the Mancozeb line is VERIFIED on the TNAU expert-system page. The full source line is 'Spray Mancozeb (2.0g/lit) or Edifenphos (1ml/lit) - 2 to 3 times at 10 - 15 day intervals'; the card keeps only the mancozeb option. CHANGES: (1) The NRRI 2022 source URL now points to its Internet Archive snapshot, because icar-nrri.in did not resolve. No other changes: every symptom, IPM and prevention line checked out against TNAU or IRRI. The resistant-variety list comes from the TNAU other-management page; the TNAU expert system lists different varieties (ADT 44, PY 4, CORH 1, CO 44, Cauvery, Bhavani, TPS 4, Dhanu), so check against current state recommendations. Brown spot mainly signals poor soil nutrition or water stress, so the app should push nutrition and irrigation before fungicide. LEFT OUT, conflicting or unclear doses (all verified on the pages): Captan or Thiram seed treatment is 2.0 g/kg on the TNAU expert system and 4 g/kg on the TNAU other-management page. TNAU's main-field line 'Edifenphos 200 ml or Mancozeb 500 g when grade reaches 3' gives no area unit. The NRRI 2022 brown-spot line is garbled: 'Propiconazole 25EC @ 1ml' gives no volume, 'Mancozeb 75WP or, Carbendazim 50WP @ 2g of water' has broken units, and 'Carbendazim 64% + Mancozeb 8% 75WP @ 1.5g per litre' looks like a typo. EXCLUDED, banned: TNAU's 'Agrosan or Ceresan 2.5 g/kg seed' are organomercurial seed dressings, and the mercury compounds are on the CIB&RC banned list (verified). Mancozeb is restricted only on guava, jowar and tapioca (S.O. 4294(E), 3 Oct 2023, verified on the CIB&RC PDF), so rice use is not affected. IRRI names fungicide seed treatments (iprodione, propiconazole, azoxystrobin, trifloxystrobin, carbendazim) without doses. IRRI says brown spot causes 5% average yield loss in South and Southeast Asian lowland rice, and up to 45% in severe cases (verified)."
+ },
+ "dead_heart": {
+  "class_key": "dead_heart",
+  "name_en": "Dead heart (stem borer damage)",
+  "cause": "Scirpophaga incertulas (yellow stem borer); other rice stem borers can cause the same symptom",
+  "symptoms": [
+   "The central shoot of a young tiller dries up and turns brown: this is the 'dead heart'.",
+   "The dried central shoot comes out easily when you pull it by hand.",
+   "The stem has small bore holes, and you can see larval droppings inside when you split it open.",
+   "Brown egg masses may be visible near the leaf tips.",
+   "If the attack comes at heading, the panicles turn white and empty ('white ear')."
+  ],
+  "ipm": [
+   "Treat only after the ETL is crossed: 10% dead hearts, or 2 egg masses per square metre.",
+   "Clip the seedling tips before transplanting to remove egg masses.",
+   "Hand-pick and destroy egg masses in the seedbed and at transplanting.",
+   "Install light traps @ 1/ha and pheromone traps @ 5/acre to monitor the moths.",
+   "Release the egg parasitoid Trichogramma japonicum @ 2 cc/acre, 3 times at weekly intervals.",
+   "Spray neem seed kernel extract 5% or Azadirachtin 0.03% @ 400 ml/acre."
+  ],
+  "chemical": [
+   {
+    "text": "Chlorantraniliprole 18.5% SC 60 ml/ac",
+    "source": 0
+   },
+   {
+    "text": "Chlorantraniliprole 0.4% G 4 kg/ac",
+    "source": 0
+   },
+   {
+    "text": "CartapHydrochloride 50 % SP 400 g/ac",
+    "source": 0
+   },
+   {
+    "text": "Cartap hydrochloride 4% granules @ 18750 g/ha (vegetative stage)",
+    "source": 1
+   }
+  ],
+  "prevention": [
+   "Harvest close to the ground so that larvae in the stubble are removed.",
+   "After harvest, flood and plough the field to kill larvae hiding in the stubble.",
+   "Use moderate nitrogen and apply it in split doses.",
+   "Finish planting all fields in an area within 3 weeks, and avoid staggered planting.",
+   "Remove stubble and volunteer rice between seasons."
+  ],
+  "sources": [
+   {
+    "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+    "title": "Yellow Stem Borer: Scirpophaga incertulas (Crop Protection: Pests of paddy)",
+    "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m1.html"
+   },
+   {
+    "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+    "title": "Integrated Pest Management Package for Rice (2014)",
+    "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+   },
+   {
+    "publisher": "IRRI Rice Knowledge Bank",
+    "title": "Stem borer (fact sheet)",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer"
+   },
+   {
+    "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+    "title": "List of banned and restricted pesticides in India",
+    "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+   },
+   {
+    "publisher": "Dept of Agriculture Development & Farmers' Welfare, Kerala (KAU Package of Practices 2016)",
+    "title": "List of new generation insecticides recommended against pests of crops in Kerala",
+    "url": "https://keralaagriculture.gov.in/wp-content/uploads/2021/04/new-generation-insecticides-table-15-8-18.pdf"
+   }
+  ],
+  "notes": "FACT-CHECK (26 Sep 2026): all 4 chemical lines are VERIFIED. Chlorantraniliprole 18.5% SC 60 ml/ac, chlorantraniliprole 0.4% G 4 kg/ac and cartap 50% SP 400 g/ac appear word for word on the TNAU page. Cartap 4% granules @ 18750 g/ha is in the vegetative-stage row of the NIPHM table. CHANGES: (1) The IPM line 'Pick and destroy egg masses in the nursery and main field' now reads 'Hand-pick and destroy egg masses in the seedbed and at transplanting', to match IRRI. NIPHM instead advises putting collected egg masses in a bamboo cage so that parasitoids can escape. (2) Removed the unverified '(WHO class Ib)' from the carbofuran note: the NIPHM toxicity table was unreadable in extraction. (3) Removed the unverified 'news reports' claim about monocrotophos; the CIB&RC fact is kept. All 5 sources loaded, and every other symptom, IPM and prevention line checked out against TNAU, NIPHM or IRRI. The dead_heart class may also include white, pink or striped stem borer damage. Split a stem to confirm a larva is inside: IRRI says dead hearts and whiteheads can be confused with rat damage, neck blast and black bug. TNAU says to spray ANY ONE of the listed insecticides, never a mix. ETLs (verified): TNAU gives 10% dead heart and 2% white ear. NIPHM gives, for the tillering stage, 2 egg masses/m2, 10% dead heart, 1 moth/m2 or 25 moths/trap/week, and for the nursery, 1 egg mass/m2. For Trichogramma, NIPHM's rate (1 lakh/ha) differs in units from TNAU's (2 cc/acre). Corroboration: the Kerala Govt/KAU table gives chlorantraniliprole 18.5% SC at 30 g a.i./ha (3 ml/10 L) for rice stem borer, which is consistent with 60 ml/acre. NIPHM gives cartap 50% SP at 1000 g/ha, which is consistent with TNAU's 400 g/ac. DISAGREEMENT outside this card's sources: ICAR-NRRI Aug 2022 gives 'Cartap hydrochloride 4G @ 10kg/acre', about 24.7 kg/ha, against NIPHM's 18.75 kg/ha. EXCLUDED: Carbofuran 3% CG (10 kg/ac per TNAU; 25000-66600 g/ha per NIPHM). It is on the CIB&RC restricted list: only the 3% CG with crop labels remains permitted (S.O. 4294(E), 3 Oct 2023, verified). I excluded it to be safe. Monocrotophos 36% SL (625-1250 ml/ha per NIPHM 2014): the CIB&RC list says the 36% SL is to be discontinued and its registrations cancelled (verified). Chlorpyriphos 20% EC (500 ml/ac per TNAU): restricted, banned on ber, citrus and tobacco only. Rice use is still legal nationally, but I excluded it to be safe. OMITTED but not banned nationally: Acephate 75% SP 400 g/ac (TNAU). It is in Punjab's basmati bans (the Rupnagar 2022 and Global Agriculture 2025 pages, cited on the blast card); a 2020 proposed national ban is unverified. TNAU also lists carbosulfan, fipronil, flubendiamide, thiacloprid and thiamethoxam, left out for brevity only. I did not check the CIB&RC label claims for each dose one by one."
+ },
+ "downy_mildew": {
+  "class_key": "downy_mildew",
+  "name_en": "Downy mildew",
+  "cause": "Sclerophthora macrospora (an oomycete)",
+  "symptoms": [
+   "Young seedlings are dwarfed and twisted, with yellow-to-whitish spots on the leaves.",
+   "Leaves may be short, thick, twisted or striped yellow, and plants may make too many tillers.",
+   "Panicles are distorted, twisted or spiral and stay green longer, or never emerge.",
+   "Sick plants usually appear in patches where seedlings grew in waterlogged soil."
+  ],
+  "ipm": [
+   "Control grassy weeds in and around the field, because they can carry the pathogen.",
+   "Clean the seed before sowing to remove bits of diseased tissue and light grains.",
+   "Take seed only from fields known to be free of the disease.",
+   "Rotate with a non-cereal crop where possible."
+  ],
+  "chemical": [],
+  "prevention": [
+   "Raise the nursery on well-prepared, well-drained land so that seedlings do not sit in waterlogged soil.",
+   "Do not put the nursery in low-lying patches that are likely to flood.",
+   "Keep bunds and channels free of grassy weeds that can host the disease."
+  ],
+  "sources": [
+   {
+    "publisher": "University of Illinois Extension (Dept of Crop Sciences)",
+    "title": "Report on Plant Disease RPD No. 122: Downy Mildew of Small Grains",
+    "url": "https://ipm.illinois.edu/diseases/rpds/122.pdf"
+   },
+   {
+    "publisher": "National IPM Database (USDA-NIFA IPM Centers)",
+    "title": "2024-2025 Pest Management Strategic Plan for Rice in AR, LA, MS, TX, MO: Pests",
+    "url": "https://ipmdata.ipmcenters.org/source_report.cfm?template=pest&pesttypeid=2&sourceid=2478&sectionid=7&view=yes"
+   },
+   {
+    "publisher": "TNAU Agritech Portal",
+    "title": "Crop Protection: Rice diseases (index)",
+    "url": "https://agritech.tnau.ac.in/crop_protection/crop_prot_crop%20diseases_cereals_rice_main.html"
+   },
+   {
+    "publisher": "Tamil Nadu Agricultural University (Renukadevi, Nakkeeran & Alice)",
+    "title": "Management of diseases of important Agriculture Crops of Tamil Nadu",
+    "url": "https://agritech.tnau.ac.in/pdf/8.pdf"
+   }
+  ],
+  "notes": "FACT-CHECK (26 Sep 2026): the card has no chemical lines to verify. All 4 sources loaded. CHANGES: (1) The diagnosis caution is trimmed to what the source says: the Illinois guide says symptoms can closely resemble injury from 2,4-D or another phenoxy herbicide. The added 'nutrient disorders or tungro' was unsupported and is removed. (2) Marked Kang & Lee 1987 as not fetched. Checked and confirmed: the symptoms match the US rice PMSP ('dwarfed and twisted with chlorotic, yellow to whitish spots'; twisted or spiral panicles that stay green longer) and the Illinois guide (excess tillering; short, thickened leaves; yellow stripes; waterlogged patches). The IPM and prevention lines match the Illinois control list: drainage, well-prepared soil, rotation with non-cereals, controlling grassy weeds, cleaning seed, and seed from disease-free fields. The Illinois guide is RPD No. 122, dated August 1989. SOURCES ARE THIN; treat this class as low confidence. The TNAU rice disease index lists 12 diseases, and downy mildew is not among them (verified). The NIPHM 2014 rice IPM package does not list it among diseases of national or regional importance (verified), so it appears rare in India. The IPM steps are adapted from a small-grain guide, not from rice-specific advice. The US rice PMSP states 'No management measures are recommended', and the Illinois guide says 'Seed treatment has no effect' (both verified). NO CHEMICAL GIVEN: metalaxyl has reportedly been studied against rice downy mildew in Korea and Japan (e.g. Kang & Lee 1987; not fetched), but no fetched source gives a rice dose. Do NOT reuse the 'Metalaxyl 6g/kg' line from TNAU's PDF: it is for pearl millet downy mildew (Sclerospora graminicola), not rice (verified). The app should advise confirmation by a KVK or agriculture officer before any action."
+ },
+ "hispa": {
+  "class_key": "hispa",
+  "name_en": "Rice hispa",
+  "cause": "Dicladispa armigera (rice hispa beetle)",
+  "symptoms": [
+   "White streaks run parallel along the leaves where adult beetles scrape off the green layer.",
+   "Whitish, blister-like patches appear near leaf tips where grubs tunnel inside the leaf.",
+   "Leaves turn whitish and papery, then wither.",
+   "Small dark blue-black beetles covered in spines are seen on the leaves.",
+   "A badly infested field looks burnt from a distance."
+  ],
+  "ipm": [
+   "Act only when the ETL is reached: 2 adults per hill (TNAU), or 2 adults or 2 dead leaves per hill (NIPHM).",
+   "Collect adult beetles with a sweep net and destroy them.",
+   "Clip seedling tips at transplanting to cut down eggs and grubs carried from the nursery.",
+   "Clip the infested shoot tips and bury them in mud to kill the grubs inside.",
+   "Protect natural enemies such as small parasitic wasps and predatory reduviid bugs."
+  ],
+  "chemical": [
+   {
+    "text": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+    "source": 0
+   }
+  ],
+  "prevention": [
+   "Do not over-fertilise, and skip nitrogen top-dressing when hispa numbers are high.",
+   "Top-dress nitrogen only after the pest is controlled, to help the crop recover.",
+   "Remove grassy weeds in and near the field, because they harbour the pest.",
+   "Remove rice ratoons and volunteer rice in the crop-free season."
+  ],
+  "sources": [
+   {
+    "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+    "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+    "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+   },
+   {
+    "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+    "title": "Integrated Pest Management Package for Rice (2014)",
+    "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+   },
+   {
+    "publisher": "IRRI Rice Knowledge Bank",
+    "title": "Rice hispa (fact sheet)",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-hispa"
+   },
+   {
+    "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+    "title": "List of banned and restricted pesticides in India",
+    "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+   }
+  ],
+  "notes": "FACT-CHECK (26 Sep 2026): the chemical line is VERIFIED. The TNAU page says 'Spray/broadcast/dust any one of the following insecticides per acre based on ETL: ... emamectin benzoate 1.9 EC 170 ml'. CHANGES: (1) The ETL line said '2 adults or 2 damaged leaves per hill'. TNAU says '2 adults /hill' and NIPHM says '2 adults or 2 dead leaf /hill', so the line now cites both exactly. (2) The spacing note is corrected: the NIPHM PDF contains both 'Fields with higher plant density suffers less damage' and a 'Wider spacing ... decreases leaf damage' line. That second line may belong to the hispa row or the leaf-folder row; the PDF layout is ambiguous. (3) Small rewording of the two clipping lines to match NIPHM (clipping at transplanting) and IRRI (clipping and burying shoots in mud cuts grub numbers by 75−92%). All 4 sources loaded, and every other symptom, IPM and prevention line checked out against TNAU, NIPHM or IRRI. The emamectin line's CIB&RC label claim for rice hispa was NOT verified. EXCLUDED: carbofuran 3% CG, 10 kg/acre (TNAU). It is restricted: only the 3% CG with crop labels remains permitted (S.O. 4294(E), 3 Oct 2023, verified on the CIB&RC list). Also excluded to be safe, because these molecules are restricted on other crops (rice use is still legal): malathion 50 EC 460 ml and malathion 5 DP 10 kg per acre (TNAU, verified), and quinalphos 25% (printed as 'gel') @ 1000 ml/ha and chlorpyrifos 20% EC @ 1250 ml/ha (NIPHM, verified). A human reviewer may re-add them. Hispa is a pest of regional importance in India; NIPHM lists Bihar, West Bengal, Assam, Odisha, Meghalaya, Mizoram, Tripura, Punjab, HP, UP and Uttarakhand (verified). Because the spacing evidence conflicts, spacing advice was left out. Hispa scraping can look like flea beetle damage (IRRI); look for the spiny beetle to confirm."
+ },
+ "normal": {
+  "class_key": "normal",
+  "name_en": "Healthy crop (no problem detected)",
+  "cause": "None: no pest or disease detected",
+  "symptoms": [
+   "Leaves are evenly green, with no spots, streaks, scraping or yellowing.",
+   "Central shoots are green and firmly attached.",
+   "No insects, egg masses or feeding damage are visible."
+  ],
+  "ipm": [
+   "Walk the field every 3-5 days to check for pests and for their natural enemies.",
+   "From 20 days after transplanting, inspect five random spots in each field.",
+   "Use pheromone traps (5 per ha) and a light trap to watch stem borer and other moth numbers.",
+   "Take plant protection measures only when a pest or disease crosses its economic threshold level (ETL), as found by field scouting."
+  ],
+  "chemical": [],
+  "prevention": [
+   "Sow pure seed, free of disease and insects, of a resistant or moderately resistant variety.",
+   "Apply fertiliser and micronutrients in balanced doses as locally recommended, without excess nitrogen.",
+   "Keep bunds clean, and remove weeds and leftover nursery seedlings.",
+   "Protect natural enemies such as spiders, dragonflies and lady beetles."
+  ],
+  "sources": [
+   {
+    "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+    "title": "Integrated Pest Management Package for Rice (2014)",
+    "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+   }
+  ],
+  "notes": "FACT-CHECK (26 Sep 2026): the NIPHM source loaded, and the card has no chemical lines. CHANGES: (1) The last IPM line said to use a pesticide only 'as a last resort'. NIPHM does not use that phrase: it says plant protection measures should be taken only when pests and diseases cross the ETL, as found by field scouting. The line now says that. Verified in NIPHM: field scouting once every 3-5 days; AESA from 20 days after transplanting at 5 random spots per field; 5 pheromone traps per ha and light traps; pure seed of a resistant or moderately resistant variety; balanced fertilisers and micronutrients as locally recommended; destroying leftover nursery, weeds and bund growth; and conserving spiders, dragonflies and coccinellids. 'Without excess nitrogen' is supported by NIPHM's advice to use only moderate nitrogen. No treatment is needed. The symptom lines describe what a healthy crop looks like; they are not quoted from the source. A 'normal' result from one photo does not rule out early infestation elsewhere in the field, so the farmer should keep scouting."
+ },
+ "tungro": {
+  "class_key": "tungro",
+  "name_en": "Rice tungro disease",
+  "cause": "Rice tungro bacilliform virus (RTBV) + Rice tungro spherical virus (RTSV), spread by the green leafhopper Nephotettix virescens",
+  "symptoms": [
+   "Leaves turn yellow to orange-yellow, starting at the leaf tip and moving down.",
+   "Plants are stunted and produce fewer tillers.",
+   "Young leaves may show pale green to whitish stripes, and older leaves may have rust-coloured spots.",
+   "Flowering is delayed, and panicles are small, only partly emerged, with many empty grains.",
+   "Green leafhoppers are usually present in the field."
+  ],
+  "ipm": [
+   "Infected plants cannot be cured, so focus on stopping the green leafhopper from spreading the virus.",
+   "Set up a light trap @ one/ha and yellow sticky traps @ 12/ha to monitor and catch leafhoppers.",
+   "Take action when you see 1 tungro-infected plant per square metre and 2 green leafhoppers per hill.",
+   "Apply neem cake @ 12.5 kg per 20 cent nursery as a basal dose.",
+   "Destroy weed hosts on bunds, and spray bund vegetation too whenever you spray the crop.",
+   "Work with neighbours, because leafhoppers move between fields and spraying one field alone often fails."
+  ],
+  "chemical": [
+   {
+    "text": "Thiamethoxam 25 WDG 40g/acre, two rounds at 15 and 30 days after transplanting (also spray bund vegetation)",
+    "source": 0
+   },
+   {
+    "text": "Imidacloprid 17.8 SL 40ml/acre, two rounds at 15 and 30 days after transplanting",
+    "source": 0
+   },
+   {
+    "text": "Nursery (20 cents area): Thiamethoxam 25 WDG 8g or Imidacloprid 17.8 SL 8ml, 2 rounds at 10 and 20 DAS",
+    "source": 2
+   },
+   {
+    "text": "Imidacloprid 17.8 SL: 100-125 ml formulation/ha (20-25 g a.i./ha) in 500-700 L water, approved use against BPH, WBPH, GLH",
+    "source": 5
+   },
+   {
+    "text": "multi-K (potassium nitrate) sprayed at 1 per cent, a foliar feed to reduce leaf yellowing (it does not cure the virus)",
+    "source": 0
+   }
+  ],
+  "prevention": [
+   "Grow tungro-resistant varieties such as IR 36, IR 50, ADT 37, Co 45, Co 48, Vikramarya or Bharani.",
+   "Plant at the same time as the surrounding farms, because late-planted fields get more tungro.",
+   "Plough in the stubble right after harvest and remove volunteer rice, to destroy virus sources.",
+   "Keep a fallow of at least a month between crops, or rotate with pulses or oilseeds in epidemic areas.",
+   "Do not transplant seedlings raised in tungro-affected areas."
+  ],
+  "sources": [
+   {
+    "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+    "title": "Rice tungro: management (other methods)",
+    "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_23.html"
+   },
+   {
+    "publisher": "TNAU Agritech Portal (Paddy expert system)",
+    "title": "Crop Protection >> Diseases >> Tungro",
+    "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdistungro.html"
+   },
+   {
+    "publisher": "Tamil Nadu Agricultural University (Renukadevi, Nakkeeran & Alice)",
+    "title": "Management of diseases of important Agriculture Crops of Tamil Nadu",
+    "url": "https://agritech.tnau.ac.in/pdf/8.pdf"
+   },
+   {
+    "publisher": "IRRI Rice Knowledge Bank",
+    "title": "Tungro (fact sheet)",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
+   },
+   {
+    "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+    "title": "Integrated Pest Management Package for Rice (2014)",
+    "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+   },
+   {
+    "publisher": "TNAU Agritech Portal (compiled from CIB&RC approved uses)",
+    "title": "Approved uses of registered insecticides (Crop based)",
+    "url": "https://agritech.tnau.ac.in/crop_protection/pdf/Pesticide%20list_crop%20wise.pdf"
+   },
+   {
+    "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+    "title": "List of banned and restricted pesticides in India",
+    "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+   },
+   {
+    "publisher": "Global Agriculture",
+    "title": "Punjab High Court Grants Stay on Ban of 12 Insecticides for Basmati Paddy (14 Aug 2025)",
+    "url": "https://www.global-agriculture.com/india-region/punjab-high-court-grants-stay-on-ban-of-12-insecticides-for-basmati-paddy/"
+   },
+   {
+    "publisher": "TNAU Agritech Portal",
+    "title": "Rice tungro virus (symptoms)",
+    "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/rice_24.html"
+   },
+   {
+    "publisher": "District Rupnagar, Govt. of Punjab (NIC portal)",
+    "title": "Bans use of 10 insecticides which were a constraint in the export of Basmati Rice (Aug 2022)",
+    "url": "https://rupnagar.nic.in/bans-use-of-10-insecticides-which-were-a-constraint-in-the-export-of-basmati-rice/"
+   }
+  ],
+  "notes": "FACT-CHECK (26 Sep 2026): all 5 chemical lines are VERIFIED. Thiamethoxam 25 WDG 40g/acre, imidacloprid 17.8 SL 40ml/acre (two rounds at 15 and 30 days after transplanting, with bund vegetation sprayed too) and multi-K 1% are on the TNAU other-methods page. The nursery line (8 g or 8 ml per 20 cents, 2 rounds at 10 and 20 DAS) is in the TNAU PDF (source 2). That PDF also gives thiamethoxam 100 g/ha and imidacloprid 100 ml/ha for the main field, which is consistent with 40 per acre. The row 'Imidacloprid 17.8 SL | BPH, WBPH, GLH | 20 - 25 | 100 - 125 | 500 - 700' is in the TNAU approved-uses PDF. CHANGES: (1) The multi-K line's wording: TNAU says to spray it 'instead of urea' as a foliar fertilizer that 'impart[s] resistance', so the line now calls it a foliar feed. 'Does not cure the virus' is consistent with IRRI ('once a rice plant is infected by tungro, it cannot be cured'). (2) Added the Rupnagar page as source 9: it loaded and confirms thiamethoxam was in Punjab's 60-day basmati ban of Aug 2022. (3) Caveat added about the approved-uses PDF (below). All 10 sources loaded, and every symptom, IPM and prevention line checked out against TNAU, IRRI or NIPHM. CAVEAT ON SOURCE 5: the TNAU approved-uses PDF is undated. It still lists methyl parathion, phosphamidon and phorate, all banned by S.O. 3951(E) of 8 Aug 2018 according to the CIB&RC list, so it predates 2018. The imidacloprid row agrees with TNAU's current 40 ml/acre, but the PDF is not a current label register. IRRI cautions that insecticides against green leafhoppers are often ineffective because hoppers keep moving in from nearby fields; resistant varieties and synchronous planting matter most. Tungro can be confused with nitrogen or zinc deficiency, water stress, stem borer or planthopper damage, rat damage, grassy stunt and orange leaf (IRRI). TNAU's iodine test can confirm it: infected leaf tips develop dark blue streaks. The action threshold is from NIPHM ('1 Tungro infected plants/m2 & 2 GLH/hill'). EXCLUDED as banned or restricted (all verified on the CIB&RC list): Carbofuran 3 G (3.5 kg per 20 cents nursery, 1 kg/ha, and 3.5 kg/ha in the field, per TNAU) is restricted: only the 3% CG with crop labels remains permitted (S.O. 4294(E), 3 Oct 2023). Phorate 10 G, 1.0 kg per 20 cents (TNAU): banned, S.O. 3951(E), 8 Aug 2018. Fenthion 100 EC, 40 ml/ha (TNAU expert system): banned, S.O. 3951(E), 2018. Quinalphos 5 G, 2.0 kg per 20 cents: restricted (banned on jute, cardamom and sorghum; rice is not restricted), excluded to be safe. Mancozeb 2.5 g/L + 2% urea: mancozeb is restricted on guava, jowar and tapioca, and the spray only masks yellowing, so it was excluded to be safe. TNAU's 'burning of stubbles' was left out; ploughing is given instead (TNAU expert system and IRRI). The two TNAU pages give different resistant-variety lists: the other-methods page lists MTU 9992, Suraksha, IET 2508 and others. Check against current state recommendations. PUNJAB/BASMATI: thiamethoxam was in Punjab's Aug 2022 60-day basmati ban (Rupnagar, verified). Thiamethoxam and imidacloprid were both in the 10 May 2025 12-molecule Punjab notification, which the High Court stayed according to Global Agriculture on 14 Aug 2025 (verified). A 2024 order is known only from search snippets and is unverified. Check the current state advisory before recommending these on basmati."
+ }
+}

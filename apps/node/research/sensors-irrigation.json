@@ -1,0 +1,107 @@
+{
+ "verdict": "NO open real-time farm-level ground sensor data exists for India today — this was confirmed, not just suspected. WINDS (the Ministry of Agriculture AWS/ARG program, actually hosted at pmfby.gov.in/winds; winds.gov.in does not even resolve) is a state-level data PROCUREMENT scheme for crop insurance with login-gated access and no public API. IMD locked its AWS/ARG portal (aws.imd.gov.in) in May 2025 — it now times out/requires designated-user login — and even IMD's once-open city weather API now returns \"Your IP needs to be whitelisted\". ICAR soil-IoT deployments (e.g., ICAR-RCER Patna) are institutional pilots with zero public feeds; state networks are either login-gated (Mahavedh) or broken (Telangana TSDPS serves an invalid SSL cert). The fallback is not only viable, it is verified working right now with real data: Open-Meteo returns model-assimilated volumetric soil moisture at 5 depth layers (0-1cm through 27-81cm, m³/m³) PLUS FAO-56 ET0 and precipitation for any Indian lat/lon with no key, and NASA POWER returns daily surface/root-zone/profile soil wetness (GWETTOP/GWETROOT/GWETPROF) with no key. Region + soil type + crop Kc (embedded table) + these two live feeds = a credible, honest irrigation/fertilization advisory basis. Frame it as \"satellite/model-derived soil moisture\" in the pitch — never claim ground sensors; the roadmap slide is where WINDS/SMAP belong.",
+ "demo_plan": "Use Open-Meteo as the sole live data dependency (no key, no signup, CORS-open, works from Vercel serverless — verified live this session). One server-side fetch per district: GET https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=soil_moisture_0_to_1cm,soil_moisture_1_to_3cm,soil_moisture_3_to_9cm,soil_moisture_9_to_27cm,soil_moisture_27_to_81cm,soil_temperature_0cm,soil_temperature_6cm,et0_fao_evapotranspiration&daily=et0_fao_evapotranspiration,precipitation_sum&past_days=7&forecast_days=3&timezone=Asia%2FKolkata — response fields: hourly.soil_moisture_9_to_27cm etc. (m³/m³), daily.et0_fao_evapotranspiration (mm), daily.precipitation_sum (mm). Irrigation logic (deterministic, runs before Gemini): take root-zone moisture = avg of soil_moisture_9_to_27cm latest hours; look up the district's soil type in the embedded table; irrigate when moisture < pwp + 0.5*(fc-pwp) (50% management-allowed depletion); compute crop water demand = ET0 × Kc(stage) minus forecast rain (skip irrigation if daily.precipitation_sum forecast > ~10mm). Optionally corroborate with NASA POWER (also verified, no key): GET https://power.larc.nasa.gov/api/temporal/daily/point?parameters=GWETTOP,GWETROOT,GWETPROF&community=AG&longitude={lon}&latitude={lat}&start=YYYYMMDD&end=YYYYMMDD&format=JSON — fields properties.parameter.GWETROOT.{yyyymmdd} = 0-1 wetness fraction (data lags ~1 week; use for 'root zone trend', not today). Pass the computed numbers + soil/crop context to Gemini to phrase the advisory in the farmer's language. Fertilization guidance comes from the embedded soil-type/crop table (N-P-K norms by soil region + crop stage), not from any live feed — no public API exists for that. Do NOT attempt IMD, WINDS, Bhuvan, or SMAP downloads in the demo path.",
+ "production_plan": "Production path, in credibility order: (1) WINDS (pmfby.gov.in/winds) — sign an MoU/data agreement with DA&FW or the state government to consume block-level AWS / gram-panchayat ARG data; this is the flagship Indian government hyperlocal network (~200K stations planned) but access is via state procurement from empanelled Weather Information Providers, realistically weeks-to-months of paperwork. (2) IMD data supply portal (dsp.imd.gov.in) — formal request specifying purpose/scope, possibly paid, since the AWS/ARG portal was locked in May 2025. (3) NASA SMAP SPL3SMP_E V006 (9 km daily soil moisture, latest granule verified current to 2 days ago via open CMR search) — free Earthdata registration + HDF5 pipeline (or AppEEARS point extraction) gives genuine satellite soil moisture; good production upgrade and citable as NASA. (4) Soil Health Card (soilhealth.dac.gov.in, verified up) — village-level N-P-K/micronutrient test data for fertilization; dashboards exist but production integration means AgriStack/UFSI onboarding (ufsi.agristack.gov.in appears in their CSP) or state data sharing. (5) Bhuvan/NRSC — registered API token (daily expiry) for LULC/village APIs; soil moisture exists only as geoportal layers, not JSON APIs. (6) Partner-deployed IoT (the ICAR pilots prove the model) for lighthouse farms. Keep Open-Meteo + NASA POWER as the permanent free fallback tier for any farm without sensor coverage — which is ~all of them.",
+ "embed_data": "{\"note\":\"fc=field capacity, pwp=permanent wilting point (m3/m3, volumetric, matches Open-Meteo soil_moisture units). Rule: irrigate when root-zone SM < pwp+0.5*(fc-pwp). Water need mm/day = ET0*Kc - rain.\",\"soils\":{\"black_cotton_vertisol\":{\"fc\":0.40,\"pwp\":0.22,\"regions\":[\"Vidarbha\",\"Marathwada\",\"Malwa\",\"N Karnataka\",\"Telangana\"],\"fert_note\":\"high clay, K-rich; split N doses, avoid waterlogging\"},\"alluvial_loam\":{\"fc\":0.31,\"pwp\":0.13,\"regions\":[\"Punjab\",\"Haryana\",\"UP\",\"Bihar\",\"WB plains\"],\"fert_note\":\"often Zn-deficient; balanced NPK + zinc sulphate\"},\"red_sandy_loam\":{\"fc\":0.24,\"pwp\":0.10,\"regions\":[\"S Karnataka\",\"Tamil Nadu\",\"Jharkhand\",\"E MP\"],\"fert_note\":\"low N & P; needs organic matter + P priming\"},\"laterite\":{\"fc\":0.27,\"pwp\":0.13,\"regions\":[\"Konkan\",\"Kerala\",\"coastal Odisha\"],\"fert_note\":\"acidic, P fixation; lime + rock phosphate\"},\"desert_sandy\":{\"fc\":0.15,\"pwp\":0.05,\"regions\":[\"W Rajasthan\",\"Kutch\"],\"fert_note\":\"very low water holding; frequent light irrigation, fertigation\"}},\"kc\":{\"rice\":{\"ini\":1.05,\"mid\":1.20,\"end\":0.90},\"wheat\":{\"ini\":0.40,\"mid\":1.15,\"end\":0.30},\"cotton\":{\"ini\":0.35,\"mid\":1.18,\"end\":0.60},\"sugarcane\":{\"ini\":0.40,\"mid\":1.25,\"end\":0.75},\"maize\":{\"ini\":0.30,\"mid\":1.20,\"end\":0.35},\"soybean\":{\"ini\":0.40,\"mid\":1.15,\"end\":0.50},\"pearl_millet\":{\"ini\":0.30,\"mid\":1.00,\"end\":0.30},\"tomato\":{\"ini\":0.60,\"mid\":1.15,\"end\":0.80},\"onion\":{\"ini\":0.70,\"mid\":1.05,\"end\":0.75}},\"demo_districts\":[{\"d\":\"Nagpur\",\"st\":\"MH\",\"lat\":21.15,\"lon\":79.09,\"soil\":\"black_cotton_vertisol\",\"crops\":[\"cotton\",\"soybean\"]},{\"d\":\"Ludhiana\",\"st\":\"PB\",\"lat\":30.90,\"lon\":75.85,\"soil\":\"alluvial_loam\",\"crops\":[\"rice\",\"wheat\",\"maize\"]},{\"d\":\"Lucknow\",\"st\":\"UP\",\"lat\":26.85,\"lon\":80.95,\"soil\":\"alluvial_loam\",\"crops\":[\"rice\",\"wheat\",\"sugarcane\"]},{\"d\":\"Coimbatore\",\"st\":\"TN\",\"lat\":11.02,\"lon\":76.96,\"soil\":\"red_sandy_loam\",\"crops\":[\"maize\",\"cotton\",\"tomato\"]},{\"d\":\"Jodhpur\",\"st\":\"RJ\",\"lat\":26.24,\"lon\":73.02,\"soil\":\"desert_sandy\",\"crops\":[\"pearl_millet\"]}]}",
+ "findings": [
+  {
+   "source_name": "Open-Meteo Forecast API — soil moisture (5 depth layers) + ET0 + precipitation",
+   "url": "https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=soil_moisture_0_to_1cm,soil_moisture_1_to_3cm,soil_moisture_3_to_9cm,soil_moisture_9_to_27cm,soil_moisture_27_to_81cm,soil_temperature_0cm,soil_temperature_6cm,et0_fao_evapotranspiration&daily=et0_fao_evapotranspiration,precipitation_sum&past_days=7&forecast_days=3&timezone=Asia%2FKolkata",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched live for Nagpur (21.15,79.09) and Lucknow (26.85,80.95). Returned hourly.soil_moisture_0_to_1cm=[0.457,0.453,...] m³/m³ through soil_moisture_27_to_81cm, soil_temperature_0cm/6cm in °C, and daily.et0_fao_evapotranspiration=[5.15,5.49,4.31,4.30,...] mm with daily.precipitation_sum=[3.10,1.20,28.10,29.90,...] mm for 2026-07-05..07-10. No API key, no signup, instant response.",
+   "use": "demo",
+   "notes": "PRIMARY demo source. Model-assimilated (ECMWF/ICON land-surface) soil moisture, not ground sensors — frame honestly as 'satellite/model-derived'. past_days gives a 7-day moisture trend for charts. Free for non-commercial use, fine for hackathon."
+  },
+  {
+   "source_name": "NASA POWER Daily Point API — surface/root-zone/profile soil wetness",
+   "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=GWETTOP,GWETROOT,GWETPROF&community=AG&longitude={lon}&latitude={lat}&start=YYYYMMDD&end=YYYYMMDD&format=JSON",
+   "access": "open",
+   "verified": true,
+   "verification_note": "Fetched live for Nagpur, 20260620-20260630. Returned properties.parameter.GWETTOP={\"20260620\":0.31,...,\"20260630\":0.46}, GWETROOT (Root Zone Soil Wetness, 0-1) and GWETPROF (Profile Soil Moisture), source GEOSIT, units documented in response. No key needed.",
+   "use": "demo",
+   "notes": "Secondary/corroborating source; carries the NASA name for deck credibility. Data lags ~1 week behind today, so use for trend/context not same-day values."
+  },
+  {
+   "source_name": "WINDS — Weather Information Network & Data System (DA&FW, Ministry of Agriculture)",
+   "url": "https://pmfby.gov.in/winds/aboutus",
+   "access": "closed",
+   "verified": false,
+   "verification_note": "winds.gov.in fails DNS entirely (curl: Could not resolve host). pmfby.gov.in/winds loads but is a JS SPA returning only the page title; no public API or open download found. WINDS Manual 2023 (pmfby.gov.in/pdf/PMFBY_WINDS_Manual_2023...) confirms it is a state-level weather-data PROCUREMENT framework (states buy AWS/ARG data from empanelled Weather Information Providers, primarily for PMFBY crop insurance).",
+   "use": "deck-citation",
+   "notes": "Cite as roadmap: 'integration-ready for WINDS block-level AWS / GP-level ARG data as the network scales to 200K+ stations'. Not usable today."
+  },
+  {
+   "source_name": "IMD AWS/ARG data portal",
+   "url": "https://aws.imd.gov.in/",
+   "access": "closed",
+   "verified": false,
+   "verification_note": "curl times out after 30s (connection timed out, HTTP 000) from public internet. Down to Earth (fetched) confirms IMD locked the portal in May 2025, made it permanent, now restricted to designated RMC/MC users; public must file formal requests and possibly pay via IMD's data supply portal.",
+   "use": "rejected",
+   "notes": "The single biggest real-time ground network in India is now paywalled/login-gated. Mention in deck only as 'why open alternatives matter'."
+  },
+  {
+   "source_name": "IMD city weather API (mausam.imd.gov.in)",
+   "url": "https://mausam.imd.gov.in/api/current_wx_api.php?id={station_id}",
+   "access": "closed",
+   "verified": false,
+   "verification_note": "Fetched live; API responds but returns only: 'Your IP/Domain 182.69.180.230 needs to be whitelisted'. Same response from city.imd.gov.in/api/cityweather.php. Previously-open endpoints are now IP-whitelisted.",
+   "use": "rejected",
+   "notes": "Do not build on this; whitelisting requires contacting IMD."
+  },
+  {
+   "source_name": "NASA SMAP Enhanced L3 soil moisture (SPL3SMP_E V006, 9km daily)",
+   "url": "https://cmr.earthdata.nasa.gov/search/granules.json?short_name=SPL3SMP_E&page_size=1&sort_key=-start_date",
+   "access": "registration",
+   "verified": true,
+   "verification_note": "CMR metadata search fetched live with no auth: latest granule SMAP_L3_SM_P_E_20260706_R19240_001.h5 (data current to 2 days ago), download href at data.nsidc.earthdatacloud.nasa.gov. The .h5 download itself requires free Earthdata login and HDF5 processing — confirmed gated.",
+   "use": "production",
+   "notes": "Genuine satellite soil moisture for production tier (free Earthdata account + pipeline, or AppEEARS point extraction). Too heavy for a same-day demo; great deck citation with the verified 9km/daily specs."
+  },
+  {
+   "source_name": "ISRO Bhuvan APIs (NRSC)",
+   "url": "https://bhuvan-app1.nrsc.gov.in/api/",
+   "access": "registration",
+   "verified": false,
+   "verification_note": "Page fetched: offers Proximity, LULC (50K/250K), Routing, Geoid APIs; requires an access token that 'expires in a day' after registration. NO soil moisture or agriculture-sensor API listed. Bhuvan soil moisture exists only as geoportal map layers, not JSON.",
+   "use": "deck-citation",
+   "notes": "Cite Bhuvan LULC as a production enrichment (land-use around farm), not soil moisture. Daily-expiring tokens make it a poor demo dependency."
+  },
+  {
+   "source_name": "ICAR IoT soil monitoring (e.g., ICAR-RCER Patna) / e-Kranti-era IoT pilots",
+   "url": "https://icar.org.in/en/iot-enabled-soil-monitoring-system-established-icar-rcer-patna",
+   "access": "closed",
+   "verified": false,
+   "verification_note": "Web search confirms these are institutional pilot deployments (ICAR-RCER + BIT Mesra) with press releases only; no public data feed, API, or portal exposing sensor readings was found anywhere.",
+   "use": "deck-citation",
+   "notes": "Proof-point that India is piloting farm IoT; use in deck as 'partner integration path', never as a data source."
+  },
+  {
+   "source_name": "Telangana TSDPS state AWS network",
+   "url": "https://tsdps.telangana.gov.in/",
+   "access": "unknown",
+   "verified": false,
+   "verification_note": "curl fails with SSL error: certificate subject name does not match 'tsdps.telangana.gov.in'. Site effectively unreachable over verified HTTPS. It is a weather (rain/temp/wind) network anyway, not soil moisture.",
+   "use": "rejected",
+   "notes": "Broken cert = disqualified for a live demo even if content were open."
+  },
+  {
+   "source_name": "Soil Health Card portal (DA&FW)",
+   "url": "https://soilhealth.dac.gov.in/",
+   "access": "registration",
+   "verified": false,
+   "verification_note": "Fetched: HTTP 200, React SPA titled 'Soil Health' served fine; CSP shows it talks to ufsi.agristack.gov.in and soilhealth4.dac.gov.in backends. Dashboards/card lookup are login/captcha-gated; no open JSON API surfaced. verified=false because no DATA was retrievable, only the shell.",
+   "use": "deck-citation",
+   "notes": "The right production source for fertilization (village-level N-P-K test data). For the demo, embed district soil-type fertilizer norms instead (see embed_data)."
+  },
+  {
+   "source_name": "data.gov.in OGD API (Agriculture datasets incl. soil)",
+   "url": "https://api.data.gov.in/resource/{resource_id}?api-key={key}&format=json",
+   "access": "api-key",
+   "verified": false,
+   "verification_note": "api.data.gov.in timed out (40s) from this network during the session — could not verify. Free key on signup; a public sample key circulates. Datasets are static/periodic (soil order, SHC aggregates), not real-time sensors.",
+   "use": "production",
+   "notes": "Even if reachable, nothing real-time here; only static soil classification tables. Not worth a demo dependency given the timeout risk observed today."
+  }
+ ]
+}

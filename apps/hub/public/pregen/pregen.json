@@ -1,0 +1,1332 @@
+{
+ "generated_at": "2026-09-27T14:49:35.271Z",
+ "diagnose": {
+  "3d5a3dc3c50f": {
+   "is_plant": true,
+   "is_rice": true,
+   "class_key": "bacterial_leaf_blight",
+   "confidence": 75,
+   "alternatives": [
+    {
+     "class_key": "other_or_unsure",
+     "confidence": 15
+    },
+    {
+     "class_key": "blast",
+     "confidence": 10
+    }
+   ],
+   "visible_symptoms": [
+    "water-soaked leaf edge",
+    "yellowish leaf lesion"
+   ],
+   "model": "gemini-3.5-flash-lite"
+  },
+  "a13594501083": {
+   "is_plant": true,
+   "is_rice": true,
+   "class_key": "blast",
+   "confidence": 75,
+   "alternatives": [
+    {
+     "class_key": "other_or_unsure",
+     "confidence": 15
+    },
+    {
+     "class_key": "bacterial_panicle_blight",
+     "confidence": 10
+    }
+   ],
+   "visible_symptoms": [
+    "whitish bleached panicle",
+    "empty grains",
+    "neck rot symptom"
+   ],
+   "model": "gemini-3.5-flash-lite"
+  },
+  "0d85c7ac2913": {
+   "is_plant": true,
+   "is_rice": true,
+   "class_key": "blast",
+   "confidence": 75,
+   "alternatives": [
+    {
+     "class_key": "brown_spot",
+     "confidence": 15
+    },
+    {
+     "class_key": "other_or_unsure",
+     "confidence": 10
+    }
+   ],
+   "visible_symptoms": [
+    "spindle shaped lesions on leaves",
+    "brown borders with grayish centers",
+    "leaf tip drying"
+   ],
+   "model": "gemini-3.5-flash-lite"
+  },
+  "302959f2ff08": {
+   "is_plant": true,
+   "is_rice": true,
+   "class_key": "bacterial_leaf_blight",
+   "confidence": 75,
+   "alternatives": [
+    {
+     "class_key": "other_or_unsure",
+     "confidence": 15
+    },
+    {
+     "class_key": "brown_spot",
+     "confidence": 10
+    }
+   ],
+   "visible_symptoms": [
+    "yellowing leaf margins",
+    "leaf tip drying",
+    "longitudinal lesion along leaf edge"
+   ],
+   "model": "gemini-3.5-flash-lite"
+  },
+  "a46ef38c3db5": {
+   "is_plant": true,
+   "is_rice": true,
+   "class_key": "bacterial_leaf_streak",
+   "confidence": 75,
+   "alternatives": [
+    {
+     "class_key": "brown_spot",
+     "confidence": 15
+    },
+    {
+     "class_key": "blast",
+     "confidence": 5
+    },
+    {
+     "class_key": "other_or_unsure",
+     "confidence": 5
+    }
+   ],
+   "visible_symptoms": [
+    "narrow water soaked streaks between veins",
+    "small brown linear lesions on leaves"
+   ],
+   "model": "gemini-3.5-flash-lite"
+  },
+  "dfd500c65340": {
+   "is_plant": true,
+   "is_rice": true,
+   "class_key": "normal",
+   "confidence": 90,
+   "alternatives": [
+    {
+     "class_key": "other_or_unsure",
+     "confidence": 10
+    }
+   ],
+   "visible_symptoms": [
+    "healthy green leaves",
+    "emerging panicles",
+    "no visible lesions or disease symptoms"
+   ],
+   "model": "gemini-3.5-flash-lite"
+  }
+ },
+ "advisory": {
+  "blast|hi|agreement": {
+   "class_key": "blast",
+   "lang": "hi",
+   "decided_by": "agreement",
+   "title_local": "धान का ब्लास्ट (Rice blast)",
+   "spoken_summary": "नमस्कार किसान भाइयों, आज हम धान के ब्लास्ट रोग के बारे में बात कर रहे हैं। इसकी पहचान पत्तियों पर छोटे सफेद से भूरे-हरे धब्बों से होती है जो बाद में हीरे के आकार के हो जाते हैं जिनके बीच का हिस्सा राख जैसा और किनारा भूरा होता है। गंभीर संक्रमण से खेत जला हुआ दिखता है। इससे बचाव के लिए बुवाई से पहले बीजों का उपचार करें और नाइट्रोजन खाद का जरूरत से ज्यादा इस्तेमाल न करें। यदि रोग के लक्षण दिखाई दें तभी रसायनों का प्रयोग करें, जैसे Tricyclazole 75 WP को 0.6 ग्राम प्रति लीटर पानी की दर से छिड़कें। कुछ भी स्प्रे करने से पहले अपने स्थानीय कृषि अधिकारी या कृषि विज्ञान केंद्र से जरूर पुष्टि कर लें।",
+   "ipm": [
+    "बुवाई से पहले प्रति किलो बीज को 10 ग्राम स्यूडोमोनास फ्लोरोसेंस (Pseudomonas fluorescens) टेलकम पाउडर से उपचारित करें।",
+    "रोपाई से पहले, 25 वर्ग मीटर नर्सरी में 2.5 सेमी खड़े पानी में 2.5 किलो स्यूडोमोनास मिलाकर उसमें पौध की जड़ों को 30 मिनट तक डुबोएं।",
+    "रोपाई के 45 दिन बाद से, 0.5 प्रतिशत स्यूडोमोनास फ्लोरोसेंस टेलकम का तीन बार 10 दिन के अंतराल पर छिड़काव करें।",
+    "नाइट्रोजन को तीन हिस्सों में बांटें, ज्यादा नाइट्रोजन न दें, और ब्लास्ट दिखने पर नाइट्रोजन की ऊपरी खाद टाल दें।",
+    "मेंड और नालियों से घास-फूस हटा दें क्योंकि वे ब्लास्ट फंगस को आश्रय देते हैं।",
+    "सूखी नर्सरी से बचें और जहां संभव हो खेत में पानी भरा रखें।"
+   ],
+   "chemical": [
+    {
+     "text": "Tricyclazole 75 WP @ 0.6 g/litre of water",
+     "text_en": "Tricyclazole 75 WP @ 0.6 g/litre of water",
+     "source": {
+      "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+      "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+      "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Tebuconazole 50%+ Trifloxystrobin 25% (Nativo 75 WG) @ 0.4g/litre",
+     "text_en": "Tebuconazole 50%+ Trifloxystrobin 25% (Nativo 75 WG) @ 0.4g/litre",
+     "source": {
+      "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+      "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+      "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "azoxystrobin + difenoconazole 100 ml/acre when initial symptoms are noticed",
+     "text_en": "azoxystrobin + difenoconazole 100 ml/acre when initial symptoms are noticed",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Crop Protection)",
+      "title": "Rice: Blast, other management",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_1.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Treat the seeds with Captan or Thiram or Carbendazim or Tricyclazole at 2 g/kg",
+     "text_en": "Treat the seeds with Captan or Thiram or Carbendazim or Tricyclazole at 2 g/kg",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Crop Protection)",
+      "title": "Rice: Blast, other management",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_1.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "अपने क्षेत्र के अनुकूल ब्लास्ट-प्रतिरोधी किस्म उगाएं (टीएनएयू सूची में CO 51, CO 52, CO 53, CO 55, CO 56, ASD 18 और IR 64 शामिल हैं)।",
+    "साफ और उपचारित बीज का उपयोग करें, क्योंकि फंगस बीज और अवशेषों में जीवित रहता है।",
+    "देरी से रोपाई करने से बचें।",
+    "सिलिकॉन की कमी वाली मिट्टी में कैल्शियम सिलिकेट जैसे सिलिकॉन उर्वरक का प्रयोग करें।",
+    "कटाई के बाद संक्रमित पुआल और अवशेषों को खेत में छोड़ने के बजाय हटा दें।"
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Expert System for Paddy)",
+     "title": "Blast (Pyricularia oryzae): symptoms and management strategies",
+     "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisblast.html"
+    },
+    {
+     "publisher": "TNAU Agritech Portal (Crop Protection)",
+     "title": "Rice: Blast, other management",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_1.html"
+    },
+    {
+     "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+     "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+     "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Blast (leaf and collar) fact sheet",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar"
+    },
+    {
+     "publisher": "District Rupnagar, Govt. of Punjab (NIC portal)",
+     "title": "Bans use of 10 insecticides which were a constraint in the export of Basmati Rice (Aug 2022)",
+     "url": "https://rupnagar.nic.in/bans-use-of-10-insecticides-which-were-a-constraint-in-the-export-of-basmati-rice/"
+    },
+    {
+     "publisher": "Global Agriculture (trade news)",
+     "title": "Punjab High Court Grants Stay on Ban of 12 Insecticides for Basmati Paddy",
+     "url": "https://www.global-agriculture.com/india-region/punjab-high-court-grants-stay-on-ban-of-12-insecticides-for-basmati-paddy/"
+    },
+    {
+     "publisher": "DPPQS / CIB&RC, Ministry of Agriculture & Farmers Welfare",
+     "title": "List of pesticides which are banned, refused registration and restricted in use (updated 31.03.2024)",
+     "url": "https://ppqs.gov.in/sites/default/files/list_of_pesticides_which_are_banned_refused_registration_and_restricted_in_use_0.pdf"
+    },
+    {
+     "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+     "title": "Agro Advisory Service for Rice: 1st fortnight of October 2018",
+     "url": "https://web.archive.org/web/20251010164342/https://icar-nrri.in/wp-content/uploads/2018/10/AAS_October_18_I_english.pdf"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:50:49.588Z"
+  },
+  "blast|en|agreement": {
+   "class_key": "blast",
+   "lang": "en",
+   "decided_by": "agreement",
+   "title_local": "Rice blast",
+   "spoken_summary": "Namaste farmer bhai. Today we are talking about rice blast disease. You can recognise it by small white to grey green spots on leaves that grow into diamond shapes with brown borders and grey centres. If it is severe, the leaves dry up and the field looks burnt. Nodes and necks can also turn black and break. To manage this, treat your seeds, avoid excess nitrogen fertilizer, and keep your field flooded. If you need to spray chemicals, use Tricyclazole 75 WP at 0.6 g/litre of water when initial symptoms are noticed. Always confirm with your local agriculture officer or Krishi Vigyan Kendra before spraying anything.",
+   "ipm": [
+    "Treat seed with Pseudomonas fluorescens talc at 10 g per kg of seed before sowing.",
+    "Before transplanting, soak seedling roots for 30 minutes in P. fluorescens: 2.5 kg mixed into water standing 2.5 cm deep over 25 m² of nursery.",
+    "From 45 days after transplanting, spray P. fluorescens talc at 0.5% three times, 10 days apart.",
+    "Split nitrogen into three doses, avoid excess N, and delay N top-dressing when blast appears.",
+    "Remove grass weeds from bunds and channels, because they carry the blast fungus.",
+    "Avoid dry nurseries, and keep the field flooded where possible."
+   ],
+   "chemical": [
+    {
+     "text": "Tricyclazole 75 WP @ 0.6 g/litre of water",
+     "text_en": "Tricyclazole 75 WP @ 0.6 g/litre of water",
+     "source": {
+      "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+      "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+      "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Tebuconazole 50%+ Trifloxystrobin 25% (Nativo 75 WG) @ 0.4g/litre",
+     "text_en": "Tebuconazole 50%+ Trifloxystrobin 25% (Nativo 75 WG) @ 0.4g/litre",
+     "source": {
+      "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+      "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+      "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "azoxystrobin + difenoconazole 100 ml/acre when initial symptoms are noticed",
+     "text_en": "azoxystrobin + difenoconazole 100 ml/acre when initial symptoms are noticed",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Crop Protection)",
+      "title": "Rice: Blast, other management",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_1.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Treat the seeds with Captan or Thiram or Carbendazim or Tricyclazole at 2 g/kg",
+     "text_en": "Treat the seeds with Captan or Thiram or Carbendazim or Tricyclazole at 2 g/kg",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Crop Protection)",
+      "title": "Rice: Blast, other management",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_1.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "Grow a blast-resistant variety suited to your area (TNAU lists CO 51, CO 52, CO 53, CO 55, CO 56, ASD 18 and IR 64).",
+    "Use clean, treated seed, because the fungus survives in seed and stubble.",
+    "Avoid late planting.",
+    "On silicon-deficient soils, apply a silicon fertilizer such as calcium silicate.",
+    "Remove infected straw and stubble after harvest instead of leaving it in the field."
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Expert System for Paddy)",
+     "title": "Blast (Pyricularia oryzae): symptoms and management strategies",
+     "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisblast.html"
+    },
+    {
+     "publisher": "TNAU Agritech Portal (Crop Protection)",
+     "title": "Rice: Blast, other management",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_1.html"
+    },
+    {
+     "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+     "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+     "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Blast (leaf and collar) fact sheet",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar"
+    },
+    {
+     "publisher": "District Rupnagar, Govt. of Punjab (NIC portal)",
+     "title": "Bans use of 10 insecticides which were a constraint in the export of Basmati Rice (Aug 2022)",
+     "url": "https://rupnagar.nic.in/bans-use-of-10-insecticides-which-were-a-constraint-in-the-export-of-basmati-rice/"
+    },
+    {
+     "publisher": "Global Agriculture (trade news)",
+     "title": "Punjab High Court Grants Stay on Ban of 12 Insecticides for Basmati Paddy",
+     "url": "https://www.global-agriculture.com/india-region/punjab-high-court-grants-stay-on-ban-of-12-insecticides-for-basmati-paddy/"
+    },
+    {
+     "publisher": "DPPQS / CIB&RC, Ministry of Agriculture & Farmers Welfare",
+     "title": "List of pesticides which are banned, refused registration and restricted in use (updated 31.03.2024)",
+     "url": "https://ppqs.gov.in/sites/default/files/list_of_pesticides_which_are_banned_refused_registration_and_restricted_in_use_0.pdf"
+    },
+    {
+     "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+     "title": "Agro Advisory Service for Rice: 1st fortnight of October 2018",
+     "url": "https://web.archive.org/web/20251010164342/https://icar-nrri.in/wp-content/uploads/2018/10/AAS_October_18_I_english.pdf"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:50:53.863Z"
+  },
+  "normal|hi|agreement": {
+   "class_key": "normal",
+   "lang": "hi",
+   "decided_by": "agreement",
+   "title_local": "स्वस्थ फसल (कोई समस्या नहीं)",
+   "spoken_summary": "नमस्ते किसान भाई, आपकी धान की फसल बिल्कुल स्वस्थ है और इसमें कोई कीट या बीमारी नहीं पाई गई है। पत्तियां एक समान हरी हैं और कोई नुकसान नहीं है। खेत की नियमित निगरानी रखें और संतुलित मात्रा में खाद का इस्तेमाल करें। इस समस्या के लिए कार्ड में कोई रासायनिक छिड़काव नहीं दिया गया है। किसी भी छिड़काव से पहले अपने स्थानीय कृषि अधिकारी या कृषि विज्ञान केंद्र से जरूर पुष्टि कर लें।",
+   "ipm": [
+    "कीटों और उनके प्राकृतिक दुश्मनों की जांच के लिए हर 3 से 5 दिन में खेत का चक्कर लगाएं।",
+    "धान रोपने के 20 दिन बाद से, हर खेत में 5 चुनिंदा जगहों की जांच करें।",
+    "तना छेदक और अन्य पतंगों की संख्या देखने के लिए फेरोमोन ट्रैप (5 प्रति हेक्टेयर) और एक लाइट ट्रैप का उपयोग करें।",
+    "खेत की देखरेख से पता चलने पर, कीट या बीमारी के आर्थिक क्षति स्तर (ETL) पार करने पर ही पौधे की सुरक्षा के उपाय करें।"
+   ],
+   "chemical": [],
+   "no_chemical": true,
+   "prevention": [
+    "रोग और कीट मुक्त, शुद्ध बीज बोएं जो किसी प्रतिरोधी या मध्यम प्रतिरोधी किस्म का हो.",
+    "स्थानीय सिफारिश के अनुसार संतुलित मात्रा में उर्वरक और सूक्ष्म पोषक तत्व डालें, और नाइट्रोजन का अत्यधिक उपयोग न करें.",
+    "मेड़ों को साफ रखें, और खरपतवार तथा बचे हुए नर्सरी के पौधों को हटा दें.",
+    "मकड़ियों, ड्रैगनफ्लाइज़ और लेडी बीटल जैसे प्राकृतिक दुश्मनों की रक्षा करें."
+   ],
+   "sources": [
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:51:06.348Z"
+  },
+  "normal|en|agreement": {
+   "class_key": "normal",
+   "lang": "en",
+   "decided_by": "agreement",
+   "title_local": "Healthy Crop",
+   "spoken_summary": "Your paddy crop is healthy and no pest or disease is detected. Leaves are evenly green with no spots, central shoots are firm, and no insects or damage are visible. Walk your field every 3 to 5 days to check for pests and natural enemies. Use pheromone traps and light traps to watch moth numbers. No chemical spray is listed for this problem. Always confirm with your local agriculture officer or Krishi Vigyan Kendra before spraying anything.",
+   "ipm": [
+    "Walk the field every 3-5 days to check for pests and for their natural enemies.",
+    "From 20 days after transplanting, inspect five random spots in each field.",
+    "Use pheromone traps (5 per ha) and a light trap to watch stem borer and other moth numbers.",
+    "Take plant protection measures only when a pest or disease crosses its economic threshold level (ETL), as found by field scouting."
+   ],
+   "chemical": [],
+   "no_chemical": true,
+   "prevention": [
+    "Sow pure seed, free of disease and insects, of a resistant or moderately resistant variety.",
+    "Apply fertiliser and micronutrients in balanced doses as locally recommended, without excess nitrogen.",
+    "Keep bunds clean, and remove weeds and leftover nursery seedlings.",
+    "Protect natural enemies such as spiders, dragonflies and lady beetles."
+   ],
+   "sources": [
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:51:09.706Z"
+  },
+  "hispa|hi|federated": {
+   "class_key": "hispa",
+   "lang": "hi",
+   "decided_by": "federated",
+   "title_local": "धान काहिस्पा (Rice hispa)",
+   "spoken_summary": "नमस्कार किसान भाइयों, आपके धान के खेत में हिस्पा कीट का हमला हो सकता है। इसे पहचानें कि पत्तियों पर सफेद धारियां दिखती हैं, पत्तियों के सिरे सफेद हो जाते हैं, और पत्तियां कागज़ जैसी होकर सूख जाती हैं। खेत दूर से जला हुआ दिखता है। फसल पर छोटे कांटेदार नीले-काले भृंग दिखते हैं। इससे बचने के लिए केवल तभी स्प्रे करें जब कीट की आर्थिक क्षति स्तर यानी ईटीएल पार हो जाए। आप 170 मिली प्रति एकड़ की दर से इमामेक्टिन बेंजोएट 1.9 ईसी का छिड़काव करें। कृपया कुछ भी स्प्रे करने से पहले इस फसल को अपने स्थानीय कृषि अधिकारी या कृषि विज्ञान केंद्र को दिखाकर पुष्टि जरूर कर लें।",
+   "ipm": [
+    "केवल तब कार्रवाई करें जब ईटीएल तक पहुंच जाए: प्रति हिल 2 वयस्क (टीएनएयू), या प्रति हिल 2 वयस्क या 2 सूखी पत्तियां (निपहम)।",
+    "स्वीप नेट से वयस्क भृंगों को इकट्ठा करें और उन्हें नष्ट कर दें।",
+    "नर्सरी से लाए गए अंडों और ग्रब को काटने के लिए रोपाई के समय पौधे के सिरों को काट दें।",
+    "संक्रमित पौधे के सिरों को काटें और अंदर के ग्रब को मारने के लिए उन्हें मिट्टी में दबा दें।",
+    "छोटे परजीवी ततैया और शिकारी रीडुविइड बग जैसे प्राकृतिक शत्रुओं की रक्षा करें।"
+   ],
+   "chemical": [
+    {
+     "text": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "text_en": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "जरूरत से ज्यादा खाद न दें, और जब हिस्पा की संख्या अधिक हो तो नाइट्रोजन टॉप-ड्रेसिंग न करें।",
+    "फसल को ठीक होने में मदद करने के लिए कीट नियंत्रित होने के बाद ही नाइट्रोजन टॉप-ड्रेसिंग करें।",
+    "खेत में और उसके पास घास के खरपतवार हटाएं, क्योंकि उनमें कीट पलता है।",
+    "फसल रहित मौसम में धान के पैटून और स्वेच्छा से उगे धान को हटाएं।"
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+     "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+    },
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Rice hispa (fact sheet)",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-hispa"
+    },
+    {
+     "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+     "title": "List of banned and restricted pesticides in India",
+     "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:54:32.383Z"
+  },
+  "hispa|ta|federated": {
+   "class_key": "hispa",
+   "lang": "ta",
+   "decided_by": "federated",
+   "title_local": "நெல் இஸ்பா வண்டு",
+   "spoken_summary": "வணக்கம் ஐயா. உங்கள் நெற்பயிரில் இஸ்பா வண்டு தாக்குதல் தெரிகிறது. இலைகளில் வெள்ளைக் கோடுகள், இலையின் நுனியில் வெளுத்த கொப்புளங்கள் மற்றும் முள்ள, ஊதா-நீல வண்டுகள் காணப்பட்டால் இது இஸ்பா வண்டு தாக்குதலாகும். வயல் தூருக்கு 2 வண்டுகள் என்ற பொருளாதார சேத எல்லையை தாண்டும்போது மட்டும் மருந்தை பயன்படுத்தவும். எமெக்டின் பென்சோயேட் 1.9 இசி 170 மில்லி மருந்தை ஒரு ஏக்கருக்கு தெளிக்க வேண்டும். இந்த நோயறிதல் ஒரு மாதிரியால் மட்டுமே செய்யப்பட்டது. எந்த மருந்தையும் தெளிப்பதற்கு முன், உள்ளூர் வேளாண் அலுவலரை அல்லது கிருஷி விஞ்ஞான் கேந்திராவை அணுகி உறுதிப்படுத்தவும்.",
+   "ipm": [
+    "பொருளாதார சேத எல்லை எட்டப்பட்டால் மட்டுமே நடவடிக்கை எடுக்கவும்: வயல் தூருக்கு 2 வண்டுகள் (டிஎன்ஏயு), அல்லது வயல் தூருக்கு 2 வண்டுகள் அல்லது 2 இறந்த இலைகள் (என்ஐபிஎச்எம்).",
+    "ஸ்வீப் நெட் மூலம் வயதுவந்த வண்டுகளை சேகரித்து அழிக்கவும்.",
+    "நாற்று நடவு செய்யும் போது நாற்று நுனிகளை கத்தரித்து, நாற்றுக்களில் இருந்து கொண்டு வரப்படும் முட்டைகள் மற்றும் புழுக்களை அகற்றவும்.",
+    "தாக்கப்பட்ட தளிரின் நுனிகளை கத்தரித்து அதில் உள்ள புழுக்களைக் கொல்ல சேற்றில் புதைக்கவும்.",
+    "சிறிய ஒட்டுண்ணி குளவிகள் மற்றும் இரையைத் தேடும் கொன்றுதின்னி வண்டுகள் போன்ற இயற்கை எதிரிகளைப் பாதுகாக்கவும்."
+   ],
+   "chemical": [
+    {
+     "text": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "text_en": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "அதிகப்படியான உரம் இட வேண்டாம், மேலும் இஸ்பா வண்டுகள் அதிகமாக இருக்கும்போது நைட்ரஜன் மேலுரம் இடுவதைத் தவிர்க்கவும்.",
+    "பயிர் மீண்டு வர உதவ, பூச்சி கட்டுப்படுத்தப்பட்ட பின்னரே நைட்ரஜன் மேலுரம் இடவும்.",
+    "வயலிலும் அதன் அருகிலும் உள்ள புல் வகைக் களைகளை அகற்றவும், ஏனெனில் அவை பூச்சியைத் தஞ்சம் அடையச் செய்யும்.",
+    "பயிர் இல்லாத பருவத்தில் நெல் கட்டைப்பயிர்களையும் தானாக முளைக்கும் நெல் செடிகளையும் அகற்றவும்."
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+     "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+    },
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Rice hispa (fact sheet)",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-hispa"
+    },
+    {
+     "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+     "title": "List of banned and restricted pesticides in India",
+     "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:55:26.253Z"
+  },
+  "hispa|te|federated": {
+   "class_key": "hispa",
+   "lang": "te",
+   "decided_by": "federated",
+   "title_local": "వరి హిస్పా",
+   "spoken_summary": "రైతు అన్నలారా, మీ వరి పొలంలో వరి హిస్పా (Rice hispa) ఉంటే ఆకుల మీద తెల్లటి గీతలు, బొబ్బల వంటి మచ్చలు వస్తాయి. ఆకులు తెల్లగా కాగితంలా మారి ఎండిపోతాయి. పొలం దూరం నుంచి చూస్తే కాలిపోయినట్లు కనిపిస్తుంది. దీని నివారణకు ఈటీఎల్ (ETL) దాటినప్పుడే చర్యలు తీసుకోవాలి. పొలంలో గడ్డి కలుపును తీసేయండి. రసాయనం వాడాల్సి వస్తే, ఎమేక్టిన్ బెన్జోయేట్ 1.9 ఈసీ (emamectin benzoate 1.9 EC) మందును ఎకరానికి 170 మి.లీ. చొప్పున ఈటీఎల్ దాటినప్పుడు మాత్రమే పిచికారీ చేయండి. ఏదైనా మందు పిచికారీ చేసే ముందు, మీ ప్రాంతంలోని వ్యవసాయ అధికారికి లేదా కృషి విజ్ఞాన కేంద్రానికి పంటను చూపించి నిర్ధారించుకోండి.",
+   "ipm": [
+    "ఈటీఎల్ చేరినప్పుడు మాత్రమే చర్య తీసుకోండి: ఎన్ఐపీహెచ్ఎం (NIPHM) ప్రకారం కుదురుకు 2 వయోజన పురుగులు లేదా 2 ఎండిన ఆకులు.",
+    "స్వీప్ నెట్ సహాయంతో వయోజన పురుగులను సేకరించి నాశనం చేయండి.",
+    "నారుమడి నుండి తెచ్చే గుడ్లు మరియు గొంగళి పురుగులను నివారించడానికి నాటే సమయంలో నారు చివరలను కత్తరించండి.",
+    "ఆకుల చివరలను కత్తరించి బురదలో తొక్కితే లోపల ఉన్న పురుగులు చనిపోతాయి.",
+    "చిన్న పరాన్నజీవి కందిరీగలు మరియు ప్రెడేటరీ రెడూవిడ్ బగ్స్ వంటి సహజ శత్రువులను రక్షించండి."
+   ],
+   "chemical": [
+    {
+     "text": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "text_en": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "ఎక్కువగా ఎరువులు వేయకండి, మరియు హిస్పా పురుగులు ఎక్కువగా ఉన్నప్పుడు నత్రజని వేయడం ఆపేయండి.",
+    "పంట కోలుకోవడానికి పురుగు అణచివేయబడిన తర్వాత మాత్రమే నత్రజని వేయండి.",
+    "పొలంలో మరియు చుట్టుపక్కల ఉన్న గడ్డి కలుపును తొలగించండి, ఎందుకంటే అవి పురుగుకు ఆశ్రయం ఇస్తాయి.",
+    "పంట లేని కాలంలో వరి గడ్డి మరియు స్వచ్ఛంద వరిని తొలగించండి."
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+     "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+    },
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Rice hispa (fact sheet)",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-hispa"
+    },
+    {
+     "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+     "title": "List of banned and restricted pesticides in India",
+     "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:55:44.076Z"
+  },
+  "hispa|mr|federated": {
+   "class_key": "hispa",
+   "lang": "mr",
+   "decided_by": "federated",
+   "title_local": "भाताची हिस्पा (Rice hispa)",
+   "spoken_summary": "नमस्कार शेतकरी बंधूंनो, तुमच्या भाताच्या पिकावर हिस्पा किडीचा प्रादुर्भाव झाला आहे. यात प्रौढ भुंगे पानांवरील हिरवा थर खातात त्यामुळे पानांवर पांढरे पट्टे पडतात. अळ्या पानांच्या आत भुंगा करून खातात आणि पाने कागदासारखी पांढरी होऊन वाळतात. शेत दूरवरून जळाल्यासारखे दिसते. यावर उपाय म्हणून प्रति हिल 2 प्रौढ किंवा 2 पाने असे नुकसान पातळी गाठल्यावरच 170 मिली इमॅमेक्टीन बेन्झोएट 1.9 ईसी प्रति एकर याप्रमाणे फवारणी करा. तसेच पाने छाटून मातीत गाडा आणि जादा नत्र देणे टाळा. फवारणीपूर्वी हे पीक स्थानिक कृषी अधिकारी किंवा कृषी विज्ञान केंद्राकडे दाखवून नक्की खात्री करा.",
+   "ipm": [
+    "नुकसान पातळी गाठल्यावरच कृषी निर्णय घ्या: प्रति हिल 2 प्रौढ (टीएनएयू), किंवा प्रति हिल 2 प्रौढ किंवा 2 मेलेली पाने (एनआयपीएचएम).",
+    "स्वीप नेटच्या मदतीने प्रौढ भुंगे गोळा करा आणि नष्ट करा.",
+    "रोपे लागवड करताना त्यांची टोके कापा जेणेकरून रोपवाटिकेतून आलेली अंडी आणि अळ्या नष्ट होतील.",
+    "प्रादुर्भाव झालेली पानांची टोके कापा आणि आतील अळ्या मारण्यासाठी ती मातीत गाडून टाका.",
+    "लहान उपद्रवी किडींचे परजीवी आणि भक्षक रेडुव्हिड कीटक यांसारख्या नैसर्गिक शत्रूंचे संरक्षण करा."
+   ],
+   "chemical": [
+    {
+     "text": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "text_en": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "जादा खत देऊ नका, आणि हिस्पाची संख्या जास्त असताना नत्र टाळण्याचे काम करू नका.",
+    "कीड नियंत्रणात आल्यानंतरच पिकाला ताजी ताकद मिळण्यासाठी नत्र टाका.",
+    "शेतात आणि शेताजवळ असलेली गवतयुक्त तण काढून टाका, कारण तिथे कीड आश्रय घेते.",
+    "पीक नसलेल्या हंगामात भाताचे पुनरुत्पादन आणि स्वयंसेवक भात काढून टाका."
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+     "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+    },
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Rice hispa (fact sheet)",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-hispa"
+    },
+    {
+     "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+     "title": "List of banned and restricted pesticides in India",
+     "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:55:49.532Z"
+  },
+  "hispa|kn|federated": {
+   "class_key": "hispa",
+   "lang": "kn",
+   "decided_by": "federated",
+   "title_local": "ಭತ್ತದ ಕಪ್ಪು ಜೀರುಂಡೆ (Rice hispa)",
+   "spoken_summary": "ನಮಸ್ಕಾರ ರೈತ ಬಂಧುಗಳೇ, ನಿಮ್ಮ ಭತ್ತದ ಗದ್ದೆಯಲ್ಲಿ ಭತ್ತದ ಕಪ್ಪು ಜೀರುಂಡೆ ಬಾಧೆ ಕಂಡುಬಂದಿದೆ. ಎಲೆಗಳ ಮೇಲೆ ಬಿಳಿ ಗೆರೆಗಳು, ಎಲೆಗಳ ತುದಿಗಳಲ್ಲಿ ಬಿಳಿಯ ಗುಳ್ಳೆಯಂತಹ ಕಲೆಗಳು, ಎಲೆಗಳು ಕಾಗದದಂತೆ ಬಿಳಿಯಾಗಿ ಒಣಗುವುದು ಮತ್ತು ಎಲೆಗಳ ಮೇಲೆ ಮೈಮೇಲೆ ಮುಳ್ಳುಗಳಿರುವ ಸಣ್ಣ ನೀಲಿ-ಕಪ್ಪು ಜೀರುಂಡೆಗಳು ಕಾಣಿಸಿಕೊಳ್ಳುವುದು ಇದರ ಮುಖ್ಯ ಲಕ್ಷಣಗಳು. ಬಾಧೆಯು ಆರ್ಥಿಕ ಮಿತಿಯನ್ನು ಮೀರಿದಾಗ ಮಾತ್ರ (ಅಂದರೆ ಪ್ರತಿ ಗುಪ್ಪೆಗೆ 2 ವشد ಜೀರುಂಡೆಗಳು ಇದ್ದರೆ ಮಾತ್ರ) ಎಮೆಮೆಕ್ಟಿನ್ ಬೆಂಜೊಯೇಟ್ 1.9 ಇಸಿ 170 ಮಿಲಿ ಪ್ರತಿ ಎಕರೆಗೆ ಸಿಂಪಡಿಸಿ. ದಯವಿಟ್ಟು ಯಾವುದೇ ಔಷಧ ಸಿಂಪಡಿಸುವ ಮೊದಲು ನಿಮ್ಮ ಹತ್ತಿರದ ಕೃಷಿ ಅಧಿಕಾರಿಯನ್ನು ಅಥವಾ ಕೃಷಿ ವಿಜ್ಞಾನ ಕೇಂದ್ರವನ್ನು ಸಂಪರ್ಕಿಸಿ ಬೆಳೆ ತೋರಿಸಿ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.",
+   "ipm": [
+    "ಆರ್ಥಿಕ ಮಿತಿ ತಲುಪಿದಾಗ ಮಾತ್ರ ಕ್ರಮ ಕೈಗೊಳ್ಳಿ: ಪ್ರತಿ ಗುಪ್ಪೆಗೆ 2 ವشد ಜೀರುಂಡೆಗಳು (ಟીએನ್ಎಯು), ಅಥವಾ ಪ್ರತಿ ಗುಪ್ಪೆಗೆ 2 ವشد ಜೀರುಂಡೆಗಳು ಅಥವಾ 2 ಒಣಗಿದ ಎಲೆಗಳು (ಎನ್ಐಪಿಎಚ್ಎಂ).",
+    "ಸ್ವೀಪ್ ನೆಟ್ ಬಳಸಿ ವشد ಜೀರುಂಡೆಗಳನ್ನು ಸಂಗ್ರಹಿಸಿ ನಾಶಪಡಿಸಿ.",
+    "நாಟಿ ಮಾಡುವಾಗ ಸಸಿಗಳ ತುದಿಗಳನ್ನು ಕತ್ತರಿಸಿ ನರ್ಸರಿಯಿಂದ ಬರುವ ಮೊಟ್ಟೆಗಳು ಮತ್ತು ಮರಿಹುಳುಗಳನ್ನು ತಡೆಯಿರಿ.",
+    "ಸೋಂಕಿತ ಚಿಗುರು ತುದಿಗಳನ್ನು ಕತ್ತರಿಸಿ ಮಣ್ಣಿನಲ್ಲಿ ಹೂತುಹಾಕುವುದರಿಂದ ಒಳಗೆ ಇರುವ ಮರಿಹುಳುಗಳು ಸಾಯುತ್ತವೆ.",
+    "ಸಣ್ಣ ಪರಾವಲಂಬಿ ಜೇಣುಹುಳುಗಳು ಮತ್ತು ಪರಭಕ್ಷಕ ಜೀರುಂಡೆಗಳಂತಹ ನೈಸರ್ಗಿಕ ಶತ್ರುಗಳನ್ನು ರಕ್ಷಿಸಿ."
+   ],
+   "chemical": [
+    {
+     "text": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "text_en": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "ಹೆಚ್ಚು ರೊಬ್ಬು ಹಾಕಬೇಡಿ, ಮತ್ತು ಜೀರುಂಡೆಗಳ ಸಂಖ್ಯೆ ಹೆಚ್ಚಿರುವಾಗ ಸಾರಜನಕದ ಮೇಲ್ಗೊಬ್ಬರ ನೀಡುವುದನ್ನು ತಪ್ಪಿಸಿ.",
+    "ಬೆಳೆ ಚೇತರಿಸಿಕೊಳ್ಳಲು ಕೀಟ ನಿಯಂತ್ರಣದ ನಂತರ ಮಾತ್ರ ಸಾರಜನಕದ ಮೇಲ್ಗೊಬ್ಬರ ನೀಡಿ.",
+    "ಗದ್ದೆಯ ಒಳಗೆ ಮತ್ತು ಸುತ್ತಮುತ್ತಲಿನ ಹುಲ್ಲು ಕಳೆಗಳನ್ನು ತೆಗೆದುಹಾಕಿ, ಏಕೆಂದರೆ ಅವು ಕೀಟಗಳಿಗೆ ಆಶ್ರಯ ನೀಡುತ್ತವೆ.",
+    "ಬೆಳೆ ಇಲ್ಲದ ಕಾಲದಲ್ಲಿ ಭತ್ತದ ಕಳೆಗಳು ಮತ್ತು ಸ್ವಯಂ-ಬೆಳೆದ ಭತ್ತವನ್ನು ತೆಗೆದುಹಾಕಿ."
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+     "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+    },
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Rice hispa (fact sheet)",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-hispa"
+    },
+    {
+     "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+     "title": "List of banned and restricted pesticides in India",
+     "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:55:58.734Z"
+  },
+  "hispa|en|federated": {
+   "class_key": "hispa",
+   "lang": "en",
+   "decided_by": "federated",
+   "title_local": "Rice hispa",
+   "spoken_summary": "Namaste farmer brother. Your paddy crop has rice hispa attack. You can recognise it by white streaks on leaves where beetles scrape the green layer, and whitish blister-like patches near leaf tips where grubs tunnel inside. The leaves turn whitish and papery, and badly hit fields look burnt. First, act only when pest level reaches ETL, like 2 adults per hill. Collect adult beetles with a sweep net. If needed, spray emamectin benzoate 1.9 EC 170 ml per acre only when ETL is crossed. Please show your crop to the local agriculture officer or Krishi Vigyan Kendra to confirm it before spraying anything.",
+   "ipm": [
+    "Act only when the ETL is reached: 2 adults per hill (TNAU), or 2 adults or 2 dead leaves per hill (NIPHM).",
+    "Collect adult beetles with a sweep net and destroy them.",
+    "Clip seedling tips at transplanting to cut down eggs and grubs carried from the nursery.",
+    "Clip the infested shoot tips and bury them in mud to kill the grubs inside.",
+    "Protect natural enemies such as small parasitic wasps and predatory reduviid bugs."
+   ],
+   "chemical": [
+    {
+     "text": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "text_en": "emamectin benzoate 1.9 EC 170 ml per acre (spray only when ETL is crossed)",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "Do not over-fertilise, and skip nitrogen top-dressing when hispa numbers are high.",
+    "Top-dress nitrogen only after the pest is controlled, to help the crop recover.",
+    "Remove grassy weeds in and near the field, because they harbour the pest.",
+    "Remove rice ratoons and volunteer rice in the crop-free season."
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+     "title": "Spiny beetle: Rice hispa, Dicladispa armigera (Crop Protection: Pests of paddy)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m9.html"
+    },
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Rice hispa (fact sheet)",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-hispa"
+    },
+    {
+     "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+     "title": "List of banned and restricted pesticides in India",
+     "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:56:03.021Z"
+  },
+  "dead_heart|hi|federated": {
+   "class_key": "dead_heart",
+   "lang": "hi",
+   "decided_by": "federated",
+   "title_local": "डेड हार्ट (तना छेदक)",
+   "spoken_summary": "राम राम किसान भाई। आपके धान के खेत में तना छेदक यानी डेड हार्ट की समस्या दिख रही है। इसमें छोटे पौधे का बीच वाला कल्ला सूखकर भूरा हो जाता है और हाथ से खींचने पर आसानी से बाहर आ जाता है। इससे बचाव के लिए खेत में नाइट्रोजन खाद संतुलित मात्रा में डालें और फसल की कटाई जमीन के पास से करें। यदि रासायनिक दवा का इस्तेमाल करना हो तो केवल तभी छिड़काव करें जब नुकसान की तय सीमा पार हो जाए। क्लोरएंट्रानिलिप्रोल 18.5 प्रतिशत एस.सी. की 60 मिलीलीटर प्रति एकड़ की दर से दवा डालें। किसी भी स्प्रे से पहले इस फसल को अपने स्थानीय कृषि अधिकारी या कृषि विज्ञान केंद्र को दिखाकर जरूर पक्का कर लें।",
+   "ipm": [
+    "इलाज तभी करें जब नुकसान की तय सीमा पार हो जाए: 10 प्रतिशत डेड हार्ट, या 2 अंडे के गुच्छे प्रति वर्ग मीटर।",
+    "रोपाई से पहले पौधे के ऊपरी हिस्से की पत्तियां काट दें ताकि अंडे हट जाएं।",
+    "बीज की क्यारी में और रोपाई के समय अंडे के गुच्छे हाथ से चुनकर नष्ट कर दें।",
+    "मच्छरों की निगरानी के लिए 1 हेक्टेयर में 1 लाइट ट्रैप और 1 एकड़ में 5 फेरोमोन ट्रैप लगाएं।",
+    "ट्राइकोग्रामा जैपोनिकम अंडा परजीवी 2 सीसी प्रति एकड़ की दर से हफ्ते के अंतराल पर 3 बार छोड़ें।",
+    "नीम के बीज की गिरी का अर्क 5 प्रतिशत या एजाडिराक्टिन 0.03 प्रतिशत @ 400 मिलीलीटर प्रति एकड़ की दर से छिड़काव करें।"
+   ],
+   "chemical": [
+    {
+     "text": "Chlorantraniliprole 18.5% SC 60 ml/ac",
+     "text_en": "Chlorantraniliprole 18.5% SC 60 ml/ac",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Yellow Stem Borer: Scirpophaga incertulas (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m1.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Chlorantraniliprole 0.4% G 4 kg/ac",
+     "text_en": "Chlorantraniliprole 0.4% G 4 kg/ac",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Yellow Stem Borer: Scirpophaga incertulas (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m1.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "CartapHydrochloride 50 % SP 400 g/ac",
+     "text_en": "CartapHydrochloride 50 % SP 400 g/ac",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Yellow Stem Borer: Scirpophaga incertulas (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m1.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Cartap hydrochloride 4% granules @ 18750 g/ha (vegetative stage)",
+     "text_en": "Cartap hydrochloride 4% granules @ 18750 g/ha (vegetative stage)",
+     "source": {
+      "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+      "title": "Integrated Pest Management Package for Rice (2014)",
+      "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "फसल की कटाई जमीन के पास से करें ताकि ठूंठ में छिपी सूंडियां निकल जाएं।",
+    "कटाई के बाद खेत में पानी भरकर जुताई कर दें ताकि ठूंठ में छिपी सूंडियां मर जाएं।",
+    "नाइट्रोजन का इस्तेमाल सीमित मात्रा में करें और इसे टुकड़ों में बांटकर दें।",
+    "एक इलाके में सभी खेतों की रोपाई 3 हफ्ते के भीतर पूरी कर लें और आगे-पीछे रोपाई न करें।",
+    "मौसम के बीच में खेत से ठूंठ और उगी हुई फालतू धान को हटा दें।"
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+     "title": "Yellow Stem Borer: Scirpophaga incertulas (Crop Protection: Pests of paddy)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m1.html"
+    },
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Stem borer (fact sheet)",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer"
+    },
+    {
+     "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+     "title": "List of banned and restricted pesticides in India",
+     "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+    },
+    {
+     "publisher": "Dept of Agriculture Development & Farmers' Welfare, Kerala (KAU Package of Practices 2016)",
+     "title": "List of new generation insecticides recommended against pests of crops in Kerala",
+     "url": "https://keralaagriculture.gov.in/wp-content/uploads/2021/04/new-generation-insecticides-table-15-8-18.pdf"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:56:23.150Z"
+  },
+  "dead_heart|en|federated": {
+   "class_key": "dead_heart",
+   "lang": "en",
+   "decided_by": "federated",
+   "title_local": "Dead heart and stem borer",
+   "spoken_summary": "Namaste bhai, your paddy crop is showing dead hearts caused by the yellow stem borer. You will see the central shoot of young tillers dry up and turn brown, and it pulls out easily. If the attack happens later, panicles turn white and empty. Treat only after crossing the economic threshold level of 10 percent dead hearts or 2 egg masses per square metre. You can use Chlorantraniliprole 18.5% SC 60 ml/ac when needed. Please show your crop to the local agriculture officer or Krishi Vigyan Kendra to confirm it before spraying anything.",
+   "ipm": [
+    "Treat only after the ETL is crossed: 10% dead hearts, or 2 egg masses per square metre.",
+    "Clip the seedling tips before transplanting to remove egg masses.",
+    "Hand-pick and destroy egg masses in the seedbed and at transplanting.",
+    "Install light traps @ 1/ha and pheromone traps @ 5/acre to monitor the moths.",
+    "Release the egg parasitoid Trichogramma japonicum @ 2 cc/acre, 3 times at weekly intervals.",
+    "Spray neem seed kernel extract 5% or Azadirachtin 0.03% @ 400 ml/acre."
+   ],
+   "chemical": [
+    {
+     "text": "Chlorantraniliprole 18.5% SC 60 ml/ac",
+     "text_en": "Chlorantraniliprole 18.5% SC 60 ml/ac",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Yellow Stem Borer: Scirpophaga incertulas (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m1.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Chlorantraniliprole 0.4% G 4 kg/ac",
+     "text_en": "Chlorantraniliprole 0.4% G 4 kg/ac",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Yellow Stem Borer: Scirpophaga incertulas (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m1.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "CartapHydrochloride 50 % SP 400 g/ac",
+     "text_en": "CartapHydrochloride 50 % SP 400 g/ac",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Yellow Stem Borer: Scirpophaga incertulas (Crop Protection: Pests of paddy)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m1.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Cartap hydrochloride 4% granules @ 18750 g/ha (vegetative stage)",
+     "text_en": "Cartap hydrochloride 4% granules @ 18750 g/ha (vegetative stage)",
+     "source": {
+      "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+      "title": "Integrated Pest Management Package for Rice (2014)",
+      "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "Harvest close to the ground so that larvae in the stubble are removed.",
+    "After harvest, flood and plough the field to kill larvae hiding in the stubble.",
+    "Use moderate nitrogen and apply it in split doses.",
+    "Finish planting all fields in an area within 3 weeks, and avoid staggered planting.",
+    "Remove stubble and volunteer rice between seasons."
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+     "title": "Yellow Stem Borer: Scirpophaga incertulas (Crop Protection: Pests of paddy)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice/crop_prot_crop_insectpest%20_cereals_paddy_m1.html"
+    },
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Stem borer (fact sheet)",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer"
+    },
+    {
+     "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+     "title": "List of banned and restricted pesticides in India",
+     "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+    },
+    {
+     "publisher": "Dept of Agriculture Development & Farmers' Welfare, Kerala (KAU Package of Practices 2016)",
+     "title": "List of new generation insecticides recommended against pests of crops in Kerala",
+     "url": "https://keralaagriculture.gov.in/wp-content/uploads/2021/04/new-generation-insecticides-table-15-8-18.pdf"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:56:59.406Z"
+  },
+  "tungro|hi|federated": {
+   "class_key": "tungro",
+   "lang": "hi",
+   "decided_by": "federated",
+   "title_local": "धान का टंगरो रोग (Rice tungro disease)",
+   "spoken_summary": "राम राम किसान भाइयों। धान के टंगरो रोग में पत्तियां टिप से नीचे की ओर पीली या नारंगी-पीली होने लगती हैं, पौधे छोटे रह जाते हैं और कल्ले कम निकलते हैं। इसके रोकथाम के लिए संक्रमित पौधों का कोई इलाज नहीं है, इसलिए वायरस फैलाने वाले हरे फुदके यानी ग्रीन लीफहॉपर्स को रोकना जरूरी है। खेत की मेंड़ पर खरपतवार नष्ट करें और पड़ोसी किसानों के साथ मिलकर काम करें। यदि खेत में 1 टंगरो-संक्रमित पौधा प्रति वर्ग मीटर और 2 हरे फुदके प्रति हिल दिखें, तभी कार्ड में बताई गई मात्रा के अनुसार ही कीटनाशक का छिड़काव करें। कोई भी स्प्रे करने से पहले फसल को अपने स्थानीय कृषि अधिकारी या कृषि विज्ञान केंद्र को दिखाकर जरूर पक्का कर लें।",
+   "ipm": [
+    "संक्रमित पौधों को ठीक नहीं किया जा सकता, इसलिए हरे फुदके को वायरस फैलाने से रोकने पर ध्यान दें।",
+    "फुदकों की निगरानी और पकड़ने के लिए 1 प्रति हेक्टेयर की दर से लाइट ट्रैप और 12 प्रति हेक्टेयर की दर से पीले चिपचिपे ट्रैप लगाएं।",
+    "जब आपको प्रति वर्ग मीटर 1 टंगरो-संक्रमित पौधा और प्रति हिल 2 हरे फुदके दिखें, तब कार्रवाई करें।",
+    "बेसल खुराक के रूप में 20 डिसमिल नर्सरी में 12.5 किलोग्राम की दर से नीम की खली लगाएं।",
+    "मेंड़ पर खरपतवार नष्ट करें, और फसल पर छिड़काव करते समय मेंड़ की वनस्पति पर भी छिड़काव करें।",
+    "पड़ोसियों के साथ मिलकर काम करें, क्योंकि फुदके खेतों के बीच आते-जाते हैं और अकेले एक खेत में छिड़काव अक्सर असफल होता है।"
+   ],
+   "chemical": [
+    {
+     "text": "Thiamethoxam 25 WDG 40g/acre, दो राउंड 15 और 30 दिन रोपाई के बाद (मेंड़ की वनस्पति पर भी छिड़काव करें)",
+     "text_en": "Thiamethoxam 25 WDG 40g/acre, two rounds at 15 and 30 days after transplanting (also spray bund vegetation)",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Rice tungro: management (other methods)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_23.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Imidacloprid 17.8 SL 40ml/acre, दो राउंड 15 और 30 दिन रोपाई के बाद",
+     "text_en": "Imidacloprid 17.8 SL 40ml/acre, two rounds at 15 and 30 days after transplanting",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Rice tungro: management (other methods)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_23.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "नर्सरी (20 डिसमिल क्षेत्र): Thiamethoxam 25 WDG 8g या Imidacloprid 17.8 SL 8ml, 2 राउंड 10 और 20 DAS पर",
+     "text_en": "Nursery (20 cents area): Thiamethoxam 25 WDG 8g or Imidacloprid 17.8 SL 8ml, 2 rounds at 10 and 20 DAS",
+     "source": {
+      "publisher": "Tamil Nadu Agricultural University (Renukadevi, Nakkeeran & Alice)",
+      "title": "Management of diseases of important Agriculture Crops of Tamil Nadu",
+      "url": "https://agritech.tnau.ac.in/pdf/8.pdf"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Imidacloprid 17.8 SL: 100-125 ml formulation/ha (20-25 g a.i./ha) 500-700 L पानी में, BPH, WBPH, GLH के खिलाफ अनुमोदित उपयोग",
+     "text_en": "Imidacloprid 17.8 SL: 100-125 ml formulation/ha (20-25 g a.i./ha) in 500-700 L water, approved use against BPH, WBPH, GLH",
+     "source": {
+      "publisher": "TNAU Agritech Portal (compiled from CIB&RC approved uses)",
+      "title": "Approved uses of registered insecticides (Crop based)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/pdf/Pesticide%20list_crop%20wise.pdf"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "multi-K (potassium nitrate) 1 प्रतिशत पर छिड़काव किया गया, पत्तियों का पीलापन कम करने के लिए पर्ण आहार (यह वायरस को ठीक नहीं करता है)",
+     "text_en": "multi-K (potassium nitrate) sprayed at 1 per cent, a foliar feed to reduce leaf yellowing (it does not cure the virus)",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Rice tungro: management (other methods)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_23.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "टंगरो-प्रतिरोधी किस्में जैसे IR 36, IR 50, ADT 37, Co 45, Co 48, विक्रमर्या या भरणी उगाएं।",
+    "आसपास के खेतों के साथ ही रोपाई करें, क्योंकि देर से रोपाई वाले खेतों में टंगरो अधिक होता है।",
+    "कटाई के तुरंत बाद ठूंठ को जोत दें और वायरस के स्रोतों को नष्ट करने के लिए स्वेच्छा से उगे धान को हटा दें।",
+    "फसलों के बीच कम से कम एक महीने का परती रखें, या महामारी वाले क्षेत्रों में दालों या तिलहनों के साथ फसल चक्र अपनाएं।",
+    "टंगरो-प्रभावित क्षेत्रों में तैयार की गई पौध की रोपाई न करें।"
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+     "title": "Rice tungro: management (other methods)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_23.html"
+    },
+    {
+     "publisher": "TNAU Agritech Portal (Paddy expert system)",
+     "title": "Crop Protection >> Diseases >> Tungro",
+     "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdistungro.html"
+    },
+    {
+     "publisher": "Tamil Nadu Agricultural University (Renukadevi, Nakkeeran & Alice)",
+     "title": "Management of diseases of important Agriculture Crops of Tamil Nadu",
+     "url": "https://agritech.tnau.ac.in/pdf/8.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Tungro (fact sheet)",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
+    },
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    },
+    {
+     "publisher": "TNAU Agritech Portal (compiled from CIB&RC approved uses)",
+     "title": "Approved uses of registered insecticides (Crop based)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/pdf/Pesticide%20list_crop%20wise.pdf"
+    },
+    {
+     "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+     "title": "List of banned and restricted pesticides in India",
+     "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+    },
+    {
+     "publisher": "Global Agriculture",
+     "title": "Punjab High Court Grants Stay on Ban of 12 Insecticides for Basmati Paddy (14 Aug 2025)",
+     "url": "https://www.global-agriculture.com/india-region/punjab-high-court-grants-stay-on-ban-of-12-insecticides-for-basmati-paddy/"
+    },
+    {
+     "publisher": "TNAU Agritech Portal",
+     "title": "Rice tungro virus (symptoms)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/rice_24.html"
+    },
+    {
+     "publisher": "District Rupnagar, Govt. of Punjab (NIC portal)",
+     "title": "Bans use of 10 insecticides which were a constraint in the export of Basmati Rice (Aug 2022)",
+     "url": "https://rupnagar.nic.in/bans-use-of-10-insecticides-which-were-a-constraint-in-the-export-of-basmati-rice/"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:57:05.061Z"
+  },
+  "tungro|en|federated": {
+   "class_key": "tungro",
+   "lang": "en",
+   "decided_by": "federated",
+   "title_local": "Rice Tungro Disease",
+   "spoken_summary": "Namaste farmer brother. Your paddy crop is suffering from rice tungro disease. You can recognise it by leaves turning yellow to orange-yellow starting from the tip, stunted plants, and delayed flowering with empty grains. Green leafhoppers spread this virus, so stop them early. Set up traps and monitor your field. When you see 1 tungro-infected plant per square metre and 2 green leafhoppers per hill, apply Thiamethoxam 25 WDG 40g/acre or Imidacloprid 17.8 SL 40ml/acre in two rounds at 15 and 30 days after transplanting. Please show your crop to the local agriculture officer or Krishi Vigyan Kendra to confirm this before spraying anything.",
+   "ipm": [
+    "Infected plants cannot be cured, so focus on stopping the green leafhopper from spreading the virus.",
+    "Set up a light trap @ one/ha and yellow sticky traps @ 12/ha to monitor and catch leafhoppers.",
+    "Take action when you see 1 tungro-infected plant per square metre and 2 green leafhoppers per hill.",
+    "Apply neem cake @ 12.5 kg per 20 cent nursery as a basal dose.",
+    "Destroy weed hosts on bunds, and spray bund vegetation too whenever you spray the crop.",
+    "Work with neighbours, because leafhoppers move between fields and spraying one field alone often fails."
+   ],
+   "chemical": [
+    {
+     "text": "Thiamethoxam 25 WDG 40g/acre, two rounds at 15 and 30 days after transplanting (also spray bund vegetation)",
+     "text_en": "Thiamethoxam 25 WDG 40g/acre, two rounds at 15 and 30 days after transplanting (also spray bund vegetation)",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Rice tungro: management (other methods)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_23.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Imidacloprid 17.8 SL 40ml/acre, two rounds at 15 and 30 days after transplanting",
+     "text_en": "Imidacloprid 17.8 SL 40ml/acre, two rounds at 15 and 30 days after transplanting",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Rice tungro: management (other methods)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_23.html"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Nursery (20 cents area): Thiamethoxam 25 WDG 8g or Imidacloprid 17.8 SL 8ml, 2 rounds at 10 and 20 DAS",
+     "text_en": "Nursery (20 cents area): Thiamethoxam 25 WDG 8g or Imidacloprid 17.8 SL 8ml, 2 rounds at 10 and 20 DAS",
+     "source": {
+      "publisher": "Tamil Nadu Agricultural University (Renukadevi, Nakkeeran & Alice)",
+      "title": "Management of diseases of important Agriculture Crops of Tamil Nadu",
+      "url": "https://agritech.tnau.ac.in/pdf/8.pdf"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "Imidacloprid 17.8 SL: 100-125 ml formulation/ha (20-25 g a.i./ha) in 500-700 L water, approved use against BPH, WBPH, GLH",
+     "text_en": "Imidacloprid 17.8 SL: 100-125 ml formulation/ha (20-25 g a.i./ha) in 500-700 L water, approved use against BPH, WBPH, GLH",
+     "source": {
+      "publisher": "TNAU Agritech Portal (compiled from CIB&RC approved uses)",
+      "title": "Approved uses of registered insecticides (Crop based)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/pdf/Pesticide%20list_crop%20wise.pdf"
+     },
+     "verbatim": false
+    },
+    {
+     "text": "multi-K (potassium nitrate) sprayed at 1 per cent, a foliar feed to reduce leaf yellowing (it does not cure the virus)",
+     "text_en": "multi-K (potassium nitrate) sprayed at 1 per cent, a foliar feed to reduce leaf yellowing (it does not cure the virus)",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+      "title": "Rice tungro: management (other methods)",
+      "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_23.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "Grow tungro-resistant varieties such as IR 36, IR 50, ADT 37, Co 45, Co 48, Vikramarya or Bharani.",
+    "Plant at the same time as the surrounding farms, because late-planted fields get more tungro.",
+    "Plough in the stubble right after harvest and remove volunteer rice, to destroy virus sources.",
+    "Keep a fallow of at least a month between crops, or rotate with pulses or oilseeds in epidemic areas.",
+    "Do not transplant seedlings raised in tungro-affected areas."
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Tamil Nadu Agricultural University)",
+     "title": "Rice tungro: management (other methods)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_23.html"
+    },
+    {
+     "publisher": "TNAU Agritech Portal (Paddy expert system)",
+     "title": "Crop Protection >> Diseases >> Tungro",
+     "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdistungro.html"
+    },
+    {
+     "publisher": "Tamil Nadu Agricultural University (Renukadevi, Nakkeeran & Alice)",
+     "title": "Management of diseases of important Agriculture Crops of Tamil Nadu",
+     "url": "https://agritech.tnau.ac.in/pdf/8.pdf"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Tungro (fact sheet)",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
+    },
+    {
+     "publisher": "NCIPM / DPPQ&S / NIPHM, Govt of India",
+     "title": "Integrated Pest Management Package for Rice (2014)",
+     "url": "https://niphm.gov.in/IPMPackages/Rice.pdf"
+    },
+    {
+     "publisher": "TNAU Agritech Portal (compiled from CIB&RC approved uses)",
+     "title": "Approved uses of registered insecticides (Crop based)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/pdf/Pesticide%20list_crop%20wise.pdf"
+    },
+    {
+     "publisher": "Wikipedia (citing CIB&RC/PPQS list as of 31 Mar 2024)",
+     "title": "List of banned and restricted pesticides in India",
+     "url": "https://en.wikipedia.org/wiki/List_of_banned_and_restricted_pesticides_in_India"
+    },
+    {
+     "publisher": "Global Agriculture",
+     "title": "Punjab High Court Grants Stay on Ban of 12 Insecticides for Basmati Paddy (14 Aug 2025)",
+     "url": "https://www.global-agriculture.com/india-region/punjab-high-court-grants-stay-on-ban-of-12-insecticides-for-basmati-paddy/"
+    },
+    {
+     "publisher": "TNAU Agritech Portal",
+     "title": "Rice tungro virus (symptoms)",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/rice_24.html"
+    },
+    {
+     "publisher": "District Rupnagar, Govt. of Punjab (NIC portal)",
+     "title": "Bans use of 10 insecticides which were a constraint in the export of Basmati Rice (Aug 2022)",
+     "url": "https://rupnagar.nic.in/bans-use-of-10-insecticides-which-were-a-constraint-in-the-export-of-basmati-rice/"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:57:09.589Z"
+  },
+  "brown_spot|hi|federated": {
+   "class_key": "brown_spot",
+   "lang": "hi",
+   "decided_by": "federated",
+   "title_local": "भूरा धब्बा (Brown spot)",
+   "spoken_summary": "नमस्कार किसान भाई। आपके धान में भूरा धब्बा रोग (Brown spot) लग गया है। इसकी पहचान पत्तियों पर छोटे, गोल या अंडाकार भूरे धब्बों से होती है जो तिल के बीज जैसे दिखते हैं। इनसे पत्तियां सूख जाती हैं और बालियों पर भी काले धब्बे पड़ जाते हैं। बचाव के लिए खेत में पानी की कमी न होने दें और खरपतवार हटाएं। दवा छिड़कने से पहले अपनी फसल को स्थानीय कृषि अधिकारी या कृषि विज्ञान केंद्र को जरूर दिखाएं।",
+   "ipm": [
+    "मिट्टी की जाँच कराकर अनुशंसित उर्वरक डालें, क्योंकि भूरा धब्बा पोषक तत्वों की कमी वाली और खराब मिट्टी में सबसे अधिक फैलता है।",
+    "खेत में पानी भरकर रखें और पानी की कमी (water stress) से बचाएं।",
+    "बीज को स्यूडोमोनास फ्लोरेसेंस (Pseudomonas fluorescens) 10 ग्राम प्रति किलो की दर से उपचारित करें, फिर रोपाई से पहले पौधों की जड़ों को 2.5 किलो प्रति हेक्टेयर की दर से 100 लीटर पानी में घोलकर 30 मिनट तक डुबोएं।",
+    "खेत से खरपतवार और संक्रमित फसल के अवशेषों को हटा दें।",
+    "बीज को ठंडे पानी में 8 घंटे तक भिगोने के बाद, 53 से 54 डिग्री सेल्सियस तापमान वाले गर्म पानी में 10 से 12 मिनट तक उपचारित करें।"
+   ],
+   "chemical": [
+    {
+     "text": "Spray Mancozeb (2.0g/lit) - 2 to 3 times at 10 - 15 day intervals",
+     "text_en": "Spray Mancozeb (2.0g/lit) - 2 to 3 times at 10 - 15 day intervals",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Expert System for Paddy)",
+      "title": "Brown Spot (Helminthosporium oryzae): symptoms and management strategies",
+      "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisbrownspot.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "रोग मुक्त बीज का उपयोग करें, क्योंकि कवक (fungus) बीज में 4 साल से अधिक समय तक जीवित रहता है।",
+    "प्रतिरोधी या मध्यम प्रतिरोधी किस्मों की खेती करें (टीएनएयू सूची के अनुसार CO 51, CO 52, CO 53, CO 55, CO 56, ASD 18 और IR 64)।",
+    "सिलिकॉन की कमी वाली मिट्टी पर, बुवाई से पहले कैल्शियम सिलिकेट स्लैग का प्रयोग करें।",
+    "अतिरिक्त नाइट्रोजन से बचें; टीएनएयू धीमी गति से जारी होने वाले (slow-release) नाइट्रोजन उर्वरकों की सलाह देता है।"
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Expert System for Paddy)",
+     "title": "Brown Spot (Helminthosporium oryzae): symptoms and management strategies",
+     "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisbrownspot.html"
+    },
+    {
+     "publisher": "TNAU Agritech Portal (Crop Protection)",
+     "title": "Rice: Brown spot, other management",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_2.html"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Brown spot fact sheet",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/brown-spot"
+    },
+    {
+     "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+     "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+     "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+    },
+    {
+     "publisher": "DPPQS / CIB&RC, Ministry of Agriculture & Farmers Welfare",
+     "title": "List of pesticides which are banned, refused registration and restricted in use (updated 31.03.2024)",
+     "url": "https://ppqs.gov.in/sites/default/files/list_of_pesticides_which_are_banned_refused_registration_and_restricted_in_use_0.pdf"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:57:44.969Z"
+  },
+  "brown_spot|en|federated": {
+   "class_key": "brown_spot",
+   "lang": "en",
+   "decided_by": "federated",
+   "title_local": "Brown spot",
+   "spoken_summary": "Namaste farmer brother. Your paddy crop is suffering from brown spot disease. You will see small oval or round dark brown spots on the leaves, like sesame seeds, which can make the nursery look scorched and cause poorly filled grains. To manage this, test your soil and apply recommended fertilizers, keep the field well irrigated, and treat your seeds. If needed, spray Mancozeb at 2.0g per litre two to three times at 10 to 15 day intervals only if the condition requires it. Please show your crop to the local agriculture officer or Krishi Vigyan Kendra to confirm it before spraying anything.",
+   "ipm": [
+    "Test the soil and apply the recommended fertilizer, because brown spot is worst on poor, nutrient-deficient soils.",
+    "Keep the field irrigated and avoid water stress.",
+    "Treat seed with Pseudomonas fluorescens at 10 g/kg, then dip seedlings for 30 minutes in 2.5 kg/ha dissolved in 100 litres of water.",
+    "Remove weed hosts and infected crop debris from the field.",
+    "Hot-water treat seed at 53-54 degrees Celsius for 10 to 12 minutes, after pre-soaking it in cold water for 8 hours."
+   ],
+   "chemical": [
+    {
+     "text": "Spray Mancozeb (2.0g/lit) - 2 to 3 times at 10 - 15 day intervals",
+     "text_en": "Spray Mancozeb (2.0g/lit) - 2 to 3 times at 10 - 15 day intervals",
+     "source": {
+      "publisher": "TNAU Agritech Portal (Expert System for Paddy)",
+      "title": "Brown Spot (Helminthosporium oryzae): symptoms and management strategies",
+      "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisbrownspot.html"
+     },
+     "verbatim": false
+    }
+   ],
+   "no_chemical": false,
+   "prevention": [
+    "Use disease-free seed, because the fungus survives in seed for more than 4 years.",
+    "Grow resistant or moderately resistant varieties (TNAU lists CO 51, CO 52, CO 53, CO 55, CO 56, ASD 18 and IR 64).",
+    "On silicon-deficient soils, apply calcium silicate slag before planting.",
+    "Avoid excess nitrogen; TNAU advises slow-release nitrogen fertilizers."
+   ],
+   "sources": [
+    {
+     "publisher": "TNAU Agritech Portal (Expert System for Paddy)",
+     "title": "Brown Spot (Helminthosporium oryzae): symptoms and management strategies",
+     "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisbrownspot.html"
+    },
+    {
+     "publisher": "TNAU Agritech Portal (Crop Protection)",
+     "title": "Rice: Brown spot, other management",
+     "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/another%20methods_rice_2.html"
+    },
+    {
+     "publisher": "IRRI Rice Knowledge Bank",
+     "title": "Brown spot fact sheet",
+     "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/brown-spot"
+    },
+    {
+     "publisher": "ICAR-National Rice Research Institute, Cuttack (Internet Archive snapshot, 10 Oct 2025)",
+     "title": "Agro-Advisory Service: Strategies for Second Fortnight of August, 2022",
+     "url": "https://web.archive.org/web/20251010151742/https://icar-nrri.in/wp-content/uploads/2022/08/AAS_August_II_2022_English.pdf"
+    },
+    {
+     "publisher": "DPPQS / CIB&RC, Ministry of Agriculture & Farmers Welfare",
+     "title": "List of pesticides which are banned, refused registration and restricted in use (updated 31.03.2024)",
+     "url": "https://ppqs.gov.in/sites/default/files/list_of_pesticides_which_are_banned_refused_registration_and_restricted_in_use_0.pdf"
+    }
+   ],
+   "model": "gemini-3.5-flash-lite",
+   "generated_at": "2026-09-27T14:58:20.168Z"
+  }
+ },
+ "audio": {
+  "hispa|hi|federated": "/pregen/audio/3d5a3dc3c50f-hi.wav",
+  "hispa|ta|federated": "/pregen/audio/3d5a3dc3c50f-ta.wav",
+  "hispa|en|federated": "/pregen/audio/3d5a3dc3c50f-en.wav"
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "verdict": "Terminology correction first: \"Rythu Seva Kendra\" (RSK) is ANDHRA PRADESH's village-tier network — 10,778 gram-panchayat centers (built 2020 as YSR Rythu Bharosa Kendras, renamed RSK in July 2024 by the TDP govt), each staffed by a graduate Village Agriculture/Horticulture/Sericulture Assistant (VAA/VHA/VSA) with a digital kiosk and a 48-hour input-delivery SLA. TELANGANA's equivalent fabric is 2,601 AEO clusters — one Agricultural Extension Officer per ~5,000 acres — anchored by Rythu Vedika meeting sheds, and critically the state PUBLISHES every AEO's cluster name + mobile number as an official directory (I verified real entries: Ichoda, Gudi Hathnur, Sirikonda clusters in Adilabad). The national escalation fabric is a three-tier stack: village (RSK/AEO) → district (731 ICAR KVKs across 638 districts, each with 4-6 Subject Matter Specialists) → national (Kisan Call Centre 1800-180-1551, whose Level-1 Farm Tele Advisor → Level-2 SME call-conference model is our exact precedent, verified live on dackkms.gov.in). ICAR/MeitY's Kisan Sarathi platform (2.95 crore farmers, 4,767 KVK/ICAR scientists, 13 languages, integrates KCC+CSC+Bhashini) already does digitally what KisanVaani proposes — it is the production partnership target, not a competitor of the demo. There is NO public API anywhere in this stack; escalation is a directory + WhatsApp/telephony integration story. Operational gotcha confirmed repeatedly this session: NIC-hosted .gov.in sites (telangana.gov.in, ap.gov.in, pjtsau.edu.in, data.gov.in API, pib.gov.in) refuse or block non-Indian IPs — a US-region Vercel function cannot fetch them, so all kendra data must be embedded (or fetched from bom1 region in production).",
+ "demo_plan": "No live API exists or is needed for this topic — build the escalation as embedded seed data + simulated routing, which is honest (the real-world handoff is WhatsApp/phone, not REST). TODAY: (1) Embed the verified kendra directory JSON below in code. (2) Confidence gate in the diagnosis flow: if Gemini diagnosis confidence < 70%, OR the recommended treatment involves a restricted pesticide class, OR the farmer taps \"Talk to an expert / అధికారితో మాట్లాడండి\", create an escalation ticket. (3) Auto-assign by geography+tier: farmer's village → Tier 1 = nearest AEO cluster (Telangana demo persona: 'AEO Cluster Ichoda, Adilabad') or RSK (AP persona); unresolved in 72h or AEO marks 'needs specialist' → Tier 2 = district KVK (e.g. 'KVK Ramnagar, Adilabad (PJTSAU)'); fallback tier shown as KCC 1800-180-1551 (6 AM–10 PM, 22 languages). (4) Officer dashboard (command center) lists tickets against the 10 real kendra names below — judges from India will recognize them. (5) Render the handoff as a WhatsApp-style card: ticket ID, crop photo thumbnail, AI diagnosis in English + Telugu, confidence %, farmer name + masked mobile, village/mandal, SLA countdown (acknowledge 4 working hrs / field visit 72 hrs — modeled on the RBK/RSK 48-hr delivery SLA and KCC same-call norms). Everything is server-side static data — zero external fetches, works on any Vercel region, cannot break during the demo. Do NOT attempt to live-fetch any telangana.gov.in / data.gov.in endpoint from the deployed app: verified geo-blocked from US IPs today.",
+ "production_plan": "Three concrete integration paths, in order of realism: (1) KISAN SARATHI (flagship, ICAR-IASRI + Digital India Corporation, MeitY): it already routes farmer queries via its IIDS (Interactive Information Dissemination System) to 4,767 KVK/ICAR scientists with voice/text/image/video in 13 languages, and already integrates KCC, CSC, IMD, MyScheme and Bhashini. Production = MoU/partnership to push KisanVaani escalation tickets (photo + AI diagnosis + confidence) into the Kisan Sarathi queue for the farmer's district KVK; their toll-free 1800 123 2175 / 14426 already exists for the voice leg. This is the credible national fabric — PMKSKs (2.14 lakh fertilizer retail points) and CSCs (~5 lakh) are access/last-mile points, not expert tiers. (2) TELANGANA AEO ROUTING: the state officially publishes every AEO cluster's mobile number (rythubharosa.telangana.gov.in AEO directory PDF; verified entries for Adilabad). Production = WhatsApp Business Cloud API template message to the cluster AEO's published number with the ticket card, escalating to the Mandal Agriculture Officer after SLA breach; requires Dept. of Agriculture, Telangana sign-off (they run everything through these clusters already). (3) AP RSK ROUTING: ticket to the gram-panchayat RSK's VAA via the RSK kiosk/CM-app stack (RTGS-run); the RBK network's NITI Aayog-endorsed 48-hour service SLA is the norm to mirror. KCC (1800-180-1551, DACKKMS) remains the universal fallback: farmer quotes the KisanVaani ticket ID, L1 FTA sees context, L2 SME conference for hard cases. Deploy fetch-side infrastructure in Vercel bom1 (Mumbai) — NIC hosts geo-fence to Indian IPs. Ticket fields officers need (from KCC/KKMS + RSK practice): ticket_id, created_at, channel, farmer{name, mobile, consent_flag, village, gram_panchayat/cluster, mandal, district, state, lat_lon?}, crop{name, variety?, sowing_date?, area_acres?}, diagnosis{pest_or_disease_en, pest_or_disease_local, confidence_pct, severity, spread_estimate}, media{photo_urls[], voice_note_url?, transcript}, ai_advice_already_given, escalation_reason(low_confidence|restricted_chemical|farmer_request|repeat_issue), assigned{tier, kendra_id, officer_name?, officer_mobile?}, sla{ack_due, visit_due}, status(open|acknowledged|field_visit|resolved|escalated_t2), resolution{action_taken, chemicals_recommended, follow_up_date}.",
+ "embed_data": "{\"escalation_tiers\":[{\"tier\":1,\"name_te\":\"AEO Cluster / Rythu Seva Kendra\",\"level\":\"village\",\"who\":\"AEO (Telangana, 1 per ~5,000 acres, 2,601 clusters) or VAA at RSK (AP, 10,778 centers)\",\"sla_ack_hrs\":4,\"sla_visit_hrs\":72,\"channel\":\"WhatsApp + published mobile\"},{\"tier\":2,\"name\":\"Krishi Vigyan Kendra (KVK)\",\"level\":\"district\",\"who\":\"Subject Matter Specialist (SMS) — 731 KVKs, 638 districts, 11 ATARI zones\",\"sla_response_hrs\":48,\"channel\":\"Kisan Sarathi IIDS / phone\"},{\"tier\":3,\"name\":\"Kisan Call Centre\",\"level\":\"national\",\"who\":\"L1 Farm Tele Advisor -> L2 SME call-conference\",\"phone\":\"1800-180-1551\",\"hours\":\"06:00-22:00 all days\",\"languages\":22,\"locations\":21}],\"kendras\":[{\"id\":\"TS-AEO-ICHODA\",\"name\":\"AEO Cluster Ichoda\",\"district\":\"Adilabad\",\"state\":\"Telangana\",\"tier\":1,\"type\":\"AEO cluster\",\"officer_mobile_masked\":\"72888940xx\"},{\"id\":\"TS-AEO-GUDIHATHNUR\",\"name\":\"AEO Cluster Gudi Hathnur\",\"district\":\"Adilabad\",\"state\":\"Telangana\",\"tier\":1,\"type\":\"AEO cluster\",\"officer_mobile_masked\":\"72888940xx\"},{\"id\":\"TS-AEO-SIRIKONDA\",\"name\":\"AEO Cluster Sirikonda\",\"district\":\"Adilabad\",\"state\":\"Telangana\",\"tier\":1,\"type\":\"AEO cluster\",\"officer_mobile_masked\":\"79819410xx\"},{\"id\":\"TS-KVK-ADILABAD\",\"name\":\"KVK Ramnagar, Adilabad\",\"district\":\"Adilabad\",\"state\":\"Telangana\",\"tier\":2,\"type\":\"KVK\",\"host\":\"PJTSAU\"},{\"id\":\"TS-KVK-WYRA\",\"name\":\"KVK Wyra\",\"district\":\"Khammam\",\"state\":\"Telangana\",\"tier\":2,\"type\":\"KVK\",\"host\":\"PJTSAU\"},{\"id\":\"TS-KVK-PALEM\",\"name\":\"KVK Palem\",\"district\":\"Nagarkurnool (erstwhile Mahabubnagar)\",\"state\":\"Telangana\",\"tier\":2,\"type\":\"KVK\",\"host\":\"PJTSAU\"},{\"id\":\"TS-KVK-KAMPASAGAR\",\"name\":\"KVK Kampasagar\",\"district\":\"Nalgonda\",\"state\":\"Telangana\",\"tier\":2,\"type\":\"KVK\",\"host\":\"PJTSAU\"},{\"id\":\"TS-KVK-MALYAL\",\"name\":\"KVK Malyal\",\"district\":\"Mahabubabad\",\"state\":\"Telangana\",\"tier\":2,\"type\":\"KVK\",\"host\":\"PJTSAU\"},{\"id\":\"TS-KVK-RUDRUR\",\"name\":\"KVK Rudrur\",\"district\":\"Nizamabad\",\"state\":\"Telangana\",\"tier\":2,\"type\":\"KVK\",\"host\":\"PJTSAU\"},{\"id\":\"MP-KVK-SEHORE\",\"name\":\"KVK Sehore (Sewania, Ichhawar)\",\"district\":\"Sehore\",\"state\":\"Madhya Pradesh\",\"tier\":2,\"type\":\"KVK\",\"host\":\"CRDE (NGO)\"},{\"id\":\"AP-RSK-WG\",\"name\":\"Rythu Seva Kendra network, West Godavari\",\"district\":\"West Godavari\",\"state\":\"Andhra Pradesh\",\"tier\":1,\"type\":\"RSK\",\"count\":409,\"staff\":\"VAA/VHA/VSA\"}],\"facts\":{\"kvk_total\":731,\"kvk_districts_covered\":638,\"atari_zones\":11,\"kvk_hosts\":{\"SAU\":506,\"NGO\":103,\"ICAR\":66,\"state_govt\":38,\"other\":18},\"ap_rsk_total\":10778,\"ap_rsk_renamed_from_rbk\":\"2024-07\",\"ts_aeo_clusters\":2601,\"ts_acres_per_aeo\":5000,\"pmksk_converted\":214000,\"kisan_sarathi\":{\"farmers_registered_cr\":2.95,\"scientists\":4767,\"queries_lakh\":19.21,\"languages\":13,\"tollfree\":\"1800 123 2175 / 14426\"},\"kcc\":{\"tollfree\":\"1800-180-1551\",\"since\":\"2004-01-21\",\"model\":\"L1 FTA (agri graduate) answers; unresolved -> L2 SME call-conference (SAU/ICAR/KVK/state dept experts)\"}},\"ticket_schema\":[\"ticket_id\",\"created_at\",\"channel\",\"farmer.name\",\"farmer.mobile\",\"farmer.consent_flag\",\"farmer.village\",\"farmer.cluster_or_gp\",\"farmer.mandal\",\"farmer.district\",\"farmer.state\",\"crop.name\",\"crop.variety\",\"crop.sowing_date\",\"crop.area_acres\",\"diagnosis.pest_or_disease_en\",\"diagnosis.pest_or_disease_local\",\"diagnosis.confidence_pct\",\"diagnosis.severity\",\"media.photo_urls\",\"media.voice_transcript\",\"ai_advice_already_given\",\"escalation_reason\",\"assigned.tier\",\"assigned.kendra_id\",\"assigned.officer_name\",\"sla.ack_due\",\"sla.visit_due\",\"status\",\"resolution.action_taken\",\"resolution.follow_up_date\"]}",
+ "findings": [
+  {
+   "source_name": "DACKKMS — Kisan Call Centre official portal (Kisan Knowledge Management System)",
+   "url": "https://www.dackkms.gov.in/Account/aboutus.aspx",
+   "access": "open",
+   "verified": true,
+   "verification_note": "WebFetch returned full page: launched 21 Jan 2004, toll-free 1800-180-1551, 6 AM–10 PM all days, 21 locations, 22 languages; L1 = Farm Tele Advisors (agri graduates/PG), unresolved queries 'transferred to higher level experts' (L2 SMEs from state depts, ICAR, KVKs, SAUs) in call-conference mode.",
+   "use": "deck-citation",
+   "notes": "Our escalation precedent. One of the few .gov.in hosts reachable from US IPs."
+  },
+  {
+   "source_name": "ICAR — Krishi Vigyan Kendras (national count + ATARI zone breakdown)",
+   "url": "https://icar.org.in/en/krishi-vigyan-kendras",
+   "access": "open",
+   "verified": true,
+   "verification_note": "WebFetch returned table: 731 KVKs across 11 ATARI zones (Zone X Hyderabad = 76 KVKs); host breakdown 506 SAU / 103 NGO / 66 ICAR / 38 state govt confirmed via companion search.",
+   "use": "deck-citation",
+   "notes": "Use '731 KVKs covering 638 districts' as the headline national-fabric number."
+  },
+  {
+   "source_name": "ICAR — Telangana KVK directory (real names for dashboard)",
+   "url": "https://www.icar.org.in/en/node/15048",
+   "access": "open",
+   "verified": true,
+   "verification_note": "WebFetch returned all 16 Telangana KVKs with exact names/hosts: KVK Ramnagar Adilabad, KVK Wyra, KVK Palem, KVK Kampasagar (Nalgonda), KVK Malyal (Mahabubabad), KVK Rudrur (Nizamabad) — all PJTSAU; plus NGO-run ones (DDS Zaheerabad, Ekalavya Tuniki).",
+   "use": "demo",
+   "notes": "Primary source for dashboard kendra names — all embedded in embed_data."
+  },
+  {
+   "source_name": "Telangana AEO cluster directory (official mobile numbers per cluster)",
+   "url": "https://rythubharosa.telangana.gov.in/assets/files/AEOs_Mobile%20Numbers.pdf",
+   "access": "open",
+   "verified": false,
+   "verification_note": "Direct curl/WebFetch timed out (NIC host geo-blocked from US); contents verified via search-indexed snippets: Adilabad district lists clusters Ichoda (7288894031), Gudi Hathnur (7288894032), Sirikonda (7981941056) with district/division/mandal/cluster columns.",
+   "use": "production",
+   "notes": "THE routing hook for Telangana: state publishes every AEO's cluster + mobile. In production, fetch from India-region infra; today, names embedded. Mask numbers in UI."
+  },
+  {
+   "source_name": "Kisan Sarathi (ICAR-IASRI + Digital India Corporation, MeitY)",
+   "url": "https://kisansarathi.in/",
+   "access": "registration",
+   "verified": true,
+   "verification_note": "WebFetch loaded homepage: ICT interface connecting farmers to KVK subject-matter specialists via IIDS (voice/text/image/video), Android+iOS apps, toll-free 1800 123 2175 / 14426. Scale stats (2.95 cr farmers, 4,767 scientists, 19.21 lakh queries, 13 languages, integrates KCC/CSC/IMD/Bhashini) from June-2026 press coverage.",
+   "use": "production",
+   "notes": "The correct national escalation fabric for production partnership — it already does farmer→KVK-SMS routing digitally. Position KisanVaani as an AI triage layer feeding it, not a rival."
+  },
+  {
+   "source_name": "AP Rythu Seva Kendras (ex-Rythu Bharosa Kendras)",
+   "url": "https://www.thehansindia.com/andhra-pradesh/rbks-renamed-as-rythu-seva-kendras-888407",
+   "access": "open",
+   "verified": false,
+   "verification_note": "Search-verified across Hans India, EPW and district sites: 10,778 RBKs at gram-panchayat level (2020), renamed RSK July 2024; staffed by graduate VAA/VHA/VSA; kiosk orders with 48-hr delivery SLA; West Godavari alone has 409 RSKs; NITI Aayog flagged as national best practice.",
+   "use": "deck-citation",
+   "notes": "IMPORTANT: RSK = Andhra Pradesh, not Telangana. AP district portals (westgodavari.ap.gov.in) geo-blocked from US IPs — do not live-fetch."
+  },
+  {
+   "source_name": "Telangana Rythu Vedika / AEO clusters",
+   "url": "https://www.dailypioneer.com/2022/columnists/telangana---s-rythu-vedikas-truly-empowering-farmers.html",
+   "access": "open",
+   "verified": false,
+   "verification_note": "Search-verified: 2,601 AEO clusters statewide, one AEO per ~5,000 acres, Rythu Vedika shed built per cluster (Rs 572.22 cr program).",
+   "use": "deck-citation",
+   "notes": "Telangana's village-tier equivalent of AP's RSK. Use 'AEO Cluster <village>' naming in the dashboard for Telangana personas."
+  },
+  {
+   "source_name": "KVK Sehore (CRDE, Sewania, Ichhawar, Madhya Pradesh)",
+   "url": "https://kvksehore.nic.in/",
+   "access": "open",
+   "verified": false,
+   "verification_note": "Existence verified via search (official site kvksehore.nic.in, host CRDE, Village Sewania, Tehsil Ichhawar, Sehore 466115; active Twitter @KVK_Sehore); direct fetch refused — NIC host geo-blocked from US.",
+   "use": "demo",
+   "notes": "Real MP KVK name for dashboard variety, as requested."
+  },
+  {
+   "source_name": "data.gov.in — Kisan Call Centre transcripts (farmers' queries & FTA answers)",
+   "url": "https://www.data.gov.in/resource/kisan-call-centre-kcc-transcripts-farmers-queries-answers",
+   "access": "api-key",
+   "verified": false,
+   "verification_note": "api.data.gov.in returned connection failure from this session (US geo-block); dataset confirmed to exist via data.gov.in catalog + AIKosh mirror (district-wise monthly CSVs of real farmer Q&A).",
+   "use": "rejected",
+   "notes": "Tempting for realism but NOT demo-safe today: API unreachable from US and 'Request API' flow needed for this resource. Could pre-download CSVs later for training/eval data."
+  },
+  {
+   "source_name": "PM Kisan Samruddhi Kendras (PMKSK)",
+   "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1868496",
+   "access": "open",
+   "verified": false,
+   "verification_note": "PIB URL returned 403 to fetcher; facts via search: 600 inaugurated Oct 2022, 1.25 lakh dedicated Jul 2023, 2.14+ lakh fertilizer shops converted by Jul 2024, target 3.25 lakh.",
+   "use": "deck-citation",
+   "notes": "PMKSKs are retail/access points (fertilizer, soil testing, scheme info) — NOT an expert escalation tier. Mention only as last-mile density."
+  },
+  {
+   "source_name": "TNAU Agritech — Kisan Call Centre explainer",
+   "url": "https://agritech.tnau.ac.in/kisan/kisan.html",
+   "access": "open",
+   "verified": false,
+   "verification_note": "Surfaced in search as corroboration of FTA/L2-SME call-conferencing model; not fetched directly.",
+   "use": "deck-citation",
+   "notes": "Secondary citation for KCC model."
+  },
+  {
+   "source_name": "agri.telangana.gov.in — AEO data pages & key contacts",
+   "url": "https://agri.telangana.gov.in/data_display.php?U=37+&+T=AEO's",
+   "access": "open",
+   "verified": false,
+   "verification_note": "WebFetch got ECONNREFUSED (state datacenter blocks non-Indian IPs); page confirmed to exist via search index.",
+   "use": "rejected",
+   "notes": "Rejected for live demo fetch; cite in deck as the official AEO registry. Same geo-block hit on pjtsau.edu.in and mahabubabad.telangana.gov.in — treat ALL state-NIC hosts as India-only."
+  }
+ ]
+}

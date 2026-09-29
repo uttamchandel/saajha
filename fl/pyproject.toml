@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "saajha-fl"
+version = "1.0.0"
+description = "Saajha: states share what they've learned, not who their farmers are — federated crop-diagnosis heads with Flower"
+license = "Apache-2.0"
+dependencies = [
+    "flwr==1.37.0",
+    "torch>=2.10",
+    "torchvision>=0.25",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "pyarrow>=15",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["saajha_fl"]
+
+[tool.flwr.app]
+publisher = "saajha"
+
+[tool.flwr.app.components]
+serverapp = "saajha_fl.server_app:app"
+clientapp = "saajha_fl.client_app:app"
+
+[tool.flwr.app.config]
+num-server-rounds = 40
+local-epochs = 2
+lr = 0.2
+hidden = 64
+mask-absent = true
+use-flip = true
+proximal-mu = 0.0
+fraction-evaluate = 0.0
+run-name = ""

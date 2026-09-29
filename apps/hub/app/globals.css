@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/*
+  Saajha design tokens.
+  Indigo is the ink of Indian government rubber stamps and carbon-copy forms —
+  the paperwork of things crossing a state border. Straw is ripe paddy. Green and
+  rust are reserved for right and wrong diagnoses and are used nowhere else.
+*/
+:root {
+  --ink: #1f2a6b;        /* stamp indigo: text, structure */
+  --carbon: #4b5bc8;     /* carbon-copy blue: links, secondary marks */
+  --straw: #e3b930;      /* ripe paddy: the one highlight (what crossed the border) */
+  --paper: #f7f8fa;      /* cool paper */
+  --sheet: #ffffff;      /* surfaces that sit on paper */
+  --shoot: #2f7a2b;      /* correct (AA on white) */
+  --blight: #b5462e;     /* wrong */
+  --muted: #5b6386;      /* secondary text (indigo-grey, AA on paper) */
+  --rule: #d9dcea;       /* hairlines */
+  --straw-wash: #fbf1cf;
+  --carbon-wash: #e9ecfb;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-carbon: var(--carbon);
+  --color-straw: var(--straw);
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
+  --color-shoot: var(--shoot);
+  --color-blight: var(--blight);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-straw-wash: var(--straw-wash);
+  --color-carbon-wash: var(--carbon-wash);
+  --font-sans: var(--font-anek), var(--font-anek-deva), var(--font-anek-tamil), "Nirmala UI", system-ui, sans-serif;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-anek), var(--font-anek-deva), var(--font-anek-tamil), "Nirmala UI", system-ui, sans-serif;
+  font-feature-settings: "tnum" 1;
+  line-height: 1.5;
+}
+
+/* Display type: Anek's width axis does the work — wide and heavy for headlines. */
+.display {
+  font-variation-settings: "wdth" 125;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+}
+
+.condensed {
+  font-variation-settings: "wdth" 80;
+}
+
+:focus-visible {
+  outline: 3px solid var(--carbon);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* The stamp: the one orchestrated motion. It lands when a round's slip is issued. */
+@keyframes stamp-in {
+  0% { transform: rotate(-9deg) scale(1.6); opacity: 0; }
+  60% { transform: rotate(-6deg) scale(0.96); opacity: 0.95; }
+  100% { transform: rotate(-6deg) scale(1); opacity: 0.9; }
+}
+.stamp {
+  animation: stamp-in 380ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp { animation: none; transform: rotate(-6deg); opacity: 0.9; }
+  * { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+}

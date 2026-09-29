@@ -1,0 +1,3943 @@
+{
+ "schema_version": 1,
+ "run_id": "deploy-h64-r40",
+ "created_at": "2026-09-27T14:48:33.859130+00:00",
+ "provenance": {
+  "git_commit": null,
+  "flwr": "1.37.0",
+  "torch": "2.14.0+cpu",
+  "seed": 42,
+  "runtime": "deployment (flower-superlink + 4 flower-supernode processes)",
+  "dataset": {
+   "name": "Paddy Doctor (10-class labelled release)",
+   "authors": "Petchiammal A., Briskline Kiruba S., Murugan D., Pandarasamy Arjunan",
+   "paper": "https://arxiv.org/abs/2205.11108",
+   "url": "https://www.kaggle.com/competitions/paddy-disease-classification",
+   "licence": "CC BY 4.0 (Kaggle competition rules \u00a77A)",
+   "origin": "Paddy fields near Tirunelveli, Tamil Nadu",
+   "source": "hf-mirror",
+   "n_train": 8268,
+   "n_test": 1549
+  },
+  "disclosure": "States A-D are label-skewed partitions of one public Tamil Nadu dataset (Paddy Doctor). They do not describe real pest prevalence in any state."
+ },
+ "classes": [
+  {
+   "idx": 0,
+   "key": "bacterial_leaf_blight",
+   "name_en": "Bacterial leaf blight",
+   "is_pest": false
+  },
+  {
+   "idx": 1,
+   "key": "bacterial_leaf_streak",
+   "name_en": "Bacterial leaf streak",
+   "is_pest": false
+  },
+  {
+   "idx": 2,
+   "key": "bacterial_panicle_blight",
+   "name_en": "Bacterial panicle blight",
+   "is_pest": false
+  },
+  {
+   "idx": 3,
+   "key": "blast",
+   "name_en": "Blast",
+   "is_pest": false
+  },
+  {
+   "idx": 4,
+   "key": "brown_spot",
+   "name_en": "Brown spot",
+   "is_pest": false
+  },
+  {
+   "idx": 5,
+   "key": "dead_heart",
+   "name_en": "Dead heart (stem borer)",
+   "is_pest": true
+  },
+  {
+   "idx": 6,
+   "key": "downy_mildew",
+   "name_en": "Downy mildew",
+   "is_pest": false
+  },
+  {
+   "idx": 7,
+   "key": "hispa",
+   "name_en": "Rice hispa",
+   "is_pest": true
+  },
+  {
+   "idx": 8,
+   "key": "normal",
+   "name_en": "Healthy",
+   "is_pest": false
+  },
+  {
+   "idx": 9,
+   "key": "tungro",
+   "name_en": "Tungro",
+   "is_pest": false
+  }
+ ],
+ "states": [
+  {
+   "id": "A",
+   "partition_id": 0,
+   "seen": [
+    "bacterial_leaf_blight",
+    "blast",
+    "brown_spot",
+    "dead_heart",
+    "hispa",
+    "normal"
+   ],
+   "unseen": [
+    "bacterial_leaf_streak",
+    "bacterial_panicle_blight",
+    "downy_mildew",
+    "tungro"
+   ],
+   "n_train": {
+    "bacterial_leaf_blight": 188,
+    "blast": 461,
+    "brown_spot": 254,
+    "dead_heart": 572,
+    "hispa": 636,
+    "normal": 350
+   }
+  },
+  {
+   "id": "B",
+   "partition_id": 1,
+   "seen": [
+    "bacterial_leaf_streak",
+    "blast",
+    "downy_mildew",
+    "hispa",
+    "normal",
+    "tungro"
+   ],
+   "unseen": [
+    "bacterial_leaf_blight",
+    "bacterial_panicle_blight",
+    "brown_spot",
+    "dead_heart"
+   ],
+   "n_train": {
+    "bacterial_leaf_streak": 152,
+    "blast": 461,
+    "downy_mildew": 247,
+    "hispa": 636,
+    "normal": 350,
+    "tungro": 288
+   }
+  },
+  {
+   "id": "C",
+   "partition_id": 2,
+   "seen": [
+    "bacterial_leaf_blight",
+    "bacterial_panicle_blight",
+    "blast",
+    "brown_spot",
+    "normal",
+    "tungro"
+   ],
+   "unseen": [
+    "bacterial_leaf_streak",
+    "dead_heart",
+    "downy_mildew",
+    "hispa"
+   ],
+   "n_train": {
+    "bacterial_leaf_blight": 188,
+    "bacterial_panicle_blight": 135,
+    "blast": 461,
+    "brown_spot": 254,
+    "normal": 350,
+    "tungro": 288
+   }
+  },
+  {
+   "id": "D",
+   "partition_id": 3,
+   "seen": [
+    "bacterial_leaf_streak",
+    "bacterial_panicle_blight",
+    "brown_spot",
+    "dead_heart",
+    "downy_mildew",
+    "normal",
+    "tungro"
+   ],
+   "unseen": [
+    "bacterial_leaf_blight",
+    "blast",
+    "hispa"
+   ],
+   "n_train": {
+    "bacterial_leaf_streak": 152,
+    "bacterial_panicle_blight": 134,
+    "brown_spot": 254,
+    "dead_heart": 572,
+    "downy_mildew": 247,
+    "normal": 350,
+    "tungro": 288
+   }
+  }
+ ],
+ "hero": {
+  "state": "C",
+  "class": "hispa"
+ },
+ "backbone": {
+  "name": "torchvision mobilenet_v3_large IMAGENET1K_V2 (frozen, 1280-d penultimate)",
+  "onnx_url": "/models/backbone.onnx",
+  "onnx_sha256": "a39cf49bbfef5ae6ed7435ae090d55e1048fda5ac8fa32f7e7b919c170e0cf38",
+  "onnx_bytes": 16797782,
+  "embedding_dim": 1280,
+  "input": {
+   "w": 224,
+   "h": 224,
+   "resize": "squash-bilinear",
+   "mean": [
+    0.485,
+    0.456,
+    0.406
+   ],
+   "std": [
+    0.229,
+    0.224,
+    0.225
+   ],
+   "layout": "NCHW",
+   "input_name": "input",
+   "output_name": "embedding"
+  }
+ },
+ "head": {
+  "arch": "mlp1",
+  "hidden": 64,
+  "input_norm": "l2",
+  "params": 82634,
+  "bytes_fp32": 330536
+ },
+ "strategy": {
+  "name": "FedAvg",
+  "rounds": 40,
+  "local_epochs": 2,
+  "lr": 0.2,
+  "mask_absent": true,
+  "dp": null
+ },
+ "gate": {
+  "tau_fed": 0.58,
+  "tau_gem": 60,
+  "calibrated_on": "validation split (5%), >=90% precision"
+ },
+ "local_models": {
+  "A": {
+   "head_url": "/fl/heads/local_A.json",
+   "sha256": "3a071a177ad72b427ca630e666b8669859a77da31466deb586bfb0c99043bbe1",
+   "temperature": 1.8696,
+   "n_train": 2461,
+   "acc_all": 0.642349898815155,
+   "acc_seen": 0.8382476568222046,
+   "acc_unseen": 0.0,
+   "per_class_acc": {
+    "bacterial_leaf_blight": 0.6760563254356384,
+    "bacterial_leaf_streak": 0.0,
+    "bacterial_panicle_blight": 0.0,
+    "blast": 0.7799227833747864,
+    "brown_spot": 0.8531468510627747,
+    "dead_heart": 0.9579439163208008,
+    "downy_mildew": 0.0,
+    "hispa": 0.7773109078407288,
+    "normal": 0.8893129825592041,
+    "tungro": 0.0
+   }
+  },
+  "B": {
+   "head_url": "/fl/heads/local_B.json",
+   "sha256": "bc7646781475d0ad97587a757a17e4fcb2b94bd8501df32f7016fd00349d44e0",
+   "temperature": 1.9993,
+   "n_train": 2134,
+   "acc_all": 0.5610070824623108,
+   "acc_seen": 0.8113912343978882,
+   "acc_unseen": 0.0,
+   "per_class_acc": {
+    "bacterial_leaf_blight": 0.0,
+    "bacterial_leaf_streak": 0.6666666865348816,
+    "bacterial_panicle_blight": 0.0,
+    "blast": 0.837837815284729,
+    "brown_spot": 0.0,
+    "dead_heart": 0.0,
+    "downy_mildew": 0.7419354915618896,
+    "hispa": 0.9033613204956055,
+    "normal": 0.7824427485466003,
+    "tungro": 0.7716049551963806
+   }
+  },
+  "C": {
+   "head_url": "/fl/heads/local_C.json",
+   "sha256": "51227f5be8eb5ed8c998734be9e97aed06d55b312301cb2cce4623adbcdfbee7",
+   "temperature": 1.7483,
+   "n_train": 1676,
+   "acc_all": 0.5145254731178284,
+   "acc_seen": 0.8416050672531128,
+   "acc_unseen": 0.0,
+   "per_class_acc": {
+    "bacterial_leaf_blight": 0.7464788556098938,
+    "bacterial_leaf_streak": 0.0,
+    "bacterial_panicle_blight": 0.9200000166893005,
+    "blast": 0.876447856426239,
+    "brown_spot": 0.8041958212852478,
+    "dead_heart": 0.0,
+    "downy_mildew": 0.0,
+    "hispa": 0.0,
+    "normal": 0.8664122223854065,
+    "tungro": 0.7962962985038757
+   }
+  },
+  "D": {
+   "head_url": "/fl/heads/local_D.json",
+   "sha256": "3ee738ba78c43619d3e2e57380f51ee6174e5c4bbf473c0fb020320f3be15707",
+   "temperature": 1.7483,
+   "n_train": 1997,
+   "acc_all": 0.5493866801261902,
+   "acc_seen": 0.8674821853637695,
+   "acc_unseen": 0.0,
+   "per_class_acc": {
+    "bacterial_leaf_blight": 0.0,
+    "bacterial_leaf_streak": 0.859649121761322,
+    "bacterial_panicle_blight": 1.0,
+    "blast": 0.0,
+    "brown_spot": 0.8741258978843689,
+    "dead_heart": 0.9205607771873474,
+    "downy_mildew": 0.8279569745063782,
+    "hispa": 0.0,
+    "normal": 0.8778625726699829,
+    "tungro": 0.7592592835426331
+   }
+  }
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "duration_s": 1.246,
+   "head_url": "/fl/heads/global_r00.json",
+   "temperature": 50.0,
+   "weights_sha256": "61b4c36252c9e4cc19c06d683b8f6ec95bbf5ea856dd2b630eede970abdbc93d",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {},
+   "broadcast_bytes": 0,
+   "bytes_on_wire_total": 0,
+   "raw_rows_transmitted": 0,
+   "payload_types": [],
+   "clients": {},
+   "global": {
+    "acc_all": 0.14912846684455872,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.0,
+     "bacterial_leaf_streak": 0.0,
+     "bacterial_panicle_blight": 0.0,
+     "blast": 0.0,
+     "brown_spot": 0.0,
+     "dead_heart": 0.0,
+     "downy_mildew": 0.10752688348293304,
+     "hispa": 0.9285714030265808,
+     "normal": 0.0,
+     "tungro": 0.0
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.18618366122245789,
+     "acc_unseen": 0.027624309062957764
+    },
+    "B": {
+     "acc_seen": 0.21568627655506134,
+     "acc_unseen": 0.0
+    },
+    "C": {
+     "acc_seen": 0.0,
+     "acc_unseen": 0.38372093439102173
+    },
+    "D": {
+     "acc_seen": 0.010193679481744766,
+     "acc_unseen": 0.38908451795578003
+    }
+   }
+  },
+  {
+   "round": 1,
+   "duration_s": 18.945,
+   "head_url": "/fl/heads/global_r01.json",
+   "temperature": 0.5228,
+   "weights_sha256": "5e1bac03a9eb14ef0fb18c1bea37f2cf279c920f7d3f6a08d306904704d70935",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "B": 330536,
+    "C": 330536,
+    "A": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 1.4684
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 1.4745
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 1.4454
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 1.3957
+    }
+   },
+   "global": {
+    "acc_all": 0.4919302761554718,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.0,
+     "bacterial_leaf_streak": 0.42105263471603394,
+     "bacterial_panicle_blight": 0.6200000047683716,
+     "blast": 0.5019304752349854,
+     "brown_spot": 0.3776223659515381,
+     "dead_heart": 0.6168224215507507,
+     "downy_mildew": 0.20430107414722443,
+     "hispa": 0.3067227005958557,
+     "normal": 0.8893129825592041,
+     "tungro": 0.40740740299224854
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.5240101218223572,
+     "acc_unseen": 0.3867403268814087
+    },
+    "B": {
+     "acc_seen": 0.5088702440261841,
+     "acc_unseen": 0.4539749026298523
+    },
+    "C": {
+     "acc_seen": 0.5427666306495667,
+     "acc_unseen": 0.4119601249694824
+    },
+    "D": {
+     "acc_seen": 0.5698267221450806,
+     "acc_unseen": 0.35739436745643616
+    }
+   }
+  },
+  {
+   "round": 2,
+   "duration_s": 15.865,
+   "head_url": "/fl/heads/global_r02.json",
+   "temperature": 0.6837,
+   "weights_sha256": "bb67e43099fcdd8403c349501e090ffb3d90c8bd67627c698398af4bc8dfba1a",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "A": 330536,
+    "C": 330536,
+    "D": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 1.1111
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 1.0093
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 1.0273
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 1.0138
+    }
+   },
+   "global": {
+    "acc_all": 0.5990961790084839,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.0,
+     "bacterial_leaf_streak": 0.6491228342056274,
+     "bacterial_panicle_blight": 0.6399999856948853,
+     "blast": 0.6563706398010254,
+     "brown_spot": 0.7202796936035156,
+     "dead_heart": 0.8037382960319519,
+     "downy_mildew": 0.2150537669658661,
+     "hispa": 0.5168067216873169,
+     "normal": 0.8091602921485901,
+     "tungro": 0.3641975224018097
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.6571187973022461,
+     "acc_unseen": 0.40883979201316833
+    },
+    "B": {
+     "acc_seen": 0.5798319578170776,
+     "acc_unseen": 0.642259418964386
+    },
+    "C": {
+     "acc_seen": 0.60823655128479,
+     "acc_unseen": 0.5847176313400269
+    },
+    "D": {
+     "acc_seen": 0.6472986936569214,
+     "acc_unseen": 0.5158450603485107
+    }
+   }
+  },
+  {
+   "round": 3,
+   "duration_s": 16.362,
+   "head_url": "/fl/heads/global_r03.json",
+   "temperature": 0.836,
+   "weights_sha256": "7a786099a3095120bf31774cc4a78e2069f0959791863a5c7ce8a7d68e187ee9",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "A": 330536,
+    "C": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.7636
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.8274
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.8509
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.9154
+    }
+   },
+   "global": {
+    "acc_all": 0.634602963924408,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.2957746386528015,
+     "bacterial_leaf_streak": 0.5087719559669495,
+     "bacterial_panicle_blight": 0.6200000047683716,
+     "blast": 0.6216216087341309,
+     "brown_spot": 0.7622377872467041,
+     "dead_heart": 0.9252336621284485,
+     "downy_mildew": 0.5053763389587402,
+     "hispa": 0.424369752407074,
+     "normal": 0.8511450290679932,
+     "tungro": 0.3888888955116272
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.6849199533462524,
+     "acc_unseen": 0.469613254070282
+    },
+    "B": {
+     "acc_seen": 0.5826330780982971,
+     "acc_unseen": 0.7510460019111633
+    },
+    "C": {
+     "acc_seen": 0.6420274376869202,
+     "acc_unseen": 0.6229236125946045
+    },
+    "D": {
+     "acc_seen": 0.7135576009750366,
+     "acc_unseen": 0.4982394278049469
+    }
+   }
+  },
+  {
+   "round": 4,
+   "duration_s": 15.693,
+   "head_url": "/fl/heads/global_r04.json",
+   "temperature": 0.894,
+   "weights_sha256": "c098b28a1177cb4ee84e4596579a5027c3b148918e02200689e49d973fbb7abf",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "A": 330536,
+    "D": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.8304
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.7679
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.6494
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.7554
+    }
+   },
+   "global": {
+    "acc_all": 0.6475145220756531,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.577464759349823,
+     "bacterial_leaf_streak": 0.6666666865348816,
+     "bacterial_panicle_blight": 0.6800000071525574,
+     "blast": 0.6679536700248718,
+     "brown_spot": 0.4615384638309479,
+     "dead_heart": 0.8925233483314514,
+     "downy_mildew": 0.5268816947937012,
+     "hispa": 0.5126050710678101,
+     "normal": 0.8740457892417908,
+     "tungro": 0.37037035822868347
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.6925020813941956,
+     "acc_unseen": 0.5
+    },
+    "B": {
+     "acc_seen": 0.6265172958374023,
+     "acc_unseen": 0.6945606470108032
+    },
+    "C": {
+     "acc_seen": 0.6367475986480713,
+     "acc_unseen": 0.6644518375396729
+    },
+    "D": {
+     "acc_seen": 0.6799184679985046,
+     "acc_unseen": 0.591549277305603
+    }
+   }
+  },
+  {
+   "round": 5,
+   "duration_s": 18.676,
+   "head_url": "/fl/heads/global_r05.json",
+   "temperature": 0.894,
+   "weights_sha256": "75452ebd1a326e77b380e2edf0f630b15935bbca32b5aa47458b5079b57fda09",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "C": 330536,
+    "D": 330536,
+    "A": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.7337
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.6713
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.5783
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.693
+    }
+   },
+   "global": {
+    "acc_all": 0.6888315081596375,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.5352112650871277,
+     "bacterial_leaf_streak": 0.7894737124443054,
+     "bacterial_panicle_blight": 0.8199999928474426,
+     "blast": 0.6718146800994873,
+     "brown_spot": 0.6713286638259888,
+     "dead_heart": 0.8831775784492493,
+     "downy_mildew": 0.6236559152603149,
+     "hispa": 0.5420168042182922,
+     "normal": 0.8587786555290222,
+     "tungro": 0.4444444477558136
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7169334292411804,
+     "acc_unseen": 0.5966851115226746
+    },
+    "B": {
+     "acc_seen": 0.6563959121704102,
+     "acc_unseen": 0.7615062594413757
+    },
+    "C": {
+     "acc_seen": 0.6821541786193848,
+     "acc_unseen": 0.6993355751037598
+    },
+    "D": {
+     "acc_seen": 0.7400611639022827,
+     "acc_unseen": 0.6003521084785461
+    }
+   }
+  },
+  {
+   "round": 6,
+   "duration_s": 18.845,
+   "head_url": "/fl/heads/global_r06.json",
+   "temperature": 0.956,
+   "weights_sha256": "f0f85f8691e2b8c669477cb1f8608722e34fbac9b20a66849cb1b5e052d94ac2",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "C": 330536,
+    "A": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.5292
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.6793
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.6312
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.633
+    }
+   },
+   "global": {
+    "acc_all": 0.6907682418823242,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.47887325286865234,
+     "bacterial_leaf_streak": 0.8070175647735596,
+     "bacterial_panicle_blight": 0.800000011920929,
+     "blast": 0.7220077514648438,
+     "brown_spot": 0.5804196000099182,
+     "dead_heart": 0.8971962332725525,
+     "downy_mildew": 0.698924720287323,
+     "hispa": 0.4663865566253662,
+     "normal": 0.847328245639801,
+     "tungro": 0.5555555820465088
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.6983993053436279,
+     "acc_unseen": 0.6657458543777466
+    },
+    "B": {
+     "acc_seen": 0.673202633857727,
+     "acc_unseen": 0.7301255464553833
+    },
+    "C": {
+     "acc_seen": 0.6927138566970825,
+     "acc_unseen": 0.6877076625823975
+    },
+    "D": {
+     "acc_seen": 0.752293586730957,
+     "acc_unseen": 0.5845070481300354
+    }
+   }
+  },
+  {
+   "round": 7,
+   "duration_s": 18.897,
+   "head_url": "/fl/heads/global_r07.json",
+   "temperature": 0.894,
+   "weights_sha256": "e4c5c787a993b8293e0e0e9208964c8569ca23ab9b7209a272887cb94de29c47",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "D": 330536,
+    "A": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.6005
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.4928
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.6306
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.5784
+    }
+   },
+   "global": {
+    "acc_all": 0.6946417093276978,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6197183132171631,
+     "bacterial_leaf_streak": 0.7543859481811523,
+     "bacterial_panicle_blight": 0.9399999976158142,
+     "blast": 0.7220077514648438,
+     "brown_spot": 0.5314685106277466,
+     "dead_heart": 0.8738317489624023,
+     "downy_mildew": 0.5483871102333069,
+     "hispa": 0.5546218752861023,
+     "normal": 0.8587786555290222,
+     "tungro": 0.5185185074806213
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7169334292411804,
+     "acc_unseen": 0.6215469837188721
+    },
+    "B": {
+     "acc_seen": 0.6741363406181335,
+     "acc_unseen": 0.7405857443809509
+    },
+    "C": {
+     "acc_seen": 0.700105607509613,
+     "acc_unseen": 0.6860465407371521
+    },
+    "D": {
+     "acc_seen": 0.7268093824386597,
+     "acc_unseen": 0.63908451795578
+    }
+   }
+  },
+  {
+   "round": 8,
+   "duration_s": 16.875,
+   "head_url": "/fl/heads/global_r08.json",
+   "temperature": 0.956,
+   "weights_sha256": "67680dcbde73646803a1b3bff6f2d061f23bea20f3db39ac8b059f79d061f151",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "C": 330536,
+    "B": 330536,
+    "D": 330536,
+    "A": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.5369
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.5446
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.4242
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.593
+    }
+   },
+   "global": {
+    "acc_all": 0.7211104035377502,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.5352112650871277,
+     "bacterial_leaf_streak": 0.8421052694320679,
+     "bacterial_panicle_blight": 0.8399999737739563,
+     "blast": 0.7567567825317383,
+     "brown_spot": 0.7272727489471436,
+     "dead_heart": 0.9065420627593994,
+     "downy_mildew": 0.5376344323158264,
+     "hispa": 0.5042017102241516,
+     "normal": 0.885496199131012,
+     "tungro": 0.5740740895271301
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7447346448898315,
+     "acc_unseen": 0.6436464190483093
+    },
+    "B": {
+     "acc_seen": 0.690009355545044,
+     "acc_unseen": 0.7907949686050415
+    },
+    "C": {
+     "acc_seen": 0.7444561719894409,
+     "acc_unseen": 0.684385359287262
+    },
+    "D": {
+     "acc_seen": 0.7777777910232544,
+     "acc_unseen": 0.6232394576072693
+    }
+   }
+  },
+  {
+   "round": 9,
+   "duration_s": 15.741,
+   "head_url": "/fl/heads/global_r09.json",
+   "temperature": 0.956,
+   "weights_sha256": "68317908a6cae1c1a0f7ab6b4f42ed438e359e1c2ad60f137fe4f5beb44028f6",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "D": 330536,
+    "A": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.5587
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.4054
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.497
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.4816
+    }
+   },
+   "global": {
+    "acc_all": 0.7501614093780518,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6197183132171631,
+     "bacterial_leaf_streak": 0.8421052694320679,
+     "bacterial_panicle_blight": 0.8799999952316284,
+     "blast": 0.7297297120094299,
+     "brown_spot": 0.748251736164093,
+     "dead_heart": 0.9205607771873474,
+     "downy_mildew": 0.6451612710952759,
+     "hispa": 0.605042040348053,
+     "normal": 0.8167939186096191,
+     "tungro": 0.709876537322998
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7540016770362854,
+     "acc_unseen": 0.7375690340995789
+    },
+    "B": {
+     "acc_seen": 0.7189542651176453,
+     "acc_unseen": 0.8200836777687073
+    },
+    "C": {
+     "acc_seen": 0.7529038786888123,
+     "acc_unseen": 0.7458471655845642
+    },
+    "D": {
+     "acc_seen": 0.8002038598060608,
+     "acc_unseen": 0.6637324094772339
+    }
+   }
+  },
+  {
+   "round": 10,
+   "duration_s": 15.769,
+   "head_url": "/fl/heads/global_r10.json",
+   "temperature": 1.0224,
+   "weights_sha256": "0c47b6cba6788ebbf4240466a57475130b64602bcc838de17730fcc8d4313adc",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "B": 330536,
+    "A": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.3682
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.5306
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.5324
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.4704
+    }
+   },
+   "global": {
+    "acc_all": 0.7333763837814331,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.4507042169570923,
+     "bacterial_leaf_streak": 0.8421052694320679,
+     "bacterial_panicle_blight": 0.7799999713897705,
+     "blast": 0.7722007632255554,
+     "brown_spot": 0.3916083872318268,
+     "dead_heart": 0.9299065470695496,
+     "downy_mildew": 0.7311828136444092,
+     "hispa": 0.6344537734985352,
+     "normal": 0.8702290058135986,
+     "tungro": 0.709876537322998
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7295703291893005,
+     "acc_unseen": 0.7458563446998596
+    },
+    "B": {
+     "acc_seen": 0.756302535533905,
+     "acc_unseen": 0.6820083856582642
+    },
+    "C": {
+     "acc_seen": 0.7074973583221436,
+     "acc_unseen": 0.7740863561630249
+    },
+    "D": {
+     "acc_seen": 0.7675840854644775,
+     "acc_unseen": 0.6742957830429077
+    }
+   }
+  },
+  {
+   "round": 11,
+   "duration_s": 15.787,
+   "head_url": "/fl/heads/global_r11.json",
+   "temperature": 1.0224,
+   "weights_sha256": "a6e0624376e17b66a0c5c1c9686caf4162659df6ea504f8c95c8da9b9dcd6bdc",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "C": 330536,
+    "A": 330536,
+    "B": 330536,
+    "D": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.5028
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.4633
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.4657
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.385
+    }
+   },
+   "global": {
+    "acc_all": 0.7559716105461121,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6901408433914185,
+     "bacterial_leaf_streak": 0.8771929740905762,
+     "bacterial_panicle_blight": 0.8799999952316284,
+     "blast": 0.7374517321586609,
+     "brown_spot": 0.6993007063865662,
+     "dead_heart": 0.9112149477005005,
+     "downy_mildew": 0.5591397881507874,
+     "hispa": 0.680672287940979,
+     "normal": 0.8396946787834167,
+     "tungro": 0.6666666865348816
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7725358009338379,
+     "acc_unseen": 0.7016574740409851
+    },
+    "B": {
+     "acc_seen": 0.7310924530029297,
+     "acc_unseen": 0.8117154836654663
+    },
+    "C": {
+     "acc_seen": 0.7518479228019714,
+     "acc_unseen": 0.7624584436416626
+    },
+    "D": {
+     "acc_seen": 0.7838940024375916,
+     "acc_unseen": 0.7077465057373047
+    }
+   }
+  },
+  {
+   "round": 12,
+   "duration_s": 15.598,
+   "head_url": "/fl/heads/global_r12.json",
+   "temperature": 1.0933,
+   "weights_sha256": "1338f796672275bfd2ae9bd1800cf8136cac2cb4231e19bf3a0019aafc8436f8",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "A": 330536,
+    "B": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.328
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.4046
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.4186
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.3923
+    }
+   },
+   "global": {
+    "acc_all": 0.7598450779914856,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6901408433914185,
+     "bacterial_leaf_streak": 0.8421052694320679,
+     "bacterial_panicle_blight": 0.9800000190734863,
+     "blast": 0.8185328245162964,
+     "brown_spot": 0.6223776340484619,
+     "dead_heart": 0.8598130941390991,
+     "downy_mildew": 0.5591397881507874,
+     "hispa": 0.7142857313156128,
+     "normal": 0.8320610523223877,
+     "tungro": 0.654321014881134
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7767481207847595,
+     "acc_unseen": 0.7044199109077454
+    },
+    "B": {
+     "acc_seen": 0.752567708492279,
+     "acc_unseen": 0.776150643825531
+    },
+    "C": {
+     "acc_seen": 0.76346355676651,
+     "acc_unseen": 0.7541528344154358
+    },
+    "D": {
+     "acc_seen": 0.7604485154151917,
+     "acc_unseen": 0.7588028311729431
+    }
+   }
+  },
+  {
+   "round": 13,
+   "duration_s": 17.112,
+   "head_url": "/fl/heads/global_r13.json",
+   "temperature": 1.0933,
+   "weights_sha256": "5926c0aa0b79864d3b684ac64de9527129f9b5af11b580c15ba2c99fdb33b5e2",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "A": 330536,
+    "B": 330536,
+    "D": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.3925
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.3799
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.3018
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.4402
+    }
+   },
+   "global": {
+    "acc_all": 0.7637185454368591,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7042253613471985,
+     "bacterial_leaf_streak": 0.8771929740905762,
+     "bacterial_panicle_blight": 0.9599999785423279,
+     "blast": 0.7683397531509399,
+     "brown_spot": 0.6083915829658508,
+     "dead_heart": 0.8598130941390991,
+     "downy_mildew": 0.7419354915618896,
+     "hispa": 0.680672287940979,
+     "normal": 0.8511450290679932,
+     "tungro": 0.6851851940155029
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7624262571334839,
+     "acc_unseen": 0.7679557800292969
+    },
+    "B": {
+     "acc_seen": 0.760037362575531,
+     "acc_unseen": 0.7719665169715881
+    },
+    "C": {
+     "acc_seen": 0.7581837177276611,
+     "acc_unseen": 0.7724252343177795
+    },
+    "D": {
+     "acc_seen": 0.7869520783424377,
+     "acc_unseen": 0.7235915660858154
+    }
+   }
+  },
+  {
+   "round": 14,
+   "duration_s": 15.782,
+   "head_url": "/fl/heads/global_r14.json",
+   "temperature": 1.1691,
+   "weights_sha256": "4c63828f9908ed9cc6e4e2ad39ca697b36ed2a0802ee3a4987d10c2512424d09",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "A": 330536,
+    "C": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.2797
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.3518
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.3537
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.4232
+    }
+   },
+   "global": {
+    "acc_all": 0.7540348768234253,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6338028311729431,
+     "bacterial_leaf_streak": 0.8771929740905762,
+     "bacterial_panicle_blight": 0.9200000166893005,
+     "blast": 0.8803088665008545,
+     "brown_spot": 0.5734265446662903,
+     "dead_heart": 0.9205607771873474,
+     "downy_mildew": 0.6344085931777954,
+     "hispa": 0.7016806602478027,
+     "normal": 0.7404580116271973,
+     "tungro": 0.6172839403152466
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7691659927368164,
+     "acc_unseen": 0.7044199109077454
+    },
+    "B": {
+     "acc_seen": 0.7450980544090271,
+     "acc_unseen": 0.7740585803985596
+    },
+    "C": {
+     "acc_seen": 0.7338964939117432,
+     "acc_unseen": 0.7857142686843872
+    },
+    "D": {
+     "acc_seen": 0.7420998811721802,
+     "acc_unseen": 0.7746478915214539
+    }
+   }
+  },
+  {
+   "round": 15,
+   "duration_s": 15.643,
+   "head_url": "/fl/heads/global_r15.json",
+   "temperature": 1.1691,
+   "weights_sha256": "af302715a94318dde218d909493d7e1bad5cece6bf5d20cb8e11521e9917fbc4",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "C": 330536,
+    "D": 330536,
+    "B": 330536,
+    "A": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.363
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.2868
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.366
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.3272
+    }
+   },
+   "global": {
+    "acc_all": 0.7856681942939758,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6760563254356384,
+     "bacterial_leaf_streak": 0.9122806787490845,
+     "bacterial_panicle_blight": 0.9800000190734863,
+     "blast": 0.8146718144416809,
+     "brown_spot": 0.7762237787246704,
+     "dead_heart": 0.9018691778182983,
+     "downy_mildew": 0.6451612710952759,
+     "hispa": 0.7689075469970703,
+     "normal": 0.805343508720398,
+     "tungro": 0.6111111044883728
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8062341809272766,
+     "acc_unseen": 0.7182320356369019
+    },
+    "B": {
+     "acc_seen": 0.761904776096344,
+     "acc_unseen": 0.8389121294021606
+    },
+    "C": {
+     "acc_seen": 0.7697993516921997,
+     "acc_unseen": 0.8106312155723572
+    },
+    "D": {
+     "acc_seen": 0.7900102138519287,
+     "acc_unseen": 0.7781690359115601
+    }
+   }
+  },
+  {
+   "round": 16,
+   "duration_s": 18.685,
+   "head_url": "/fl/heads/global_r16.json",
+   "temperature": 1.0933,
+   "weights_sha256": "6aa871099bf021135f177dcb0e09469a08857bf96f0a98370ca279bf2408340a",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "A": 330536,
+    "C": 330536,
+    "B": 330536,
+    "D": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.3311
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.3086
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.3487
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.2889
+    }
+   },
+   "global": {
+    "acc_all": 0.7927695512771606,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7323943376541138,
+     "bacterial_leaf_streak": 0.8245614171028137,
+     "bacterial_panicle_blight": 0.9800000190734863,
+     "blast": 0.8301158547401428,
+     "brown_spot": 0.811188817024231,
+     "dead_heart": 0.9205607771873474,
+     "downy_mildew": 0.6881720423698425,
+     "hispa": 0.7226890921592712,
+     "normal": 0.8206107020378113,
+     "tungro": 0.6234567761421204
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8146588206291199,
+     "acc_unseen": 0.7209944725036621
+    },
+    "B": {
+     "acc_seen": 0.760037362575531,
+     "acc_unseen": 0.866108775138855
+    },
+    "C": {
+     "acc_seen": 0.7898627519607544,
+     "acc_unseen": 0.7973421812057495
+    },
+    "D": {
+     "acc_seen": 0.8042813539505005,
+     "acc_unseen": 0.7728873491287231
+    }
+   }
+  },
+  {
+   "round": 17,
+   "duration_s": 15.728,
+   "head_url": "/fl/heads/global_r17.json",
+   "temperature": 1.1691,
+   "weights_sha256": "a5aebe782dbc09b17b33ebae8d0d6aecddb72c82bf2e32fe941f59810957123e",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "D": 330536,
+    "C": 330536,
+    "A": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.3306
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.2655
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.313
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.2927
+    }
+   },
+   "global": {
+    "acc_all": 0.7817947268486023,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7183098793029785,
+     "bacterial_leaf_streak": 0.859649121761322,
+     "bacterial_panicle_blight": 0.9599999785423279,
+     "blast": 0.8262548446655273,
+     "brown_spot": 0.6713286638259888,
+     "dead_heart": 0.9158878326416016,
+     "downy_mildew": 0.6451612710952759,
+     "hispa": 0.7310924530029297,
+     "normal": 0.8244274854660034,
+     "tungro": 0.6604938507080078
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7978096008300781,
+     "acc_unseen": 0.7292817831039429
+    },
+    "B": {
+     "acc_seen": 0.76563960313797,
+     "acc_unseen": 0.8179916143417358
+    },
+    "C": {
+     "acc_seen": 0.7729672789573669,
+     "acc_unseen": 0.7956810593605042
+    },
+    "D": {
+     "acc_seen": 0.7869520783424377,
+     "acc_unseen": 0.7728873491287231
+    }
+   }
+  },
+  {
+   "round": 18,
+   "duration_s": 18.681,
+   "head_url": "/fl/heads/global_r18.json",
+   "temperature": 1.1691,
+   "weights_sha256": "16fa3d1373f0a78244bb1a13d0ec299bc0aab7054b27e0ad9f920d51f8dbb48b",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "A": 330536,
+    "C": 330536,
+    "B": 330536,
+    "D": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.2869
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.3613
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.3142
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.2464
+    }
+   },
+   "global": {
+    "acc_all": 0.8005164861679077,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6901408433914185,
+     "bacterial_leaf_streak": 0.8947368264198303,
+     "bacterial_panicle_blight": 0.9800000190734863,
+     "blast": 0.8030887842178345,
+     "brown_spot": 0.7972028255462646,
+     "dead_heart": 0.836448609828949,
+     "downy_mildew": 0.5483871102333069,
+     "hispa": 0.8151260614395142,
+     "normal": 0.8587786555290222,
+     "tungro": 0.7407407164573669
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8163437247276306,
+     "acc_unseen": 0.7486187815666199
+    },
+    "B": {
+     "acc_seen": 0.7927170991897583,
+     "acc_unseen": 0.8179916143417358
+    },
+    "C": {
+     "acc_seen": 0.8078141212463379,
+     "acc_unseen": 0.7890365719795227
+    },
+    "D": {
+     "acc_seen": 0.8042813539505005,
+     "acc_unseen": 0.7940140962600708
+    }
+   }
+  },
+  {
+   "round": 19,
+   "duration_s": 15.681,
+   "head_url": "/fl/heads/global_r19.json",
+   "temperature": 1.2502,
+   "weights_sha256": "457ea63f1a8596a55bb50cead64632713842a92b8ea862916ded5b8d53b4ad98",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "D": 330536,
+    "A": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.3025
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.202
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.2363
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.2895
+    }
+   },
+   "global": {
+    "acc_all": 0.7688831686973572,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6338028311729431,
+     "bacterial_leaf_streak": 0.7894737124443054,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.9034749269485474,
+     "brown_spot": 0.6573426723480225,
+     "dead_heart": 0.8598130941390991,
+     "downy_mildew": 0.6559139490127563,
+     "hispa": 0.7058823704719543,
+     "normal": 0.7595419883728027,
+     "tungro": 0.6851851940155029
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7784330248832703,
+     "acc_unseen": 0.7375690340995789
+    },
+    "B": {
+     "acc_seen": 0.763772189617157,
+     "acc_unseen": 0.7803347110748291
+    },
+    "C": {
+     "acc_seen": 0.7740232348442078,
+     "acc_unseen": 0.7607973217964172
+    },
+    "D": {
+     "acc_seen": 0.7584097981452942,
+     "acc_unseen": 0.7869718074798584
+    }
+   }
+  },
+  {
+   "round": 20,
+   "duration_s": 15.74,
+   "head_url": "/fl/heads/global_r20.json",
+   "temperature": 1.1691,
+   "weights_sha256": "891ff4d6481867e0be464693cd9cfac17449c56bca8791e7d8ac53a71554fb3e",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "B": 330536,
+    "C": 330536,
+    "A": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.2152
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.2878
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.3129
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.2783
+    }
+   },
+   "global": {
+    "acc_all": 0.8030987977981567,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6760563254356384,
+     "bacterial_leaf_streak": 0.8947368264198303,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.8494208455085754,
+     "brown_spot": 0.811188817024231,
+     "dead_heart": 0.8925233483314514,
+     "downy_mildew": 0.7526881694793701,
+     "hispa": 0.7016806602478027,
+     "normal": 0.7862595319747925,
+     "tungro": 0.7716049551963806
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.7986520528793335,
+     "acc_unseen": 0.8176795840263367
+    },
+    "B": {
+     "acc_seen": 0.7833800315856934,
+     "acc_unseen": 0.8472803235054016
+    },
+    "C": {
+     "acc_seen": 0.8078141212463379,
+     "acc_unseen": 0.7956810593605042
+    },
+    "D": {
+     "acc_seen": 0.8246687054634094,
+     "acc_unseen": 0.7658450603485107
+    }
+   }
+  },
+  {
+   "round": 21,
+   "duration_s": 19.908,
+   "head_url": "/fl/heads/global_r21.json",
+   "temperature": 1.2502,
+   "weights_sha256": "372fb04064984969f58d8779dd7552b1be977de8cd13c31ae05afc5b726fa417",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "A": 330536,
+    "C": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.2369
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.2282
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.2438
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.304
+    }
+   },
+   "global": {
+    "acc_all": 0.8018076419830322,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6901408433914185,
+     "bacterial_leaf_streak": 0.8947368264198303,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.7915058135986328,
+     "brown_spot": 0.8041958212852478,
+     "dead_heart": 0.8598130941390991,
+     "downy_mildew": 0.6666666865348816,
+     "hispa": 0.7226890921592712,
+     "normal": 0.8893129825592041,
+     "tungro": 0.7469135522842407
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8070766925811768,
+     "acc_unseen": 0.7845304012298584
+    },
+    "B": {
+     "acc_seen": 0.7880485653877258,
+     "acc_unseen": 0.8326359987258911
+    },
+    "C": {
+     "acc_seen": 0.816261887550354,
+     "acc_unseen": 0.7790697813034058
+    },
+    "D": {
+     "acc_seen": 0.8318042755126953,
+     "acc_unseen": 0.75
+    }
+   }
+  },
+  {
+   "round": 22,
+   "duration_s": 18.681,
+   "head_url": "/fl/heads/global_r22.json",
+   "temperature": 1.2502,
+   "weights_sha256": "56b82a3e67b463b797561d289ad590850dff7de238776cbd04736b7ad6ff0e3f",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "A": 330536,
+    "D": 330536,
+    "C": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.2588
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1917
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.2482
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.288
+    }
+   },
+   "global": {
+    "acc_all": 0.8056811094284058,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6619718074798584,
+     "bacterial_leaf_streak": 0.859649121761322,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.8301158547401428,
+     "brown_spot": 0.6503496766090393,
+     "dead_heart": 0.8971962332725525,
+     "downy_mildew": 0.7526881694793701,
+     "hispa": 0.7647058963775635,
+     "normal": 0.8587786555290222,
+     "tungro": 0.7716049551963806
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8037068247795105,
+     "acc_unseen": 0.8121547102928162
+    },
+    "B": {
+     "acc_seen": 0.8085901141166687,
+     "acc_unseen": 0.7991631627082825
+    },
+    "C": {
+     "acc_seen": 0.7972545027732849,
+     "acc_unseen": 0.8189368844032288
+    },
+    "D": {
+     "acc_seen": 0.819571852684021,
+     "acc_unseen": 0.7816901206970215
+    }
+   }
+  },
+  {
+   "round": 23,
+   "duration_s": 18.659,
+   "head_url": "/fl/heads/global_r23.json",
+   "temperature": 1.2502,
+   "weights_sha256": "6578676cb751aab028eeb858fc6be90573873f32328a5e77d23de85a50f83514",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "A": 330536,
+    "C": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.2068
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.2308
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.276
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.2511
+    }
+   },
+   "global": {
+    "acc_all": 0.8102001547813416,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6760563254356384,
+     "bacterial_leaf_streak": 0.9122806787490845,
+     "bacterial_panicle_blight": 0.9800000190734863,
+     "blast": 0.8494208455085754,
+     "brown_spot": 0.748251736164093,
+     "dead_heart": 0.8831775784492493,
+     "downy_mildew": 0.6666666865348816,
+     "hispa": 0.743697464466095,
+     "normal": 0.8511450290679932,
+     "tungro": 0.790123462677002
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.812131404876709,
+     "acc_unseen": 0.8038673996925354
+    },
+    "B": {
+     "acc_seen": 0.8048552870750427,
+     "acc_unseen": 0.8221757411956787
+    },
+    "C": {
+     "acc_seen": 0.8183737993240356,
+     "acc_unseen": 0.7973421812057495
+    },
+    "D": {
+     "acc_seen": 0.8256880640983582,
+     "acc_unseen": 0.783450722694397
+    }
+   }
+  },
+  {
+   "round": 24,
+   "duration_s": 15.686,
+   "head_url": "/fl/heads/global_r24.json",
+   "temperature": 1.2502,
+   "weights_sha256": "0bae658e9867ac4294b1b140626a6e4b915d2a1b6e795468c381a82b77816ff8",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "C": 330536,
+    "B": 330536,
+    "A": 330536,
+    "D": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.2403
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.2398
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1993
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1756
+    }
+   },
+   "global": {
+    "acc_all": 0.8082634210586548,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6760563254356384,
+     "bacterial_leaf_streak": 0.9122806787490845,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.8880308866500854,
+     "brown_spot": 0.7762237787246704,
+     "dead_heart": 0.8738317489624023,
+     "downy_mildew": 0.6451612710952759,
+     "hispa": 0.7899159789085388,
+     "normal": 0.7977099418640137,
+     "tungro": 0.7222222089767456
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8197135925292969,
+     "acc_unseen": 0.7707182168960571
+    },
+    "B": {
+     "acc_seen": 0.7992530465126038,
+     "acc_unseen": 0.8284518718719482
+    },
+    "C": {
+     "acc_seen": 0.8078141212463379,
+     "acc_unseen": 0.8089700937271118
+    },
+    "D": {
+     "acc_seen": 0.8012232184410095,
+     "acc_unseen": 0.8204225301742554
+    }
+   }
+  },
+  {
+   "round": 25,
+   "duration_s": 15.757,
+   "head_url": "/fl/heads/global_r25.json",
+   "temperature": 1.2502,
+   "weights_sha256": "ddbdd3abd5b874f6467c5a81182e30090de55685da3978e39a6c9a79505266d3",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "A": 330536,
+    "D": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.2263
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1874
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1962
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.2166
+    }
+   },
+   "global": {
+    "acc_all": 0.8218205571174622,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7183098793029785,
+     "bacterial_leaf_streak": 0.8771929740905762,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.8185328245162964,
+     "brown_spot": 0.8041958212852478,
+     "dead_heart": 0.9158878326416016,
+     "downy_mildew": 0.7634408473968506,
+     "hispa": 0.7815126180648804,
+     "normal": 0.8282442688941956,
+     "tungro": 0.7716049551963806
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8230834007263184,
+     "acc_unseen": 0.8176795840263367
+    },
+    "B": {
+     "acc_seen": 0.8039215803146362,
+     "acc_unseen": 0.8619247078895569
+    },
+    "C": {
+     "acc_seen": 0.8130939602851868,
+     "acc_unseen": 0.8355481624603271
+    },
+    "D": {
+     "acc_seen": 0.8399592041969299,
+     "acc_unseen": 0.7904929518699646
+    }
+   }
+  },
+  {
+   "round": 26,
+   "duration_s": 18.74,
+   "head_url": "/fl/heads/global_r26.json",
+   "temperature": 1.2502,
+   "weights_sha256": "a5fcc735649adc61a36e2543390896877e8c3bc845b6960247e26df8df681f8f",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "D": 330536,
+    "C": 330536,
+    "A": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.2178
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.158
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.2181
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1717
+    }
+   },
+   "global": {
+    "acc_all": 0.8205294013023376,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7042253613471985,
+     "bacterial_leaf_streak": 0.8771929740905762,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.876447856426239,
+     "brown_spot": 0.6993007063865662,
+     "dead_heart": 0.9112149477005005,
+     "downy_mildew": 0.7096773982048035,
+     "hispa": 0.7773109078407288,
+     "normal": 0.8549618124961853,
+     "tungro": 0.7654321193695068
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8264532685279846,
+     "acc_unseen": 0.8011049628257751
+    },
+    "B": {
+     "acc_seen": 0.8179271817207336,
+     "acc_unseen": 0.8263598084449768
+    },
+    "C": {
+     "acc_seen": 0.8183737993240356,
+     "acc_unseen": 0.8239202499389648
+    },
+    "D": {
+     "acc_seen": 0.8246687054634094,
+     "acc_unseen": 0.8133803009986877
+    }
+   }
+  },
+  {
+   "round": 27,
+   "duration_s": 18.777,
+   "head_url": "/fl/heads/global_r27.json",
+   "temperature": 1.3369,
+   "weights_sha256": "98a33e35a4c84efa380400dd169e27542f9da48efbb5b4786407175c267f7ac7",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "A": 330536,
+    "C": 330536,
+    "B": 330536,
+    "D": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.2015
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.2297
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.2204
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1471
+    }
+   },
+   "global": {
+    "acc_all": 0.803744375705719,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6901408433914185,
+     "bacterial_leaf_streak": 0.9473684430122375,
+     "bacterial_panicle_blight": 0.9800000190734863,
+     "blast": 0.7953668236732483,
+     "brown_spot": 0.7692307829856873,
+     "dead_heart": 0.8691588640213013,
+     "downy_mildew": 0.7311828136444092,
+     "hispa": 0.743697464466095,
+     "normal": 0.8740457892417908,
+     "tungro": 0.7222222089767456
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8062341809272766,
+     "acc_unseen": 0.7955800890922546
+    },
+    "B": {
+     "acc_seen": 0.7945845127105713,
+     "acc_unseen": 0.8242678046226501
+    },
+    "C": {
+     "acc_seen": 0.8025343418121338,
+     "acc_unseen": 0.8056478500366211
+    },
+    "D": {
+     "acc_seen": 0.8287461996078491,
+     "acc_unseen": 0.7605633735656738
+    }
+   }
+  },
+  {
+   "round": 28,
+   "duration_s": 18.701,
+   "head_url": "/fl/heads/global_r28.json",
+   "temperature": 1.3369,
+   "weights_sha256": "d27f3db7f502965a1aaaba425dc73bfc6cba1e3232d321d6924cfa40b0c675e7",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "D": 330536,
+    "A": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.2166
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.147
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1875
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.212
+    }
+   },
+   "global": {
+    "acc_all": 0.8302130699157715,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7183098793029785,
+     "bacterial_leaf_streak": 0.859649121761322,
+     "bacterial_panicle_blight": 0.9800000190734863,
+     "blast": 0.876447856426239,
+     "brown_spot": 0.811188817024231,
+     "dead_heart": 0.9299065470695496,
+     "downy_mildew": 0.698924720287323,
+     "hispa": 0.7226890921592712,
+     "normal": 0.8931297659873962,
+     "tungro": 0.7654321193695068
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8416175246238708,
+     "acc_unseen": 0.7928176522254944
+    },
+    "B": {
+     "acc_seen": 0.8132586479187012,
+     "acc_unseen": 0.8682008385658264
+    },
+    "C": {
+     "acc_seen": 0.8458289504051208,
+     "acc_unseen": 0.8056478500366211
+    },
+    "D": {
+     "acc_seen": 0.8521916270256042,
+     "acc_unseen": 0.7922534942626953
+    }
+   }
+  },
+  {
+   "round": 29,
+   "duration_s": 15.697,
+   "head_url": "/fl/heads/global_r29.json",
+   "temperature": 1.3369,
+   "weights_sha256": "5f3f9d1aa92814f82f0ce3e89cde4a4197400ec92cafc97ebbe035fba4afedb7",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "B": 330536,
+    "A": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1476
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.1894
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1744
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1753
+    }
+   },
+   "global": {
+    "acc_all": 0.8179470896720886,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6760563254356384,
+     "bacterial_leaf_streak": 0.9122806787490845,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.8918918967247009,
+     "brown_spot": 0.748251736164093,
+     "dead_heart": 0.8925233483314514,
+     "downy_mildew": 0.698924720287323,
+     "hispa": 0.831932783126831,
+     "normal": 0.767175555229187,
+     "tungro": 0.7654321193695068
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.822240948677063,
+     "acc_unseen": 0.8038673996925354
+    },
+    "B": {
+     "acc_seen": 0.8132586479187012,
+     "acc_unseen": 0.8284518718719482
+    },
+    "C": {
+     "acc_seen": 0.8035902976989746,
+     "acc_unseen": 0.840531587600708
+    },
+    "D": {
+     "acc_seen": 0.8053007125854492,
+     "acc_unseen": 0.8397887349128723
+    }
+   }
+  },
+  {
+   "round": 30,
+   "duration_s": 19.892,
+   "head_url": "/fl/heads/global_r30.json",
+   "temperature": 1.3369,
+   "weights_sha256": "40c435180066eb849636ad9ef3c071e20929076abef6d09e3d2dcf315228c16f",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "C": 330536,
+    "A": 330536,
+    "B": 330536,
+    "D": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1795
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1756
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.1949
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1525
+    }
+   },
+   "global": {
+    "acc_all": 0.8153647780418396,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6760563254356384,
+     "bacterial_leaf_streak": 0.9298245906829834,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.876447856426239,
+     "brown_spot": 0.7552447319030762,
+     "dead_heart": 0.84112149477005,
+     "downy_mildew": 0.7526881694793701,
+     "hispa": 0.7773109078407288,
+     "normal": 0.8625954389572144,
+     "tungro": 0.7160493731498718
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8205560445785522,
+     "acc_unseen": 0.7983425259590149
+    },
+    "B": {
+     "acc_seen": 0.8188608884811401,
+     "acc_unseen": 0.8075313568115234
+    },
+    "C": {
+     "acc_seen": 0.8183737993240356,
+     "acc_unseen": 0.8106312155723572
+    },
+    "D": {
+     "acc_seen": 0.8185524940490723,
+     "acc_unseen": 0.8098591566085815
+    }
+   }
+  },
+  {
+   "round": 31,
+   "duration_s": 15.765,
+   "head_url": "/fl/heads/global_r31.json",
+   "temperature": 1.4297,
+   "weights_sha256": "51a089604bb6f3c5d5127960e89b9dbda9f2ca73ccd714031b737642bc36edb2",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "C": 330536,
+    "A": 330536,
+    "D": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1764
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1382
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1244
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.2026
+    }
+   },
+   "global": {
+    "acc_all": 0.8327953815460205,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7183098793029785,
+     "bacterial_leaf_streak": 0.859649121761322,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.8494208455085754,
+     "brown_spot": 0.811188817024231,
+     "dead_heart": 0.8925233483314514,
+     "downy_mildew": 0.5913978219032288,
+     "hispa": 0.8571428656578064,
+     "normal": 0.8740457892417908,
+     "tungro": 0.7716049551963806
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8517270684242249,
+     "acc_unseen": 0.7707182168960571
+    },
+    "B": {
+     "acc_seen": 0.8235294222831726,
+     "acc_unseen": 0.8535565137863159
+    },
+    "C": {
+     "acc_seen": 0.8352692723274231,
+     "acc_unseen": 0.8289036750793457
+    },
+    "D": {
+     "acc_seen": 0.8307849168777466,
+     "acc_unseen": 0.8362675905227661
+    }
+   }
+  },
+  {
+   "round": 32,
+   "duration_s": 15.919,
+   "head_url": "/fl/heads/global_r32.json",
+   "temperature": 1.3369,
+   "weights_sha256": "97839fd6875501357d2bc0e109cdf2eda6d548f18ec674fc0a217b02744bba7b",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "A": 330536,
+    "C": 330536,
+    "D": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1442
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1565
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1292
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.2029
+    }
+   },
+   "global": {
+    "acc_all": 0.8373143672943115,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6338028311729431,
+     "bacterial_leaf_streak": 0.9298245906829834,
+     "bacterial_panicle_blight": 0.9800000190734863,
+     "blast": 0.84555983543396,
+     "brown_spot": 0.8951048851013184,
+     "dead_heart": 0.9252336621284485,
+     "downy_mildew": 0.6559139490127563,
+     "hispa": 0.848739504814148,
+     "normal": 0.8358778357505798,
+     "tungro": 0.7592592835426331
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8517270684242249,
+     "acc_unseen": 0.7900552749633789
+    },
+    "B": {
+     "acc_seen": 0.8188608884811401,
+     "acc_unseen": 0.8786610960960388
+    },
+    "C": {
+     "acc_seen": 0.8268215656280518,
+     "acc_unseen": 0.8538206219673157
+    },
+    "D": {
+     "acc_seen": 0.8470947742462158,
+     "acc_unseen": 0.8204225301742554
+    }
+   }
+  },
+  {
+   "round": 33,
+   "duration_s": 18.783,
+   "head_url": "/fl/heads/global_r33.json",
+   "temperature": 1.3369,
+   "weights_sha256": "1b53d4fe7a84a9bbdea4fe8c3768b430917be32d48dea38c9dc5f1073c2a45d9",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "C": 330536,
+    "D": 330536,
+    "A": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1685
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1482
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1422
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.1803
+    }
+   },
+   "global": {
+    "acc_all": 0.8366687893867493,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.6478873491287231,
+     "bacterial_leaf_streak": 0.9298245906829834,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.88416987657547,
+     "brown_spot": 0.7762237787246704,
+     "dead_heart": 0.9392523169517517,
+     "downy_mildew": 0.6129032373428345,
+     "hispa": 0.8403361439704895,
+     "normal": 0.847328245639801,
+     "tungro": 0.7839506268501282
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8500421047210693,
+     "acc_unseen": 0.7928176522254944
+    },
+    "B": {
+     "acc_seen": 0.8291316628456116,
+     "acc_unseen": 0.8535565137863159
+    },
+    "C": {
+     "acc_seen": 0.8289334774017334,
+     "acc_unseen": 0.8488371968269348
+    },
+    "D": {
+     "acc_seen": 0.8369011282920837,
+     "acc_unseen": 0.8362675905227661
+    }
+   }
+  },
+  {
+   "round": 34,
+   "duration_s": 18.637,
+   "head_url": "/fl/heads/global_r34.json",
+   "temperature": 1.4297,
+   "weights_sha256": "e9e02c44666e3abfe45e88451e46fb4c0cf72cb47b990ad4b2319dd259ecd22f",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "C": 330536,
+    "B": 330536,
+    "D": 330536,
+    "A": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1497
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.1692
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1053
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.157
+    }
+   },
+   "global": {
+    "acc_all": 0.8373143672943115,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7042253613471985,
+     "bacterial_leaf_streak": 0.9298245906829834,
+     "bacterial_panicle_blight": 0.9599999785423279,
+     "blast": 0.8803088665008545,
+     "brown_spot": 0.7972028255462646,
+     "dead_heart": 0.9252336621284485,
+     "downy_mildew": 0.5806451439857483,
+     "hispa": 0.8151260614395142,
+     "normal": 0.8702290058135986,
+     "tungro": 0.8024691343307495
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8525695204734802,
+     "acc_unseen": 0.7872928380966187
+    },
+    "B": {
+     "acc_seen": 0.8281979560852051,
+     "acc_unseen": 0.857740581035614
+    },
+    "C": {
+     "acc_seen": 0.8426610231399536,
+     "acc_unseen": 0.8289036750793457
+    },
+    "D": {
+     "acc_seen": 0.8409786224365234,
+     "acc_unseen": 0.8309859037399292
+    }
+   }
+  },
+  {
+   "round": 35,
+   "duration_s": 18.845,
+   "head_url": "/fl/heads/global_r35.json",
+   "temperature": 1.5289,
+   "weights_sha256": "fdef4a427ae516c263300114a3652a6fcda4177a1f9551ca9448c2b04abc0d2b",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "A": 330536,
+    "B": 330536,
+    "D": 330536,
+    "C": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1148
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.1771
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.107
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1672
+    }
+   },
+   "global": {
+    "acc_all": 0.836023211479187,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7746478915214539,
+     "bacterial_leaf_streak": 0.8947368264198303,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.837837815284729,
+     "brown_spot": 0.7972028255462646,
+     "dead_heart": 0.8925233483314514,
+     "downy_mildew": 0.6129032373428345,
+     "hispa": 0.8403361439704895,
+     "normal": 0.8893129825592041,
+     "tungro": 0.7839506268501282
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8508845567703247,
+     "acc_unseen": 0.7872928380966187
+    },
+    "B": {
+     "acc_seen": 0.8263305425643921,
+     "acc_unseen": 0.857740581035614
+    },
+    "C": {
+     "acc_seen": 0.840549111366272,
+     "acc_unseen": 0.8289036750793457
+    },
+    "D": {
+     "acc_seen": 0.8389398455619812,
+     "acc_unseen": 0.8309859037399292
+    }
+   }
+  },
+  {
+   "round": 36,
+   "duration_s": 15.777,
+   "head_url": "/fl/heads/global_r36.json",
+   "temperature": 1.4297,
+   "weights_sha256": "0a6445d8b8621eada8eb22ccad56d10ec37846db5e35799f3d947312d548b515",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "A": 330536,
+    "D": 330536,
+    "C": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.108
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.0876
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1883
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.1428
+    }
+   },
+   "global": {
+    "acc_all": 0.8469980359077454,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7605633735656738,
+     "bacterial_leaf_streak": 0.8947368264198303,
+     "bacterial_panicle_blight": 0.9599999785423279,
+     "blast": 0.8687258958816528,
+     "brown_spot": 0.7832167744636536,
+     "dead_heart": 0.9299065470695496,
+     "downy_mildew": 0.6881720423698425,
+     "hispa": 0.8655462265014648,
+     "normal": 0.8740457892417908,
+     "tungro": 0.7654321193695068
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8635214567184448,
+     "acc_unseen": 0.7928176522254944
+    },
+    "B": {
+     "acc_seen": 0.839402437210083,
+     "acc_unseen": 0.8640167117118835
+    },
+    "C": {
+     "acc_seen": 0.8363252282142639,
+     "acc_unseen": 0.8637873530387878
+    },
+    "D": {
+     "acc_seen": 0.8430173397064209,
+     "acc_unseen": 0.8538732528686523
+    }
+   }
+  },
+  {
+   "round": 37,
+   "duration_s": 15.843,
+   "head_url": "/fl/heads/global_r37.json",
+   "temperature": 1.4297,
+   "weights_sha256": "b3ba209d09fec2dea19a44087dd205490fde67ec37bad5b3d75c35aa4f805d57",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "B": 330536,
+    "D": 330536,
+    "C": 330536,
+    "A": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.152
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.0964
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1374
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.0986
+    }
+   },
+   "global": {
+    "acc_all": 0.8476436138153076,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7323943376541138,
+     "bacterial_leaf_streak": 0.9122806787490845,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.8880308866500854,
+     "brown_spot": 0.867132842540741,
+     "dead_heart": 0.8831775784492493,
+     "downy_mildew": 0.698924720287323,
+     "hispa": 0.8067227005958557,
+     "normal": 0.885496199131012,
+     "tungro": 0.7839506268501282
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8584667444229126,
+     "acc_unseen": 0.8121547102928162
+    },
+    "B": {
+     "acc_seen": 0.8384687304496765,
+     "acc_unseen": 0.8682008385658264
+    },
+    "C": {
+     "acc_seen": 0.8606124520301819,
+     "acc_unseen": 0.8272425532341003
+    },
+    "D": {
+     "acc_seen": 0.8552497625350952,
+     "acc_unseen": 0.8345070481300354
+    }
+   }
+  },
+  {
+   "round": 38,
+   "duration_s": 24.832,
+   "head_url": "/fl/heads/global_r38.json",
+   "temperature": 1.5289,
+   "weights_sha256": "7d7172b47e6ffe4235cd7956c25a7553b80c8a88ca019ebb2fba429c94071a87",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "C": 330536,
+    "B": 330536,
+    "A": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.096
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1781
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.1421
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1365
+    }
+   },
+   "global": {
+    "acc_all": 0.8353776335716248,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7183098793029785,
+     "bacterial_leaf_streak": 0.859649121761322,
+     "bacterial_panicle_blight": 1.0,
+     "blast": 0.8957529067993164,
+     "brown_spot": 0.7762237787246704,
+     "dead_heart": 0.9018691778182983,
+     "downy_mildew": 0.6129032373428345,
+     "hispa": 0.924369752407074,
+     "normal": 0.8129770755767822,
+     "tungro": 0.7283950448036194
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.859309196472168,
+     "acc_unseen": 0.7569060921669006
+    },
+    "B": {
+     "acc_seen": 0.8300653696060181,
+     "acc_unseen": 0.8472803235054016
+    },
+    "C": {
+     "acc_seen": 0.8183737993240356,
+     "acc_unseen": 0.8621262311935425
+    },
+    "D": {
+     "acc_seen": 0.806320071220398,
+     "acc_unseen": 0.8855633735656738
+    }
+   }
+  },
+  {
+   "round": 39,
+   "duration_s": 24.397,
+   "head_url": "/fl/heads/global_r39.json",
+   "temperature": 1.4297,
+   "weights_sha256": "6e58047d14f9a425699e2680745b39d7b638e8b9be3b282c6e9b7d6b17e9297c",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "A": 330536,
+    "C": 330536,
+    "D": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1042
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1399
+    },
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.1016
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.1513
+    }
+   },
+   "global": {
+    "acc_all": 0.838605523109436,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.7323943376541138,
+     "bacterial_leaf_streak": 0.9473684430122375,
+     "bacterial_panicle_blight": 0.9599999785423279,
+     "blast": 0.8648648858070374,
+     "brown_spot": 0.8041958212852478,
+     "dead_heart": 0.9065420627593994,
+     "downy_mildew": 0.6451612710952759,
+     "hispa": 0.8067227005958557,
+     "normal": 0.8396946787834167,
+     "tungro": 0.8641975522041321
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8399326205253601,
+     "acc_unseen": 0.8342541456222534
+    },
+    "B": {
+     "acc_seen": 0.8309990763664246,
+     "acc_unseen": 0.8556485176086426
+    },
+    "C": {
+     "acc_seen": 0.8437169790267944,
+     "acc_unseen": 0.8305647969245911
+    },
+    "D": {
+     "acc_seen": 0.8470947742462158,
+     "acc_unseen": 0.8239436745643616
+    }
+   }
+  },
+  {
+   "round": 40,
+   "duration_s": 22.361,
+   "head_url": "/fl/heads/global_r40.json",
+   "temperature": 1.6349,
+   "weights_sha256": "38012632fadf1cfae46ec54215bbea41bdffa6893491f38aa4fa28239abb2921",
+   "tensor_shapes": {
+    "net.0.bias": [
+     64
+    ],
+    "net.0.weight": [
+     64,
+     1280
+    ],
+    "net.2.bias": [
+     10
+    ],
+    "net.2.weight": [
+     10,
+     64
+    ]
+   },
+   "update_bytes": {
+    "D": 330536,
+    "A": 330536,
+    "C": 330536,
+    "B": 330536
+   },
+   "broadcast_bytes": 1322144,
+   "bytes_on_wire_total": 2644288,
+   "raw_rows_transmitted": 0,
+   "payload_types": [
+    "ArrayRecord",
+    "MetricRecord"
+   ],
+   "clients": {
+    "D": {
+     "n_examples": 3994,
+     "train_loss": 0.0897
+    },
+    "A": {
+     "n_examples": 4922,
+     "train_loss": 0.1081
+    },
+    "C": {
+     "n_examples": 3352,
+     "train_loss": 0.1035
+    },
+    "B": {
+     "n_examples": 4268,
+     "train_loss": 0.1202
+    }
+   },
+   "global": {
+    "acc_all": 0.8450613021850586,
+    "per_class_acc": {
+     "bacterial_leaf_blight": 0.8169013857841492,
+     "bacterial_leaf_streak": 0.8771929740905762,
+     "bacterial_panicle_blight": 0.9599999785423279,
+     "blast": 0.8880308866500854,
+     "brown_spot": 0.7902097702026367,
+     "dead_heart": 0.9392523169517517,
+     "downy_mildew": 0.5591397881507874,
+     "hispa": 0.8025209903717041,
+     "normal": 0.9045801758766174,
+     "tungro": 0.7962962985038757
+    }
+   },
+   "per_state": {
+    "A": {
+     "acc_seen": 0.8677337765693665,
+     "acc_unseen": 0.7707182168960571
+    },
+    "B": {
+     "acc_seen": 0.8300653696060181,
+     "acc_unseen": 0.8786610960960388
+    },
+    "C": {
+     "acc_seen": 0.8606124520301819,
+     "acc_unseen": 0.8205980062484741
+    },
+    "D": {
+     "acc_seen": 0.8460754156112671,
+     "acc_unseen": 0.8433098793029785
+    }
+   }
+  }
+ ],
+ "totals": {
+  "records_moved": 0,
+  "bytes_on_wire": 105771520
+ },
+ "centralized_upper_bound": {
+  "acc_all": 0.8876694440841675
+ },
+ "hard_subset": {
+  "rule": "held-out images whose nearest training image (any state) has cosine < 0.95",
+  "n": 786,
+  "n_test": 1549,
+  "fed_acc_all": 0.8142493367195129,
+  "fed_per_class_acc": {
+   "bacterial_leaf_blight": 0.7674418687820435,
+   "bacterial_leaf_streak": 0.7857142686843872,
+   "bacterial_panicle_blight": 0.9333333373069763,
+   "blast": 0.875,
+   "brown_spot": 0.7183098793029785,
+   "dead_heart": 0.9342105388641357,
+   "downy_mildew": 0.5833333134651184,
+   "hispa": 0.6567164063453674,
+   "normal": 0.8666666746139526,
+   "tungro": 0.7582417726516724
+  },
+  "fed_per_state": {
+   "A": {
+    "acc_seen": 0.8370118737220764,
+    "acc_unseen": 0.7461928725242615
+   },
+   "B": {
+    "acc_seen": 0.7877551317214966,
+    "acc_unseen": 0.8581081032752991
+   },
+   "C": {
+    "acc_seen": 0.8228105902671814,
+    "acc_unseen": 0.800000011920929
+   },
+   "D": {
+    "acc_seen": 0.8222222328186035,
+    "acc_unseen": 0.7967479825019836
+   }
+  },
+  "local_C_per_state": {
+   "acc_seen": 0.7983706593513489,
+   "acc_unseen": 0.0
+  }
+ },
+ "gemini_benchmark": {
+  "model": "gemini-3.5-flash-lite",
+  "n": 50,
+  "acc": 0.24,
+  "per_class_acc": {
+   "bacterial_leaf_blight": 0.4,
+   "bacterial_leaf_streak": 0.2,
+   "bacterial_panicle_blight": 0.8,
+   "blast": 0.2,
+   "brown_spot": 0.0,
+   "dead_heart": 0.0,
+   "downy_mildew": 0.0,
+   "hispa": 0.0,
+   "normal": 0.8,
+   "tungro": 0.0
+  },
+  "mean_conf_correct": 92.16666666666667,
+  "mean_conf_wrong": 92.07894736842105,
+  "models_used": [
+   "gemini-3.5-flash-lite"
+  ],
+  "measured_at": "2026-09-26T21:19:36.037341+00:00",
+  "fed_acc_same_images": 0.84
+ }
+}

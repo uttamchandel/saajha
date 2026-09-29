@@ -1,0 +1,34 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# node / next
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.vercel
+
+# data — images are never redistributed (Paddy Doctor: Kaggle rules §7B). Datasets live in
+# $SAAJHA_DATA outside the repo; these patterns are a guard against copying any in.
+data/raw/
+data/images/
+data/states/
+*.7z
+*.zip
+*.parquet
+*.npy
+*.npz
+*.pt
+
+# os
+.DS_Store
+Thumbs.db
