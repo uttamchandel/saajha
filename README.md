@@ -12,12 +12,13 @@ Built for Build with AI: Code for Communities, Second Edition (Google Cloud × H
 ## Try it in three minutes
 
 1. **A farmer's photo, decided by the shared model.** Open [saajha-node.vercel.app/demo](https://saajha-node.vercel.app/demo) → *Photo diagnosis* → tap a sample paddy photo. The node downloads the model the hub released (16.8 MB, once, fingerprint-checked), runs it **in your browser**, and the federated model decides. Gemini checks the photo shows paddy and gives a second opinion; on the rice-hispa sample it usually disagrees ("bacterial leaf blight, 85%"), which is shown and logged for an expert to audit. The advice comes from an approved card, in Hindi, IPM first, with a voice note.
-2. **Early warning across a state border.** [saajha-hub.vercel.app/exchange](https://saajha-hub.vercel.app/exchange): the hub pulls two separately deployed state nodes, accepts only district-week outbreak counts of at least 5, and warns Telangana that pink bollworm is rising in Yavatmal (Maharashtra), across the Penganga river from Adilabad. Then *Test the border yourself*: try to send a farmer's phone number, a count of 3 or a person's name, and watch the hub refuse it without repeating it.
-3. **The district officer's view.** [saajha-node.vercel.app/command](https://saajha-node.vercel.app/command): the warning from Maharashtra arrives with *Alert farmers in Adilabad*; Gemini writes the alert in Telugu and the officer reads it before sending. Weather alerts by block are live too (Gemini drafts those in the district's language the same way).
-4. **A regenerative crop plan.** [saajha-node.vercel.app/recommend](https://saajha-node.vercel.app/recommend) → pick a district → every crop gets two scores (this season, and the soil over the next seasons) and the plot gets practices triggered by its own numbers: a pulse when nitrogen is low, green manure when carbon is low, water saving when rain is short.
-5. **Proof of the federation.** [saajha-hub.vercel.app/federation](https://saajha-hub.vercel.app/federation) → *Verify all 40 rounds*: your browser recomputes the fingerprint of every round's weights. Farmer records moved: 0.
-6. **Proof the node runs the shared model exactly.** [saajha-node.vercel.app/dev/model-check](https://saajha-node.vercel.app/dev/model-check) → *Run the model check*: 6 of 6 photos give the same image features as Python (cosine 1.000000) and the same answer.
-7. **The same on WhatsApp.** [saajha-node.vercel.app/whatsapp](https://saajha-node.vercel.app/whatsapp) → send a photo or a voice note.
+2. **The learning loop: an expert's answer teaches every state.** On [saajha-node.vercel.app/demo](https://saajha-node.vercel.app/demo) → *Photo diagnosis* → *Try the learning loop*, send **photo 1**: the shared model is only 43% sure, so it goes to Telangana's expert. In [/command](https://saajha-node.vercel.app/command) → *Escalations*, open the case (the photo is stored in Telangana's own database), verify it as brown spot, and press **Run a federated round**: each state node trains on its newly verified cases and sends only weights; the hub releases round 41 only after checking it on held-out photos (84.5% → 84.6%). Send **photo 2**, a different photo of the same plant that round 40 misread as bacterial leaf blight: round 41 decides it, brown spot 78%, with advice. The round shows up in the [federation record](https://saajha-hub.vercel.app/federation#live-rounds).
+3. **Early warning across a state border.** [saajha-hub.vercel.app/exchange](https://saajha-hub.vercel.app/exchange): the hub pulls two separately deployed state nodes, accepts only district-week outbreak counts of at least 5, and warns Telangana that pink bollworm is rising in Yavatmal (Maharashtra), across the Penganga river from Adilabad. Then *Test the border yourself*: try to send a farmer's phone number, a count of 3 or a person's name, and watch the hub refuse it without repeating it.
+4. **The district officer's view.** [saajha-node.vercel.app/command](https://saajha-node.vercel.app/command): the warning from Maharashtra arrives with *Alert farmers in Adilabad*; Gemini writes the alert in Telugu and the officer reads it before sending. Weather alerts by block are live too (Gemini drafts those in the district's language the same way).
+5. **A regenerative crop plan.** [saajha-node.vercel.app/recommend](https://saajha-node.vercel.app/recommend) → pick a district → every crop gets two scores (this season, and the soil over the next seasons) and the plot gets practices triggered by its own numbers: a pulse when nitrogen is low, green manure when carbon is low, water saving when rain is short.
+6. **Proof of the federation.** [saajha-hub.vercel.app/federation](https://saajha-hub.vercel.app/federation) → *Verify all 40 rounds*: your browser recomputes the fingerprint of every round's weights. Farmer records moved: 0.
+7. **Proof the node runs the shared model exactly.** [saajha-node.vercel.app/dev/model-check](https://saajha-node.vercel.app/dev/model-check) → *Run the model check*: 6 of 6 photos give the same image features as Python (cosine 1.000000) and the same answer.
+8. **The same on WhatsApp.** [saajha-node.vercel.app/whatsapp](https://saajha-node.vercel.app/whatsapp) → send a photo or a voice note.
 
 ## How it fits together
 
@@ -74,6 +75,8 @@ From recorded run **`deploy-h64-r40`** (exported 26 Sep 2026): a real Flower dep
 | Raw farmer records that crossed a state border | **0**, in all 40 rounds |
 | Gemini alone (`gemini-3.5-flash-lite`, zero-shot, 10 labels) vs federated, same 50 held-out photos | 24% vs 84% |
 | The state node running the released model in a browser vs Python, 6 gallery photos | cosine 1.000000, same answer 6/6 |
+| Live round code (TypeScript, deployed) vs PyTorch + Flower's FedAvg on the same inputs | weights within 2.4e-7; same step, temperature, threshold, accuracy (`fl/scripts/check_live_round.py`) |
+| A few verified cases applied in full, no server step (measured, why live rounds take a step) | held-out accuracy fell to 17-85% |
 
 **Read this with the disclosures below:** states A–D are simulated, label-skewed partitions of one public Tamil Nadu dataset.
 
@@ -122,6 +125,7 @@ KisanVaani (voice, SMS and WhatsApp advisory in 12+ languages, crop recommendati
 
 - **Saajha, the shared layer:** federated training across state nodes with Flower (40 real rounds, weights-only border inspector, per-round fingerprints, 0 farmer records moved), calibrated confidence, a measured Gemini-vs-federated benchmark, and a public, verifiable federation record.
 - **KisanVaani as a state node:** paddy photos are decided by the federated model the hub released, run on the farmer's device with Python-exact preprocessing; Gemini became a checker and second opinion instead of the decider; advice comes from the shared card library with doses grounded to the card; expert tickets for low confidence, other crops, disagreements and failures.
+- **The learning loop, live:** an expert verifies a farmer's photo at the state's desk; the photo and the model's reading stay in that state's database. A federated round asks every state node to train the released model on its newly verified cases (the recorded run's recipe, in TypeScript, checked against the Python/Flower code) and send only weights. The hub averages them (FedAvg) and takes the largest step toward the average that keeps accuracy on 516 validation photos (a server learning rate), refits the temperature and the 90%-precision threshold, and releases the round only if held-out accuracy has not fallen by more than 0.5 points; refused rounds are recorded with the reason. A follow-up call ("did it work?") that gets a "no" reopens the case and takes it out of training.
 - **Cross-border early warning:** two state nodes deployed from the same code (Telangana, Maharashtra; adding a state is one more deployment) publish k-anonymous district-week outbreak counts. The hub pulls them, checks each at the border (only four fields, at least 5, a real district of that state, a condition on the shared list; a refusal never repeats what it refused) and warns the neighbouring state's officer, who alerts farmers in their own language.
 - **Regenerative crop plans:** every recommended crop is scored for this season and for the soil over the next seasons, and practices (pulse rotation, green manure, no residue burning, water saving) are triggered by the plot's own numbers against Soil Health Card limits.
 - **Honesty and safety:** every canned diagnosis and canned voice reply from Ed1 removed; unverified claims and outdated statistics removed; unsigned telephony webhooks refused in production; Next.js upgraded past critical advisories; Gemini models moved to the ones new keys can use.
@@ -132,11 +136,12 @@ KisanVaani (voice, SMS and WhatsApp advisory in 12+ languages, crop recommendati
 - Flower training and aggregation (1 SuperLink + 4 SuperNode processes, on one machine), every weight file and its sha256, all accuracies on a held-out benchmark, and records moved = 0 in every round.
 - On the state node: the federated model deciding paddy photos in your browser, Gemini's photo check and second opinion, advice from the card library, voice-note understanding, SMS/IVR advisories, crop recommendations, weather alerts from Open-Meteo, and alerts drafted in the district's language.
 - Two state nodes deployed separately from the same code, and the hub's live pull, border check and warnings between them.
+- Live federated rounds between those two nodes: local training on each state's verified cases, weights-only updates, averaging, the held-out release check and the model registry. Each state has its own database.
 
 **Simulated or seeded**
 - States A–D are label-skewed partitions of one Tamil Nadu dataset (Paddy Doctor). They do not describe real pest prevalence in any state; "expert-verified" labels are the dataset's own labels.
 - The network is simulated: all federation nodes ran on one computer, and the hub replays that recorded run. No state government runs a node.
-- The expert desk is simulated: no RSK or KVK receives tickets, and tickets live in the server's memory until a database is connected. The command center's farmer registry, KPIs and past tickets are invented Ed1 sample data (its weather alerts are live).
+- The expert desk is simulated: no RSK or KVK receives tickets; whoever opens `/command` plays the expert, and their verified labels do train live rounds. The follow-up call is a button, not a phone call. The learning-loop sample photos are two held-out Paddy Doctor photos of the same plant. Demo databases are Neon Postgres in Singapore (Neon has no India region); a state would keep its database in India. The command center's farmer registry, KPIs and past tickets are invented Ed1 sample data (its weather alerts are live).
 - The outbreak counts the two nodes publish are a seeded scenario (pink bollworm in Yavatmal rising 6 → 14 → 31 reports a week); no farmer reported them. The Yavatmal–Adilabad border along the Penganga river is real.
 - The phone and WhatsApp screens are browser simulators; no public number is connected to this deployment.
 - Mandi prices are typical values: the Agmarknet API now requires a captcha or token for automated access.
@@ -150,6 +155,8 @@ KisanVaani (voice, SMS and WhatsApp advisory in 12+ languages, crop recommendati
 - **Paddy only, 10 conditions,** for the federated model. Other crops get Gemini's unverified reading and an expert.
 - **The frozen backbone caps accuracy** (88.8% pooled upper bound).
 - **Simulated topology.** No real network latency, dropped nodes or version drift.
+- **Live rounds run inside the deployed apps, not in Flower.** They use the recorded Flower run's training recipe and FedAvg, reimplemented in TypeScript and checked against the Python/Flower code, so the loop runs around the clock without a server to watch. Next step: run live rounds as real Flower rounds on Google Cloud, with each state's SuperNode reading its own verified cases (SuperNodes connect outbound, so a state needs no open ports).
+- **One verified case moves the model a little, by design.** The server step keeps held-out accuracy level; some rounds are refused, and those cases wait for the next round.
 - **No differential privacy in this run.** Flower supports it on the updates; it is the next step.
 - **Confidence is not correctness.** A calibrated 90% is still wrong one time in ten: below the threshold a state expert decides, and every differing Gemini second opinion is logged for audit.
 
@@ -159,11 +166,13 @@ KisanVaani (voice, SMS and WhatsApp advisory in 12+ languages, crop recommendati
 apps/hub/     Shared layer (Next.js 16): / (the flip), /federation, /diagnose, /exchange, /method, /dev/parity
               api/diagnose, api/advisory, api/tts, api/exchange (pull + border check + warnings),
               api/exchange/check (test the border) · lib/exchange.ts (registered nodes, districts, borders)
+              api/rounds (live rounds), api/rounds/latest, api/rounds/run · lib/rounds.ts (FedAvg, server
+              step, calibration, release gate) · data/benchmark (held-out embeddings, generated, not committed)
               public/fl (run.json, every round's head), public/models (backbone.onnx, 16.8 MB),
               public/gallery (6 attributed photos)
 apps/node/    State node, KisanVaani (Next.js 16): / , /demo, /whatsapp, /recommend, /command,
               /dev/model-check · api/diagnose (decision rule), api/voice, api/advisory, api/recommend,
-              api/alerts, api/alerts/draft, api/exchange/counts, api/mandi, api/tickets,
+              api/alerts, api/alerts/draft, api/exchange/counts, api/fl/update, api/fl/status, api/mandi, api/tickets,
               api/telephony/{voice,sms,whatsapp} · lib/node.ts (which state this copy serves)
               lib/fed/ — the shared model on the node: copies of the hub's embed/heads/contract/classes,
               federated.ts (release download + checks), decide.ts (who decides)
@@ -196,6 +205,8 @@ python fl/scripts/baseline_local.py --run deploy-h64-r40   # each state alone: t
 python fl/scripts/export_onnx.py                   # backbone -> apps/hub/public/models/backbone.onnx, parity check
 python fl/scripts/export_web.py --run deploy-h64-r40       # run.json, every head, gallery -> apps/hub/public
 python fl/scripts/check_contract.py                # zero records moved, every sha256 recomputes
+python fl/scripts/export_benchmark.py              # held-out embeddings the hub checks live rounds against
+python fl/scripts/check_live_round.py              # deployed TypeScript round == PyTorch + Flower FedAvg
 ```
 
 ## Data licence

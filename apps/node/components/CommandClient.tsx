@@ -25,6 +25,7 @@ import AlertsPanel from "./command/AlertsPanel";
 import CrossBorderPanel from "./command/CrossBorderPanel";
 import OutbreaksPanel from "./command/OutbreaksPanel";
 import EscalationsPanel from "./command/EscalationsPanel";
+import LearningLoopPanel from "./command/LearningLoopPanel";
 import BroadcastsPanel from "./command/BroadcastsPanel";
 import RegistryTable from "./command/RegistryTable";
 import BroadcastComposer, { type ComposeTarget } from "./command/BroadcastComposer";
@@ -46,6 +47,10 @@ export default function CommandClient() {
         kendra: patch.kendra,
       });
     }
+  }, []);
+  // A case the expert desk just verified or followed up (already saved by CaseReview): local merge only.
+  const replaceTicket = useCallback((t: EscalationTicket) => {
+    setTickets((prev) => prev.map((p) => (p.id === t.id ? { ...p, ...t } : p)));
   }, []);
 
   // broadcast log grows as the composer queues sends
@@ -187,7 +192,10 @@ export default function CommandClient() {
           {tab === "outbreaks" && <OutbreaksPanel district={district} onCompose={setComposeTarget} />}
 
           {tab === "escalations" && (
-            <EscalationsPanel district={district} tickets={tickets} onUpdate={updateTicket} />
+            <>
+              <LearningLoopPanel />
+              <EscalationsPanel district={district} tickets={tickets} onUpdate={updateTicket} onReplace={replaceTicket} />
+            </>
           )}
 
           {tab === "broadcasts" && <BroadcastsPanel district={district} broadcasts={broadcasts} />}

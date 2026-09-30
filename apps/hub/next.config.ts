@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  // The held-out benchmark (fl/scripts/export_benchmark.py) is read on the server by the round engine;
+  // it is bundled with that function only and never served to browsers.
+  outputFileTracingIncludes: {
+    "/api/rounds/run": ["./data/benchmark/**/*"],
+  },
   // The released model (run.json, heads, backbone) and the sample photos are public: any state node's page may use them.
   async headers() {
     const cors = [

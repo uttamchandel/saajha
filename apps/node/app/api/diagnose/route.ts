@@ -14,6 +14,7 @@ import { generateContentResilient } from "@/lib/genai";
 import { LANG_NAME_FOR_PROMPT } from "@/lib/i18n-full";
 import { createTicket, logQuery } from "@/lib/db";
 import { HOME_DISTRICT } from "@/lib/node";
+import { hubLatest } from "@/lib/fed/hub";
 import { CLASSES, DIAGNOSIS_KEYS, UNSURE_KEY, classLabel, isClassKey, isDiagnosisKey, type ClassKey } from "@/lib/fed/classes";
 import { decide, type Decision, type FedVerdict, type GeminiCheck } from "@/lib/fed/decide";
 
@@ -27,23 +28,18 @@ const ALLOWED_MIME = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 // ---- the hub's release: the threshold and the fingerprint the verdict must come from ----
 
-type ReleaseInfo = { tauFed: number; round: number; sha256: string };
-let releaseCache: { value: ReleaseInfo; expires: number } | null = null;
+// The latest release may be a live round (step 3); a verdict from the release just before it is also
+// accepted, so a photo analysed a moment before a new round is not thrown away.
+type ReleaseInfo = { tauFed: number; round: number; sha256: string; accepted: string[] };
 
-async function hubRelease(): Promise<ReleaseInfo | null> {
-  if (releaseCache && Date.now() < releaseCache.expires) return releaseCache.value;
-  try {
-    const r = await fetch(`${HUB_URL}/fl/run.json`, { signal: AbortSignal.timeout(8000), cache: "no-store" });
-    if (!r.ok) return null;
-    const run = (await r.json()) as { gate: { tau_fed: number }; rounds: { round: number; weights_sha256: string }[] };
-    const last = run.rounds[run.rounds.length - 1];
-    const value = { tauFed: run.gate.tau_fed, round: last.round, sha256: last.weights_sha256 };
-    releaseCache = { value, expires: Date.now() + 10 * 60 * 1000 };
-    return value;
-  } catch {
-    return null;
-  }
+async function hubRelease(fresh = false): Promise<ReleaseInfo | null> {
+  const r = await hubLatest(fresh);
+  return r ? { tauFed: r.tau, round: r.round, sha256: r.sha256, accepted: r.recent_sha256 } : null;
 }
+
+// 1280 float32 values: the frozen backbone's reading of the photo, kept with the ticket (in this state)
+// so that an expert's verified label can train the next round.
+const EMBEDDING_BYTES = 1280 * 4;
 
 // ---- Gemini: paddy check, independent second opinion, and a reading for other crops ----
 
@@ -239,17 +235,25 @@ export async function POST(req: NextRequest) {
   const channel = body.channel === "whatsapp" ? "whatsapp" : "photo";
   const mimeType = typeof body.mimeType === "string" && ALLOWED_MIME.has(body.mimeType) ? body.mimeType : "image/jpeg";
 
-  const release = await hubRelease();
+  let release = await hubRelease();
+  // A round may have been released after this node last asked: check again before rejecting a verdict.
+  const claimed = (body.federated as { sha256?: unknown } | null | undefined)?.sha256;
+  if (release && typeof claimed === "string" && !release.accepted.includes(claimed)) release = (await hubRelease(true)) ?? release;
   // Use the browser's verdict only if it came from the model the hub released.
   let fed: (FedVerdict & { round: number; sha256: string }) | null = null;
   let federatedNote: string | null = null;
   const f = (body.federated ?? null) as Record<string, unknown> | null;
   if (f && isClassKey(f.top) && typeof f.p === "number" && f.p >= 0 && f.p <= 1 && typeof f.sha256 === "string") {
-    if (release && f.sha256 === release.sha256) fed = { top: f.top, p: f.p, round: release.round, sha256: release.sha256 };
-    else federatedNote = release ? "The verdict came from a different model version than the hub's latest release, so it was not used." : "The hub's release could not be checked, so the model's verdict was not used.";
+    if (release && release.accepted.includes(f.sha256)) {
+      const round = f.sha256 === release.sha256 ? release.round : typeof f.round === "number" ? f.round : release.round - 1;
+      fed = { top: f.top, p: f.p, round, sha256: f.sha256 };
+    } else federatedNote = release ? "The verdict came from a different model version than the hub's latest release, so it was not used." : "The hub's release could not be checked, so the model's verdict was not used.";
   } else if (!f) {
     federatedNote = channel === "whatsapp" ? "The shared model runs in the web app; photos on the WhatsApp line go to an expert." : "The shared model could not run on this device.";
   }
+
+  const embB64 = typeof f?.embedding === "string" && f.embedding.length < 8000 && BASE64_RE.test(f.embedding) ? f.embedding : null;
+  const embedding = embB64 && Buffer.from(embB64, "base64").length === EMBEDDING_BYTES ? embB64 : null;
 
   const gemini = await geminiCheck(image, mimeType, lang);
   const decision = decide(release?.tauFed ?? 0.58, fed, gemini);
@@ -258,7 +262,7 @@ export async function POST(req: NextRequest) {
   const who = channel === "whatsapp" ? "WhatsApp farmer" : "Demo farmer";
   const gemLabel = gemini ? classLabel(gemini.class_key) : "";
   let ticket: { id: string; kendra: string } | null = null;
-  const openTicket = async (crop: string, aiDiagnosis: string, confidence: number, severity: "low" | "medium" | "high") => {
+  const openTicket = async (crop: string, aiDiagnosis: string, confidence: number, severity: "low" | "medium" | "high", paddy = true) => {
     try {
       const t = await createTicket({
         farmer: who,
@@ -270,6 +274,15 @@ export async function POST(req: NextRequest) {
         aiDiagnosis,
         confidence,
         severity,
+        evidence: {
+          photo: image,
+          embedding: paddy ? embedding : null,
+          modelTop: fed?.top ?? null,
+          modelP: fed?.p ?? null,
+          modelRound: fed?.round ?? null,
+          geminiLabel: gemini?.is_rice ? gemini.class_key : null,
+          geminiConf: gemini?.is_rice ? gemini.confidence : null,
+        },
       });
       ticket = { id: t.id, kendra: t.kendra };
     } catch (err) {
@@ -291,7 +304,7 @@ export async function POST(req: NextRequest) {
   if (decision.outcome === "not_plant") {
     out = { ...base, is_plant: false, disease_en: "", disease_local: "", confidence: 0, severity: "low", urgency: "", voice_summary: "", source: "not-plant" };
   } else if (decision.outcome === "unverified" && gemini) {
-    await openTicket(gemini.crop_en || "Unknown crop", `${gemini.crop_en || "Crop"}: Gemini reads "${gemini.problem_en || "unclear"}" (not verified: no federated model for this crop). Expert to decide.`, gemini.confidence, "medium");
+    await openTicket(gemini.crop_en || "Unknown crop", `${gemini.crop_en || "Crop"}: Gemini reads "${gemini.problem_en || "unclear"}" (not verified: no federated model for this crop). Expert to decide.`, gemini.confidence, "medium", false);
     out = {
       ...base,
       disease_en: gemini.problem_en,

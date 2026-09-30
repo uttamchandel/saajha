@@ -8,6 +8,7 @@ import { fetchRun } from "@/lib/fl";
 import AccuracyMatrix from "./AccuracyMatrix";
 import GeminiBenchmark from "./GeminiBenchmark";
 import LearningCurve from "./LearningCurve";
+import LiveRounds from "./LiveRounds";
 import Provenance from "./Provenance";
 import RoundLog from "./RoundLog";
 import Summary from "./Summary";
@@ -67,6 +68,8 @@ export default function FederationRecord() {
       <Section id="rounds" title={`Round log, all ${last} rounds`}>
         <RoundLog run={run} />
       </Section>
+
+      <LiveRounds />
 
       <Section id="gemini" title="Gemini, measured on the same photos">
         <GeminiBenchmark run={run} />

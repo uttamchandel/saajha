@@ -262,7 +262,7 @@ export default function WhatsAppClient() {
             mimeType: "image/jpeg",
             lang: "hi",
             channel: "whatsapp",
-            federated: a.fed ? { top: a.fed.top, p: a.fed.p, round: a.fed.round, sha256: a.fed.sha256 } : null,
+            federated: a.fed ? { top: a.fed.top, p: a.fed.p, round: a.fed.round, sha256: a.fed.sha256, embedding: a.fed.embedding } : null,
           }),
           signal: AbortSignal.timeout(60000),
         });

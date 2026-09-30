@@ -122,6 +122,13 @@ export default function DemoClient() {
   const [kvkReferring, setKvkReferring] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  // The learning loop (step 3): two held-out photos of the same plant (Paddy Doctor, CC BY 4.0). Round 40
+  // is unsure about both; once an expert verifies photo 1 and a round is released, photo 2 is decided.
+  const loopSamples: Sample[] = [
+    { id: "loop-1", url: "/loop/field-photo-1.jpg", label: "brown spot" },
+    { id: "loop-2", url: "/loop/field-photo-2.jpg", label: "brown spot" },
+  ];
+
   // Real, attributed paddy photos from the hub's gallery (Paddy Doctor, CC BY 4.0) to try the model on.
   useEffect(() => {
     if (mode !== "photo" || photoSamples.length) return;
@@ -359,7 +366,7 @@ export default function DemoClient() {
           mimeType: "image/jpeg",
           lang: uiLang,
           channel: "photo",
-          federated: a.fed ? { top: a.fed.top, p: a.fed.p, round: a.fed.round, sha256: a.fed.sha256 } : null,
+          federated: a.fed ? { top: a.fed.top, p: a.fed.p, round: a.fed.round, sha256: a.fed.sha256, embedding: a.fed.embedding } : null,
         }),
       });
       if (!res.ok) throw new Error(`diagnose ${res.status}`);
@@ -674,6 +681,33 @@ export default function DemoClient() {
                 <p className="mt-2 text-[11px] text-ink-soft">
                   Sample photos: Paddy Doctor dataset (Petchiammal et al., CC BY 4.0), served by the Saajha hub.
                 </p>
+                <div className="mt-4 rounded-lg border border-forest/15 bg-leaf-mist/30 p-3">
+                  <div className="text-xs font-semibold text-forest">Try the learning loop: two photos of the same field</div>
+                  <div className="mt-2 grid grid-cols-2 gap-2">
+                    {loopSamples.map((s, i) => (
+                      <button
+                        key={s.id}
+                        onClick={() => void runSample(s)}
+                        disabled={diagLoading}
+                        aria-label={`Learning-loop photo ${i + 1}`}
+                        className={`relative overflow-hidden rounded-lg border-2 transition disabled:opacity-60 ${
+                          activeCase === s.id ? "border-forest" : "border-transparent hover:border-forest/40"
+                        }`}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={s.url} alt="" className="aspect-square w-full object-cover" />
+                        <span className="absolute left-1 top-1 rounded bg-white/90 px-1.5 text-[10px] font-semibold text-forest">Photo {i + 1}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <ol className="mt-2 list-decimal space-y-0.5 pl-4 text-[11px] text-ink-soft">
+                    <li>Send photo 1: the shared model is unsure, so it goes to the state expert.</li>
+                    <li>
+                      In the <a href="/command" className="underline">command center</a>, Escalations: verify the case, then run a federated round.
+                    </li>
+                    <li>Send photo 2, never trained on: the new round decides it.</li>
+                  </ol>
+                </div>
               </div>
             )}
 
@@ -1008,9 +1042,9 @@ export default function DemoClient() {
                       </button>
                     ) : null}
 
-                    {activeCase && photoSamples.some((s) => s.id === activeCase) && (
+                    {activeCase && [...photoSamples, ...loopSamples].some((s) => s.id === activeCase) && (
                       <div className="text-[11px] text-ink-soft mt-3">
-                        Dataset label for this sample photo: {photoSamples.find((s) => s.id === activeCase)?.label}
+                        Dataset label for this sample photo: {[...photoSamples, ...loopSamples].find((s) => s.id === activeCase)?.label}
                       </div>
                     )}
                   </div>

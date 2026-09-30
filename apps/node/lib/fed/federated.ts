@@ -23,25 +23,50 @@ export interface Release {
 }
 
 let releaseP: Promise<Release> | null = null;
+let releaseAt = 0;
 
-/** The hub's latest national model: run.json + last round's head, fingerprint-checked. */
+type Latest = { round: number; sha256: string; tau: number; head_url: string };
+
+/**
+ * The hub's current national model, fingerprint-checked: the newest live round (the learning loop,
+ * /api/rounds/latest) or the recorded run's last round. Re-checked every minute, so a round released
+ * while this page is open reaches the next photo.
+ */
 export function loadRelease(): Promise<Release> {
+  if (releaseP && Date.now() - releaseAt > 60_000) releaseP = null;
   releaseP ??= (async () => {
     const r = await fetch(`${HUB_URL}/fl/run.json`, { cache: "no-store" });
     if (!r.ok) throw new Error(`Could not reach the Saajha hub for the shared model (${r.status}).`);
     const run = (await r.json()) as RunFile;
     run.backbone = { ...run.backbone, onnx_url: abs(run.backbone.onnx_url) };
     const last = run.rounds[run.rounds.length - 1];
-    const head = await fetchHead(abs(last.head_url));
-    if (!(await verifyHeadSha(head)) || head.file.sha256 !== last.weights_sha256) {
+    let latest: Latest = { round: last.round, sha256: last.weights_sha256, tau: run.gate.tau_fed, head_url: last.head_url };
+    try {
+      const l = await fetch(`${HUB_URL}/api/rounds/latest`, { cache: "no-store" });
+      if (l.ok) latest = (await l.json()) as Latest;
+    } catch {
+      // The registry is unreachable: the recorded release still works.
+    }
+    const head = await fetchHead(abs(latest.head_url));
+    if (!(await verifyHeadSha(head)) || head.file.sha256 !== latest.sha256) {
       throw new Error("The model the hub released does not match its recorded fingerprint, so it was not used.");
     }
-    return { run, head, round: last.round, sha256: last.weights_sha256, tauFed: run.gate.tau_fed };
+    return { run, head, round: latest.round, sha256: latest.sha256, tauFed: latest.tau };
   })();
+  releaseAt = Date.now();
   releaseP.catch(() => {
     releaseP = null; // let the next photo retry
   });
   return releaseP;
+}
+
+function f32ToB64(v: Float32Array): string {
+  const bytes = new Uint8Array(v.length * 4);
+  const view = new DataView(bytes.buffer);
+  for (let i = 0; i < v.length; i++) view.setFloat32(i * 4, v[i], true);
+  let s = "";
+  for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+  return btoa(s);
 }
 
 export interface FedResult {
@@ -53,6 +78,9 @@ export interface FedResult {
   sha256: string;
   tauFed: number;
   ms: number;
+  /** The frozen backbone's reading of the photo (1280 float32, base64): kept in this state with any ticket,
+   *  so an expert's verified label can train the next round. */
+  embedding: string;
 }
 
 export interface PhotoAnalysis {
@@ -82,7 +110,7 @@ export async function analysePhoto(src: Blob | string, onProgress?: (p: LoadProg
     const vec = await embedImage(bb, bmp);
     const top3 = topK(runHead(rel.head, vec), CLASS_KEYS, 3) as [ClassKey, number][];
     return {
-      fed: { top: top3[0][0], p: top3[0][1], top3, round: rel.round, sha256: rel.sha256, tauFed: rel.tauFed, ms: Math.round(performance.now() - t0) },
+      fed: { top: top3[0][0], p: top3[0][1], top3, round: rel.round, sha256: rel.sha256, tauFed: rel.tauFed, ms: Math.round(performance.now() - t0), embedding: f32ToB64(vec) },
       fedError: null,
       jpegB64: jpeg.b64,
     };

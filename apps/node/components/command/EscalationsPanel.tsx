@@ -5,6 +5,7 @@ import { Camera, Check, ChevronDown, ChevronUp, UserRound, BadgeCheck } from "lu
 import type { EscalationStatus, EscalationTicket } from "@/lib/types";
 import type { LiveTicket } from "@/lib/ops-live";
 import { ChannelBadge, EmptyState, SectionCard, SeverityChip, StatusPill, Td, Th, fmtDateTime } from "./ui";
+import CaseReview from "./CaseReview";
 
 // Marks tickets persisted in the database (created by the live demo surfaces).
 function LivePill() {
@@ -48,10 +49,11 @@ function ConfidenceBar({ pct }: { pct: number }) {
   );
 }
 
-export default function EscalationsPanel({ district, tickets, onUpdate }: {
+export default function EscalationsPanel({ district, tickets, onUpdate, onReplace }: {
   district: string;
   tickets: LiveTicket[];
   onUpdate: (id: string, patch: Partial<EscalationTicket>) => void;
+  onReplace: (t: EscalationTicket) => void;
 }) {
   const [statusFilter, setStatusFilter] = useState<EscalationStatus | "all">("all");
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -115,6 +117,37 @@ export default function EscalationsPanel({ district, tickets, onUpdate }: {
               <tbody>
                 {rows.map((t) => {
                   const open = expanded === t.id;
+                  const actions = (
+                    <div className="flex flex-col gap-1.5" onClick={(e) => e.stopPropagation()}>
+                      {t.officer === null && t.status !== "closed" && (
+                        <button
+                          onClick={() => onUpdate(t.id, { officer: "Duty officer (auto-assign)", status: "assigned" })}
+                          className="inline-flex items-center gap-1.5 rounded-md bg-forest px-3 py-1.5 text-xs font-medium text-white hover:bg-leaf"
+                        >
+                          <UserRound className="size-3.5" aria-hidden="true" />
+                          Assign officer
+                        </button>
+                      )}
+                      {(t.status === "pending" || t.status === "assigned") && !(t.live && t.hasPhoto) && (
+                        <button
+                          onClick={() => onUpdate(t.id, { status: "expert_replied" })}
+                          className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                        >
+                          <BadgeCheck className="size-3.5" aria-hidden="true" />
+                          Mark expert replied
+                        </button>
+                      )}
+                      {t.status !== "closed" && (
+                        <button
+                          onClick={() => onUpdate(t.id, { status: "closed", slaHoursLeft: 0 })}
+                          className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                        >
+                          <Check className="size-3.5" aria-hidden="true" />
+                          Close ticket
+                        </button>
+                      )}
+                    </div>
+                  );
                   return [
                     <tr key={t.id} className={`cursor-pointer ${open ? "bg-slate-50" : "hover:bg-slate-50"}`} onClick={() => setExpanded(open ? null : t.id)}>
                       <Td className="font-medium tabular-nums text-slate-900">
@@ -142,6 +175,12 @@ export default function EscalationsPanel({ district, tickets, onUpdate }: {
                     open ? (
                       <tr key={`${t.id}-detail`} className="bg-slate-50/70">
                         <td colSpan={12} className="border-b border-slate-200 px-4 py-4">
+                          {t.live && t.hasPhoto ? (
+                            <div className="grid gap-4 lg:grid-cols-[1fr_auto]">
+                              <CaseReview ticket={t} onReplace={onReplace} />
+                              {actions}
+                            </div>
+                          ) : (
                           <div className="grid gap-4 lg:grid-cols-[180px_1fr_auto]">
                             <div className="flex h-32 w-44 flex-col items-center justify-center gap-1.5 rounded-md border border-dashed border-slate-300 bg-white text-slate-400">
                               <Camera className="size-5" aria-hidden="true" />
@@ -163,36 +202,9 @@ export default function EscalationsPanel({ district, tickets, onUpdate }: {
                                 <span className="font-medium text-slate-800">Fallback:</span> Kisan Call Centre 1800-180-1551 (L2 SME)
                               </p>
                             </div>
-                            <div className="flex flex-col gap-1.5" onClick={(e) => e.stopPropagation()}>
-                              {t.officer === null && t.status !== "closed" && (
-                                <button
-                                  onClick={() => onUpdate(t.id, { officer: "Duty officer (auto-assign)", status: "assigned" })}
-                                  className="inline-flex items-center gap-1.5 rounded-md bg-forest px-3 py-1.5 text-xs font-medium text-white hover:bg-leaf"
-                                >
-                                  <UserRound className="size-3.5" aria-hidden="true" />
-                                  Assign officer
-                                </button>
-                              )}
-                              {(t.status === "pending" || t.status === "assigned") && (
-                                <button
-                                  onClick={() => onUpdate(t.id, { status: "expert_replied" })}
-                                  className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
-                                >
-                                  <BadgeCheck className="size-3.5" aria-hidden="true" />
-                                  Mark expert replied
-                                </button>
-                              )}
-                              {t.status !== "closed" && (
-                                <button
-                                  onClick={() => onUpdate(t.id, { status: "closed", slaHoursLeft: 0 })}
-                                  className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
-                                >
-                                  <Check className="size-3.5" aria-hidden="true" />
-                                  Close ticket
-                                </button>
-                              )}
-                            </div>
+                            {actions}
                           </div>
+                          )}
                         </td>
                       </tr>
                     ) : null,

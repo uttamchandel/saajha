@@ -94,6 +94,19 @@ export type EscalationTicket = {
   officer: string | null;
   status: EscalationStatus;
   slaHoursLeft: number;
+  // The learning loop (live photo tickets only; the seeded sample tickets leave these unset).
+  hasPhoto?: boolean;
+  trainable?: boolean; // the shared model's reading (embedding) was kept, so a verified label can train
+  modelTop?: string | null;
+  modelP?: number | null;
+  modelRound?: number | null;
+  geminiLabel?: string | null;
+  geminiConf?: number | null;
+  verifiedLabel?: string | null;
+  verifiedBy?: string | null;
+  expertNote?: string | null;
+  usedInRound?: number | null;
+  followup?: "worked" | "did_not_work" | null;
 };
 
 export type MandiRow = {
