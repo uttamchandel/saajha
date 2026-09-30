@@ -1,0 +1,68 @@
+/* Hero-only styles. Colours mirror the night tokens in app/globals.css. */
+
+/* The hero headline: large across the page on phones and tablets, sized to its column on desktop. */
+.h1 {
+  font-size: clamp(2.6rem, 7.4vw, 4rem);
+  text-wrap: balance;
+}
+@media (min-width: 1024px) {
+  .h1 {
+    font-size: clamp(2.6rem, 4.1vw, 3.7rem);
+  }
+}
+
+/*
+  NetworkField labels. SVG text is sized in viewBox units, so the network scales it with the drawing.
+  Below 520px the drawing is small, so the labels get more units to stay readable (about 12-13 px).
+*/
+.nodeName {
+  font-size: 16px;
+  font-weight: 600;
+  fill: #eef0fb;
+}
+.nodeSub {
+  font-size: 13px;
+  fill: #aab1d8;
+}
+.hubSmall {
+  font-size: 12.5px;
+  fill: #aab1d8;
+  letter-spacing: 0.06em;
+}
+.hubNum {
+  font-size: 34px;
+  font-weight: 600;
+  fill: #eef0fb;
+}
+@media (max-width: 519.98px) {
+  .nodeName {
+    font-size: 23px;
+  }
+  .nodeSub {
+    font-size: 19px;
+  }
+  .hubSmall {
+    font-size: 18px;
+  }
+  .hubNum {
+    font-size: 44px;
+  }
+}
+
+/* A night-coloured outline behind label text, so a lane passing under a label never cuts through it. */
+.halo {
+  paint-order: stroke;
+  stroke: #0a0f2c;
+  stroke-width: 6px;
+  stroke-linejoin: round;
+}
+
+/* Shown only in the still frame used for prefers-reduced-motion. */
+.stillOnly {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .stillOnly {
+    display: inline;
+  }
+}

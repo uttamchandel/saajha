@@ -1,0 +1,96 @@
+/*
+  Motion for the landing's lower sections (Problem → FinalCta).
+  Everything is fully visible by default. The scroll-linked moves (the stamp landing, bars growing)
+  only run where the browser supports scroll-driven animation AND the visitor has not asked for
+  reduced motion, so nothing is ever hidden on an older browser, a screenshot, or a reduced-motion setup.
+*/
+
+/* Live dots: a slow expanding ring behind the dot. */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  75%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+.pulseRing {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pulseRing {
+    animation: pulse-ring 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+  }
+}
+
+/* The border stamp rests at −6°, like a hand-stamped form. */
+.stamp {
+  transform: rotate(-6deg);
+  opacity: 0.92;
+}
+
+/* Bars grow from their baseline. */
+.barY {
+  transform-origin: 50% 100%;
+}
+.barX {
+  transform-origin: 0% 50%;
+}
+
+@keyframes stamp-land {
+  0% {
+    transform: rotate(-13deg) scale(1.45);
+    opacity: 0;
+  }
+  55% {
+    transform: rotate(-5deg) scale(0.96);
+    opacity: 0.92;
+  }
+  100% {
+    transform: rotate(-6deg) scale(1);
+    opacity: 0.92;
+  }
+}
+
+@keyframes grow-y {
+  from {
+    transform: scaleY(0.06);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0.04);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stamp {
+      animation: stamp-land linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 42%;
+    }
+    .barY {
+      animation: grow-y linear both;
+      animation-timeline: view();
+      animation-range: entry 60% cover 38%;
+    }
+    .barX {
+      animation: grow-x linear both;
+      animation-timeline: view();
+      animation-range: entry 60% cover 40%;
+    }
+  }
+}

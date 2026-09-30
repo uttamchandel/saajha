@@ -1,11 +1,34 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Anek_Devanagari, Anek_Latin, Anek_Tamil } from "next/font/google";
+import {
+  Anek_Bangla,
+  Anek_Devanagari,
+  Anek_Gujarati,
+  Anek_Gurmukhi,
+  Anek_Kannada,
+  Anek_Latin,
+  Anek_Malayalam,
+  Anek_Odia,
+  Anek_Tamil,
+  Anek_Telugu,
+} from "next/font/google";
 import "./globals.css";
 
 const anek = Anek_Latin({ subsets: ["latin"], axes: ["wdth"], variable: "--font-anek" });
 const anekDeva = Anek_Devanagari({ subsets: ["devanagari"], axes: ["wdth"], variable: "--font-anek-deva" });
 const anekTamil = Anek_Tamil({ subsets: ["tamil"], axes: ["wdth"], variable: "--font-anek-tamil" });
+// The other scripts farmers read. Not preloaded: a browser fetches a script's file only when a page shows it.
+const anekTelugu = Anek_Telugu({ subsets: ["telugu"], variable: "--font-anek-telugu", preload: false });
+const anekKannada = Anek_Kannada({ subsets: ["kannada"], variable: "--font-anek-kannada", preload: false });
+const anekMalayalam = Anek_Malayalam({ subsets: ["malayalam"], variable: "--font-anek-malayalam", preload: false });
+const anekBangla = Anek_Bangla({ subsets: ["bengali"], variable: "--font-anek-bangla", preload: false });
+const anekGujarati = Anek_Gujarati({ subsets: ["gujarati"], variable: "--font-anek-gujarati", preload: false });
+const anekGurmukhi = Anek_Gurmukhi({ subsets: ["gurmukhi"], variable: "--font-anek-gurmukhi", preload: false });
+const anekOdia = Anek_Odia({ subsets: ["oriya"], variable: "--font-anek-odia", preload: false });
+
+const FONTS = [anek, anekDeva, anekTamil, anekTelugu, anekKannada, anekMalayalam, anekBangla, anekGujarati, anekGurmukhi, anekOdia]
+  .map((f) => f.variable)
+  .join(" ");
 
 export const metadata: Metadata = {
   title: "Saajha — states share what they've learned, not who their farmers are",
@@ -16,7 +39,7 @@ export const metadata: Metadata = {
 const NODE_URL = process.env.NEXT_PUBLIC_NODE_URL ?? "https://saajha-node.vercel.app";
 
 const NAV = [
-  { href: "/", label: "The flip" },
+  { href: "/#flip", label: "The flip" },
   { href: "/diagnose", label: "Try a photo" },
   { href: "/federation", label: "Federation record" },
   { href: "/exchange", label: "Early warning" },
@@ -25,20 +48,20 @@ const NAV = [
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${anek.variable} ${anekDeva.variable} ${anekTamil.variable} h-full antialiased`}>
+    <html lang="en" className={`${FONTS} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-paper text-ink">
-        <header className="border-b border-rule bg-sheet">
+        <header className="border-b border-night-line bg-night text-starlight">
           <div className="mx-auto flex max-w-6xl flex-wrap items-baseline gap-x-8 gap-y-2 px-4 py-4 sm:px-6">
-            <Link href="/" className="display text-2xl text-ink no-underline">
-              Saajha <span className="font-normal text-muted" lang="hi">साझा</span>
+            <Link href="/" className="display text-2xl text-starlight no-underline">
+              Saajha <span className="font-normal text-gold" lang="hi">साझा</span>
             </Link>
             <nav aria-label="Main" className="flex flex-wrap gap-x-5 gap-y-1 text-[15px]">
               {NAV.map((n) => (
-                <Link key={n.href} href={n.href} className="text-carbon underline-offset-4 hover:underline">
+                <Link key={n.href} href={n.href} className="text-haze underline-offset-4 hover:text-starlight hover:underline">
                   {n.label}
                 </Link>
               ))}
-              <a href={NODE_URL} className="font-semibold text-carbon underline-offset-4 hover:underline">
+              <a href={NODE_URL} className="font-semibold text-gold underline-offset-4 hover:underline">
                 State node: KisanVaani ↗
               </a>
             </nav>

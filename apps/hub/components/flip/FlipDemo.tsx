@@ -114,9 +114,9 @@ export default function FlipDemo() {
       </figure>
 
       <div className="min-w-0">
-        <h1 className="display text-[clamp(2.1rem,5.2vw,3.6rem)]">
+        <h2 className="display text-[clamp(2.1rem,5.2vw,3.6rem)]">
           State {stateId} has never recorded {classLabel(hero.true_key).toLowerCase()}. Its model learns to see it anyway.
-        </h1>
+        </h2>
         <p className="mt-5 max-w-[62ch] text-lg text-muted">
           Experts in States {verifiedCases.map((v) => v.id).join(" and ")} have verified{" "}
           {grouped(verifiedCases.reduce((a, v) => a + v.n, 0))} cases of it. Those photos and the farmers behind them never
@@ -126,9 +126,9 @@ export default function FlipDemo() {
 
         <section aria-labelledby="verdict-h" className="mt-8 rounded-md border border-rule bg-sheet p-5 sm:p-6">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h2 id="verdict-h" className="text-lg font-semibold">
+            <h3 id="verdict-h" className="text-lg font-semibold">
               State {stateId}&apos;s diagnosis of this photo
-            </h2>
+            </h3>
             <p className="text-sm text-muted" aria-live="polite">
               {round === 0 ? "Trained on its own verified cases only" : `After federation round ${round} of ${last}`}
             </p>
