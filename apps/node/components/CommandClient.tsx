@@ -22,6 +22,7 @@ import KpiCards from "./command/KpiCards";
 import { LanguageDonut, QueryVolumeChart, TopCropsChart } from "./command/Charts";
 import QueryFeedTable from "./command/QueryFeedTable";
 import AlertsPanel from "./command/AlertsPanel";
+import CrossBorderPanel from "./command/CrossBorderPanel";
 import OutbreaksPanel from "./command/OutbreaksPanel";
 import EscalationsPanel from "./command/EscalationsPanel";
 import BroadcastsPanel from "./command/BroadcastsPanel";
@@ -165,6 +166,7 @@ export default function CommandClient() {
         <main className="space-y-4 p-4 lg:p-6">
           {tab === "overview" && (
             <>
+              <CrossBorderPanel onCompose={setComposeTarget} />
               <KpiCards liveAlerts={liveAlerts} />
               <div className="grid gap-4 xl:grid-cols-[1.6fr_1fr_1fr]">
                 <QueryVolumeChart />
@@ -175,7 +177,12 @@ export default function CommandClient() {
             </>
           )}
 
-          {tab === "alerts" && <AlertsPanel district={district} onCompose={setComposeTarget} />}
+          {tab === "alerts" && (
+            <>
+              <CrossBorderPanel onCompose={setComposeTarget} />
+              <AlertsPanel district={district} onCompose={setComposeTarget} />
+            </>
+          )}
 
           {tab === "outbreaks" && <OutbreaksPanel district={district} onCompose={setComposeTarget} />}
 

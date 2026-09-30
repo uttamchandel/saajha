@@ -76,6 +76,15 @@ expect(mandi.status === 200 && Array.isArray(mandi.json.rows), `/api/mandi -> ${
 const soil = await call("/api/soil-profile");
 expect(soil.status === 200, `/api/soil-profile 200`, `/api/soil-profile -> HTTP ${soil.status}`);
 
+// What this node publishes to the hub: district-week counts of at least k, and nothing else.
+const pub = await call("/api/exchange/counts");
+const fields = new Set((pub.json.counts ?? []).flatMap((c) => Object.keys(c)));
+expect(
+  pub.status === 200 && pub.json.schema === "saajha.outbreak_counts.v1" && pub.json.k >= 5 && pub.json.counts.every((c) => c.count >= pub.json.k) && [...fields].every((f) => ["district", "iso_week", "condition", "count"].includes(f)),
+  `/api/exchange/counts -> ${pub.json.state}: ${pub.json.counts?.length} counts >= ${pub.json.k}, ${pub.json.withheld} held back, only district/week/condition/count`,
+  `/api/exchange/counts -> HTTP ${pub.status} ${JSON.stringify(pub.json).slice(0, 160)}`,
+);
+
 if (!skipGemini) {
   const adv = await call("/api/advisory", { query: "KAPAS PILA PATTA", lang: "hi", channel: "sms" });
   expect(adv.status === 200 && adv.json.source === "gemini", `/api/advisory -> live Gemini in ${adv.secs}s`, `/api/advisory -> HTTP ${adv.status}, source ${adv.json.source}`);
@@ -102,6 +111,18 @@ if (!skipGemini) {
     noModel.status === 200 && d2.outcome === "expert" && Boolean(d2.ticket?.id) && !noModel.json.treatment_chemical?.length,
     `/api/diagnose without a model verdict -> expert decides, ticket ${d2.ticket?.id}, no advice guessed`,
     `/api/diagnose without a model verdict -> HTTP ${noModel.status}, outcome ${d2.outcome}`,
+  );
+
+  // The officer's alert, drafted by Gemini in the district's language (the officer reads it before sending).
+  const draft = await call("/api/alerts/draft", {
+    message: "Pink bollworm (cotton) is rising in Yavatmal district of Maharashtra, just across the Penganga river. Check green cotton bolls for pink larvae this week and set pheromone traps. Ask your RSK or KVK before spraying anything. Helpline: 1800-180-1551",
+    from: "English",
+    to: "Telugu",
+  });
+  expect(
+    draft.status === 200 && /[\u0C00-\u0C7F]/.test(draft.json.text ?? "") && draft.json.text.includes("1800-180-1551"),
+    `/api/alerts/draft -> Telugu alert, helpline kept, in ${draft.secs}s`,
+    `/api/alerts/draft -> HTTP ${draft.status} ${JSON.stringify(draft.json).slice(0, 160)}`,
   );
 
   const rec = await call("/api/recommend", { lang: "hi" });

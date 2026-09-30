@@ -26,7 +26,7 @@ import type { LucideIcon } from "lucide-react";
 import { HUB_URL, analysePhoto } from "@/lib/fed/federated";
 import type { LoadProgress } from "@/lib/fed/embed";
 import type { DiagnoseResponse } from "@/app/api/diagnose/route";
-import { DISTRICTS } from "@/lib/districts";
+import { HOME_DISTRICT } from "@/lib/node";
 import { LANGS_FULL, T_FULL, SAMPLE_QUERIES_FULL } from "@/lib/i18n-full";
 import { speak, stopSpeaking, createRecognizer } from "@/lib/speech";
 import { startRecording, stopRecording } from "@/lib/recorder";
@@ -61,8 +61,8 @@ const MODES: { id: Mode; icon: LucideIcon; label: string; sub: string }[] = [
 ];
 
 // Keypad-2 mandi flow: crops + state from the pilot's first district (Sehore, MP).
-const MANDI_CROPS: string[] = DISTRICTS[0]?.crops ?? ["Wheat", "Soybean", "Cotton"];
-const MANDI_STATE = DISTRICTS[0]?.state ?? "Madhya Pradesh";
+const MANDI_CROPS: string[] = HOME_DISTRICT.crops ?? ["Wheat", "Soybean", "Cotton"];
+const MANDI_STATE = HOME_DISTRICT.state;
 
 // Cached mandi quotes so the flow works even while /api/mandi is unavailable.
 const CACHED_MANDI: Record<string, { market: string; modal: number }> = {
@@ -390,7 +390,7 @@ export default function DemoClient() {
   const referToExpert = async () => {
     if (!diag || kvkReferring) return;
     setKvkReferring(true);
-    const d = DISTRICTS[0];
+    const d = HOME_DISTRICT;
     const ticket = await createLiveTicket({
       farmer: "Demo farmer",
       village: d?.blocks[0] ?? "Sehore",

@@ -24,7 +24,7 @@ import {
 import type { VoiceResult } from "@/lib/types";
 import { speak, stopSpeaking } from "@/lib/speech";
 import { createLiveTicket } from "@/lib/ops-live";
-import { DISTRICTS } from "@/lib/districts";
+import { HOME_DISTRICT } from "@/lib/node";
 import { analysePhoto } from "@/lib/fed/federated";
 import type { DiagnoseResponse } from "@/app/api/diagnose/route";
 
@@ -316,7 +316,7 @@ export default function WhatsAppClient() {
       setMsgs((prev) => prev.map((x) => (x.id === m.id ? { ...x, referred: true } : x)));
       sendOutgoing({ id: uid(), kind: "text", text: "Expert se baat karani hai 🙏" });
       setTimeout(() => setTyping(true), 500);
-      const home = DISTRICTS[0];
+      const home = HOME_DISTRICT;
       const ticket = await createLiveTicket({
         farmer: "WhatsApp farmer",
         village: home?.blocks[0] ?? "Sehore",

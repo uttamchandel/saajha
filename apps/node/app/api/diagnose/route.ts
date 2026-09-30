@@ -13,7 +13,7 @@ import { GoogleGenAI, Type, type Schema } from "@google/genai";
 import { generateContentResilient } from "@/lib/genai";
 import { LANG_NAME_FOR_PROMPT } from "@/lib/i18n-full";
 import { createTicket, logQuery } from "@/lib/db";
-import { DISTRICTS } from "@/lib/districts";
+import { HOME_DISTRICT } from "@/lib/node";
 import { CLASSES, DIAGNOSIS_KEYS, UNSURE_KEY, classLabel, isClassKey, isDiagnosisKey, type ClassKey } from "@/lib/fed/classes";
 import { decide, type Decision, type FedVerdict, type GeminiCheck } from "@/lib/fed/decide";
 
@@ -254,7 +254,7 @@ export async function POST(req: NextRequest) {
   const gemini = await geminiCheck(image, mimeType, lang);
   const decision = decide(release?.tauFed ?? 0.58, fed, gemini);
 
-  const home = DISTRICTS[0];
+  const home = HOME_DISTRICT;
   const who = channel === "whatsapp" ? "WhatsApp farmer" : "Demo farmer";
   const gemLabel = gemini ? classLabel(gemini.class_key) : "";
   let ticket: { id: string; kendra: string } | null = null;

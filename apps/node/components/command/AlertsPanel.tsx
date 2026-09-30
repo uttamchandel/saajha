@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { CloudRain, Sun, Thermometer, Megaphone, RefreshCw, type LucideIcon } from "lucide-react";
 import type { AlertsResponse, AlertType, ZoneAlert } from "@/lib/types";
 import { CACHED_ALERTS } from "@/lib/opsData";
+import { STATE_LANGUAGE } from "@/lib/node";
 import type { ComposeTarget } from "./BroadcastComposer";
 import { EmptyState, SectionCard, SeverityChip, SkeletonRows, TableShell, Td, Th, fmtDateTime, nf } from "./ui";
 
@@ -117,8 +118,10 @@ export default function AlertsPanel({ district, onCompose }: {
                             title: `${t.label} ${a.severity} — ${a.district}`,
                             district: a.district,
                             state: a.state,
-                            language: a.state === "Telangana" || a.state === "Andhra Pradesh" ? "Telugu" : a.state === "Maharashtra" ? "Marathi" : "Hindi",
+                            language: STATE_LANGUAGE[a.state] ?? "Hindi",
                             message: a.farmerMessage,
+                            // Alert texts are written in Hindi (a few seeded ones in Telugu); Gemini drafts the district's language.
+                            messageLanguage: /[\u0C00-\u0C7F]/.test(a.farmerMessage) ? "Telugu" : "Hindi",
                             recipients: a.farmersInZone,
                           })
                         }

@@ -19,6 +19,7 @@ const NAV = [
   { href: "/", label: "The flip" },
   { href: "/diagnose", label: "Try a photo" },
   { href: "/federation", label: "Federation record" },
+  { href: "/exchange", label: "Early warning" },
   { href: "/method", label: "Method and limits" },
 ];
 

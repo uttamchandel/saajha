@@ -43,7 +43,7 @@ function headSha(head) {
 }
 
 console.log(`Verifying ${base}`);
-for (const page of ["/", "/diagnose", "/federation", "/method"]) {
+for (const page of ["/", "/diagnose", "/federation", "/method", "/exchange"]) {
   try {
     const r = await fetch(base + page);
     expect(r.ok, `page ${page} ${r.status}`, `page ${page} ${r.status}`);
@@ -76,6 +76,26 @@ if (!headFails) ok(`${heads.length} head files recompute to their recorded sha25
 
 const gallery = await get("/fl/gallery.json");
 expect(gallery.some((g) => g.hero), `gallery (${gallery.length} images, hero present)`, "no hero in gallery");
+
+// Cross-border early warning: the hub pulls every state node's counts and checks them at the border.
+const ex = await get("/api/exchange");
+const down = ex.nodes.filter((n) => !n.ok);
+expect(ex.nodes.length >= 2 && down.length === 0, `/api/exchange pulled ${ex.nodes.length} state nodes`, `/api/exchange: unreachable ${down.map((n) => `${n.state} (${n.error})`).join(", ")}`);
+expect(ex.farmer_records_moved === 0 && ex.counts.every((c) => Object.keys(c).sort().join() === "condition,count,district,iso_week,state" && c.count >= 5), `/api/exchange ${ex.counts.length} counts, all >= 5, no other fields`, "/api/exchange: a count broke the rule");
+expect(ex.warnings.length > 0, `/api/exchange warnings: ${ex.warnings.map((w) => `${w.from.district} -> ${w.to.district}`).join(", ")}`, "/api/exchange: no warning (expected Yavatmal -> Adilabad in the scenario)");
+const envelope = (c) => ({ schema: "saajha.outbreak_counts.v1", state: "Maharashtra", k: 5, counts: [{ district: "Yavatmal", iso_week: "2026-W40", condition: "pink_bollworm", count: 31, ...c }] });
+for (const [label, body, accept] of [
+  ["a valid count", envelope({}), true],
+  ["a phone number", envelope({ farmer_phone: "+91 90000 00000" }), false],
+  ["a count of 3", envelope({ count: 3 }), false],
+  ["a person's name as district", envelope({ district: "Ramesh Patil" }), false],
+]) {
+  const r = await fetch(base + "/api/exchange/check", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  const v = await r.json().catch(() => ({}));
+  const accepted = r.ok && v.accepted?.length === 1 && v.refused?.length === 0;
+  const refused = r.ok && v.accepted?.length === 0 && v.refused?.length === 1 && !JSON.stringify(v.refused).includes("Ramesh") && !JSON.stringify(v.refused).includes("90000");
+  expect(accept ? accepted : refused, `/api/exchange/check ${label}: ${accept ? "accepted" : "refused, not repeated"}`, `/api/exchange/check ${label}: HTTP ${r.status} ${JSON.stringify(v).slice(0, 160)}`);
+}
 
 if (!skipGemini) {
   const hero = gallery.find((g) => g.hero);

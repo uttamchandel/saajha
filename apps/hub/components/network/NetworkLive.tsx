@@ -6,7 +6,7 @@ const NODE_URL = (process.env.NEXT_PUBLIC_NODE_URL ?? "https://saajha-node.verce
 const CROSSINGS = [
   { what: "Model releases", how: "Weights and fingerprints for every round. State nodes download them and refuse a file that does not match.", live: true },
   { what: "Approved advice", how: "A node asks for a condition's card in a language; only the label and the language cross, never the photo.", live: true },
-  { what: "Outbreak counts", how: "District, week, pest and a count above a minimum, so a neighbouring state is warned first.", live: false },
+  { what: "Outbreak counts", how: "District, week, pest and a count of at least 5, so a neighbouring state is warned first. The hub checks every count at the border.", live: true, href: "/exchange", cta: "See counts cross" },
 ];
 
 export default function NetworkLive({ round, sha256 }: { round: number; sha256: string }) {
@@ -23,7 +23,7 @@ export default function NetworkLive({ round, sha256 }: { round: number; sha256: 
 
       <div className="mt-8 grid gap-6 md:grid-cols-2">
         <div className="rounded-md border border-rule bg-sheet p-6">
-          <p className="text-sm font-semibold uppercase tracking-wide text-muted">State node · live</p>
+          <p className="text-sm font-semibold uppercase tracking-wide text-muted">State nodes · Telangana and Maharashtra, live</p>
           <h3 className="display mt-1 text-2xl">KisanVaani</h3>
           <p className="mt-2 text-[15px]">
             The farmer layer: voice, SMS and WhatsApp in 12+ languages, expert tickets and the district officer&apos;s console.
@@ -55,7 +55,17 @@ export default function NetworkLive({ round, sha256 }: { round: number; sha256: 
                     {c.live ? "· live" : "· being built"}
                   </span>
                 </p>
-                <p className="text-[15px] text-muted">{c.how}</p>
+                <p className="text-[15px] text-muted">
+                  {c.how}
+                  {c.href && (
+                    <>
+                      {" "}
+                      <a href={c.href} className="text-carbon underline underline-offset-4">
+                        {c.cta}
+                      </a>
+                    </>
+                  )}
+                </p>
               </li>
             ))}
           </ul>

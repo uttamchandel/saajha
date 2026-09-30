@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NODE_STATE } from "@/lib/node";
 import {
   Sprout,
   CloudRain,
@@ -44,16 +45,20 @@ const CROSSINGS = [
   {
     icon: ChartColumn,
     title: "Outbreak counts",
-    body: "District, week, pest and a count above a minimum, so a neighbouring state is warned before a pest arrives. Never who reported it.",
-    status: "Being built",
-    live: false,
+    body: "District, week, pest and a count of at least 5, so a neighbouring state is warned before a pest arrives. Never who reported it.",
+    status: "Live between two state nodes",
+    live: true,
+    note: "The Telangana and Maharashtra nodes publish counts (a labelled scenario); the hub checks every count at the border and warns the neighbouring state.",
+    href: `${HUB_URL}/exchange`,
+    cta: "See counts cross",
   },
   {
     icon: BookCheck,
     title: "Expert-approved advice",
     body: "Advice cards an expert in one state has approved, reusable in every state, in each state's languages.",
-    status: "Being built",
-    live: false,
+    status: "Live for paddy",
+    live: true,
+    note: "This node's paddy advice comes from the hub's card library: only the condition and the language cross, never the photo. Cards cite public sources; expert approval is simulated for now.",
   },
 ];
 
@@ -85,8 +90,8 @@ const STEPS = [
 const MODULES = [
   {
     icon: Sprout,
-    title: "Smart crop recommendation",
-    body: "Ranked, explained crop choices reasoned by Gemini from ISRIC 250 m soil grids, Government of India Soil Health Card records, 16-day weather, and ICAR agronomy.",
+    title: "Regenerative crop planning",
+    body: "Ranked, explained crop choices from ISRIC 250 m soil grids, Soil Health Card records, 16-day weather and ICAR agronomy, each with two scores: this season, and what it does to the soil over the next seasons. Pulses when nitrogen is low, green manure when carbon is low, water-saving methods when rain is short.",
     href: "/recommend",
     cta: "Try the crop advisor",
   },
@@ -158,6 +163,7 @@ const SIMULATED = [
   "The expert desk is simulated: no RSK or KVK receives these tickets, and tickets are kept in memory.",
   "The farmer registry, KPIs and past tickets in the command center are invented sample data; its weather alerts are live.",
   "Mandi prices are typical values, not today's.",
+  "The outbreak counts this node publishes to the hub are a seeded scenario; the hub's pull, border check and warning are live.",
   "Advice cards are compiled from cited public sources and not yet reviewed by an agronomist; card approvals are simulated.",
 ];
 
@@ -171,7 +177,7 @@ export default function Home() {
             <Sprout size={18} className="text-forest" aria-hidden="true" />
             KisanVaani
             <span className="hidden sm:inline font-sans text-[11px] font-semibold uppercase tracking-wider text-ink-soft">
-              Saajha state node
+              Saajha state node · {NODE_STATE}
             </span>
           </span>
           <div className="flex items-center gap-4 text-sm">
@@ -195,7 +201,7 @@ export default function Home() {
       {/* Hero */}
       <header className="mx-auto max-w-6xl px-4 pt-16 pb-12">
         <div className="inline-flex items-center gap-2 rounded-full bg-leaf-mist text-forest text-xs font-semibold px-3 py-1.5 mb-6">
-          Saajha state node · Build with AI: Code for Communities, Edition 2 · PS-04 Agricultural Intelligence
+          Saajha state node · {NODE_STATE} · Build with AI: Code for Communities, Edition 2 · PS-04 Agricultural Intelligence
         </div>
         <h1 className="font-display text-4xl sm:text-6xl font-semibold text-forest leading-[1.08] max-w-4xl">
           Every farmer deserves an agronomist,<br className="hidden sm:block" />
