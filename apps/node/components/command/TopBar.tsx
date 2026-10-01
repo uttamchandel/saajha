@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ChevronDown, CircleDot, UserRound } from "lucide-react";
 import { OPS_DISTRICTS } from "@/lib/opsData";
+import { HOME_DISTRICT } from "@/lib/node";
 
 const TAB_TITLE: Record<string, string> = {
   overview: "Overview",
@@ -68,7 +69,7 @@ export default function TopBar({ tab, district, onDistrict }: {
           <span className="flex size-5 items-center justify-center rounded-full bg-forest text-white">
             <UserRound className="size-3" aria-hidden="true" />
           </span>
-          DAO · Sehore
+          DAO · {HOME_DISTRICT.district}
         </span>
       </div>
     </header>

@@ -11,6 +11,17 @@ export const NODE_DISTRICTS: District[] = DISTRICTS.filter((d) => d.state === NO
 /** Where tickets and defaults land when a farmer's own district is not known. */
 export const HOME_DISTRICT: District = NODE_DISTRICTS[0] ?? DISTRICTS[0];
 
+// Routing mirrors the state escalation fabric: RSKs in AP, AEO clusters in TS,
+// district KVKs elsewhere.
+export function kendraFor(district: string, state: string): string {
+  if (state === "Andhra Pradesh") return `RSK ${district}`;
+  if (state === "Telangana") return `AEO Cluster ${district}`;
+  return `KVK ${district}`;
+}
+
+/** The kendra a ticket from the home district is routed to. */
+export const HOME_KENDRA = kendraFor(HOME_DISTRICT.district, HOME_DISTRICT.state);
+
 /** The language a state's broadcasts go out in (every state in the district registry). */
 export const STATE_LANGUAGE: Record<string, string> = {
   "Andhra Pradesh": "Telugu",

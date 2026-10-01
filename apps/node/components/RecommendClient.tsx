@@ -21,6 +21,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { DISTRICTS, type District } from "@/lib/districts";
+import { HOME_DISTRICT, NODE_DISTRICTS, NODE_STATE } from "@/lib/node";
 import { irrigationAdvice } from "@/lib/irrigation";
 import { speak, stopSpeaking } from "@/lib/speech";
 import type { WaterSource } from "@/lib/agronomy";
@@ -49,6 +50,9 @@ const WATER_OPTIONS: { id: WaterSource; icon: LucideIcon; en: string; hi: string
   { id: "borewell", icon: Droplet, en: "Borewell", hi: "बोरवेल" },
   { id: "drip", icon: Droplets, en: "Drip", hi: "ड्रिप" },
 ];
+
+// The district picker lists this node's own districts first, then the rest of the registry.
+const PICKER_DISTRICTS: District[] = [...NODE_DISTRICTS, ...DISTRICTS.filter((d) => d.state !== NODE_STATE)];
 
 const LOAD_STAGES = [
   "Reading satellite soil grids (ISRIC, 250 m)…",
@@ -120,8 +124,8 @@ export default function RecommendClient() {
 
   const matches = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return DISTRICTS;
-    return DISTRICTS.filter(
+    if (!q) return PICKER_DISTRICTS;
+    return PICKER_DISTRICTS.filter(
       (d) => d.district.toLowerCase().includes(q) || d.state.toLowerCase().includes(q),
     );
   }, [query]);
@@ -287,7 +291,7 @@ export default function RecommendClient() {
                     }}
                     onFocus={() => setListOpen(true)}
                     onBlur={() => setTimeout(() => setListOpen(false), 150)}
-                    placeholder="Type your district… (e.g. Sehore)"
+                    placeholder={`Type your district… (e.g. ${HOME_DISTRICT.district})`}
                     className="w-full border border-forest/20 rounded-xl pl-9 pr-3 py-2.5 text-sm bg-paper focus:outline-none focus:border-forest"
                   />
                 </div>

@@ -22,7 +22,7 @@ import {
 import type { VoiceResult } from "@/lib/types";
 import { speak, stopSpeaking } from "@/lib/speech";
 import { createLiveTicket } from "@/lib/ops-live";
-import { HOME_DISTRICT } from "@/lib/node";
+import { HOME_DISTRICT, HOME_KENDRA } from "@/lib/node";
 import SiteNav from "@/components/saajha/SiteNav";
 import { analysePhoto } from "@/lib/fed/federated";
 import type { DiagnoseResponse } from "@/app/api/diagnose/route";
@@ -120,6 +120,8 @@ export default function WhatsAppClient() {
   // Set after mount only — calling fmtTime() during render caused a server/client
   // hydration mismatch (React #418), since the two renders format different Dates.
   const [smsTime, setSmsTime] = useState("");
+  // This node's own address for the invite link, read after mount for the same reason.
+  const [smsHost, setSmsHost] = useState("");
 
   const fileRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -147,6 +149,7 @@ export default function WhatsAppClient() {
     setMsgs(initial);
     setLoaded(true);
     setSmsTime(fmtTime());
+    setSmsHost(window.location.host);
   }, []);
 
   useEffect(() => {
@@ -318,9 +321,9 @@ export default function WhatsAppClient() {
       const home = HOME_DISTRICT;
       const ticket = await createLiveTicket({
         farmer: "WhatsApp farmer",
-        village: home?.blocks[0] ?? "Sehore",
-        district: home?.district ?? "Sehore",
-        state: home?.state ?? "Madhya Pradesh",
+        village: home.blocks[0] ?? home.district,
+        district: home.district,
+        state: home.state,
         channel: "whatsapp",
         crop: d.plant,
         aiDiagnosis: `${d.disease_en}${d.disease_scientific ? ` (${d.disease_scientific})` : ""}`,
@@ -329,7 +332,7 @@ export default function WhatsAppClient() {
       });
       // API unreachable → keep the demo alive with a locally generated ticket.
       const id = ticket?.id ?? `RSK-${1000 + Math.floor(Math.random() * 9000)}`;
-      const kendra = ticket?.kendra ?? "KVK Sehore";
+      const kendra = ticket?.kendra ?? HOME_KENDRA;
       setTyping(false);
       addMsg({
         id: uid(),
@@ -898,12 +901,12 @@ export default function WhatsAppClient() {
               <div className="text-xs font-semibold text-ink-soft mb-3">1. SMS invite — reaches feature phones</div>
               <div className="rounded-xl bg-zinc-100 border border-zinc-200 p-3 max-w-sm">
                 <div className="text-[10px] font-semibold text-zinc-500 mb-1.5 flex items-center justify-between">
-                  <span>KVKSHR</span>
+                  <span>KVAANI</span>
                   <span>{smsTime}</span>
                 </div>
                 <div className="rounded-lg rounded-tl-none bg-white shadow-sm px-3 py-2 text-[13px] leading-snug text-zinc-800">
                   KisanVaani: Namaste! Apni fasal ki photo bhejein aur turant salah paayein:{" "}
-                  <span className="text-sky underline">saajha-node.vercel.app/whatsapp</span> — KVK Sehore
+                  <span className="text-sky underline">{smsHost}/whatsapp</span> — {HOME_KENDRA}
                 </div>
               </div>
               <p className="text-xs text-ink-soft mt-3">

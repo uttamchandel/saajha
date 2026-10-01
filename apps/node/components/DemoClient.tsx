@@ -26,7 +26,7 @@ import SiteNav from "@/components/saajha/SiteNav";
 import { HUB_URL, analysePhoto } from "@/lib/fed/federated";
 import type { LoadProgress } from "@/lib/fed/embed";
 import type { DiagnoseResponse } from "@/app/api/diagnose/route";
-import { HOME_DISTRICT } from "@/lib/node";
+import { HOME_DISTRICT, HOME_KENDRA } from "@/lib/node";
 import { LANGS_FULL, T_FULL, SAMPLE_QUERIES_FULL } from "@/lib/i18n-full";
 import { speak, stopSpeaking, createRecognizer } from "@/lib/speech";
 import { startRecording, stopRecording } from "@/lib/recorder";
@@ -60,16 +60,14 @@ const MODES: { id: Mode; icon: LucideIcon; label: string; sub: string }[] = [
   { id: "photo", icon: Camera, label: "Photo diagnosis", sub: "Via relay worker" },
 ];
 
-// Keypad-2 mandi flow: crops + state from the pilot's first district (Sehore, MP).
+// Keypad-2 mandi flow: crops + state from this node's home district.
 const MANDI_CROPS: string[] = HOME_DISTRICT.crops ?? ["Wheat", "Soybean", "Cotton"];
 const MANDI_STATE = HOME_DISTRICT.state;
 
-// Cached mandi quotes so the flow works even while /api/mandi is unavailable.
-const CACHED_MANDI: Record<string, { market: string; modal: number }> = {
-  Wheat: { market: "Sehore", modal: 2450 },
-  Soybean: { market: "Ashta", modal: 4720 },
-  Cotton: { market: "Khargone", modal: 7040 },
-};
+// Cached mandi quotes so the flow works even while /api/mandi is unavailable: typical prices, quoted
+// at this node's own market. A crop with no typical price gets no number.
+const CACHED_MARKET = HOME_DISTRICT.blocks[0] ?? HOME_DISTRICT.district;
+const CACHED_MODAL: Record<string, number> = { Wheat: 2450, Soybean: 4720, Cotton: 7040 };
 
 // Mic support is a fixed browser capability: read it at render, nothing to subscribe to.
 const noSubscribe = () => () => {};
@@ -271,9 +269,8 @@ export default function DemoClient() {
     stopSpeaking();
     setBubbles((b) => [...b, { who: "farmer", text: crop }]);
     setCallState("thinking");
-    const cached = CACHED_MANDI[crop] ?? { market: "Sehore", modal: 2450 };
-    let market = cached.market;
-    let modal = cached.modal;
+    let market = CACHED_MARKET;
+    let modal: number | undefined = CACHED_MODAL[crop];
     let source = "cached";
     try {
       const res = await fetch(
@@ -292,12 +289,20 @@ export default function DemoClient() {
     } catch {
       /* keep cached quote */
     }
-    const line =
-      uiLang === "en"
-        ? `${crop} price: ₹${modal} per quintal at ${market} mandi.`
-        : `${crop} ka bhav: ${market} mandi mein ₹${modal} prati quintal.`;
+    let line: string;
+    if (modal === undefined) {
+      line =
+        uiLang === "en"
+          ? `${crop} price is not available right now. Please try again in a little while.`
+          : `${crop} ka bhav abhi uplabdh nahin hai. Kripya thodi der baad phir koshish karein.`;
+    } else {
+      line =
+        uiLang === "en"
+          ? `${crop} price: ₹${modal} per quintal at ${market} mandi.`
+          : `${crop} ka bhav: ${market} mandi mein ₹${modal} prati quintal.`;
+    }
     setBubbles((b) => [...b, { who: "ivr", text: line }]);
-    setCallSource(source);
+    setCallSource(modal === undefined ? null : source);
     setCallState("answered");
     speak(line, bcp47);
   };
@@ -400,9 +405,9 @@ export default function DemoClient() {
     const d = HOME_DISTRICT;
     const ticket = await createLiveTicket({
       farmer: "Demo farmer",
-      village: d?.blocks[0] ?? "Sehore",
-      district: d?.district ?? "Sehore",
-      state: d?.state ?? "Madhya Pradesh",
+      village: d.blocks[0] ?? d.district,
+      district: d.district,
+      state: d.state,
       channel: "photo",
       crop: diag.plant,
       aiDiagnosis: `${diag.disease_en}${diag.disease_scientific ? ` (${diag.disease_scientific})` : ""}`,
@@ -413,7 +418,7 @@ export default function DemoClient() {
     setKvkTicket(
       ticket
         ? { id: ticket.id, kendra: ticket.kendra }
-        : { id: `RSK-${1000 + Math.floor(Math.random() * 9000)}`, kendra: "KVK Sehore" }
+        : { id: `RSK-${1000 + Math.floor(Math.random() * 9000)}`, kendra: HOME_KENDRA }
     );
   };
 

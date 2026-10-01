@@ -6,6 +6,7 @@
 import { neon } from "@neondatabase/serverless";
 import type { EscalationTicket } from "./types";
 import type { BroadcastRecord } from "./opsData";
+import { HOME_DISTRICT, kendraFor } from "./node";
 
 type Row = Record<string, unknown>;
 
@@ -149,14 +150,6 @@ function slaLeft(createdAt: string, slaHours: number, status: string): number {
   return Math.round((slaHours - elapsedH) * 10) / 10;
 }
 
-// Routing mirrors the state escalation fabric: RSKs in AP, AEO clusters in TS,
-// district KVKs elsewhere.
-function kendraFor(district: string, state: string): string {
-  if (state === "Andhra Pradesh") return `RSK ${district}`;
-  if (state === "Telangana") return `AEO Cluster ${district}`;
-  return `KVK ${district}`;
-}
-
 function rowToTicket(r: Row): EscalationTicket {
   const createdAt = new Date(String(r.created_at)).toISOString();
   const status = String(r.status ?? "pending") as EscalationTicket["status"];
@@ -206,9 +199,10 @@ function newTicketId(): string {
 
 export async function createTicket(input: NewTicket): Promise<EscalationTicket> {
   const farmer = input.farmer?.trim() || "Unregistered farmer";
-  const village = input.village?.trim() || "Sehore";
-  const district = input.district?.trim() || "Sehore";
-  const state = input.state?.trim() || "Madhya Pradesh";
+  // A ticket that names no place lands in this node's home district.
+  const village = input.village?.trim() || HOME_DISTRICT.blocks[0] || HOME_DISTRICT.district;
+  const district = input.district?.trim() || HOME_DISTRICT.district;
+  const state = input.state?.trim() || HOME_DISTRICT.state;
   const kendra = kendraFor(district, state);
   const confidence = Math.max(0, Math.min(100, Math.round(input.confidence)));
   const ev = input.evidence;

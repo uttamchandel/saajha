@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LIVE_FEED } from "@/lib/opsData";
+import { HOME_DISTRICT } from "@/lib/node";
 import { ChannelBadge, EmptyState, SectionCard, TableShell, Td, Th } from "./ui";
 
 const RES_STYLE: Record<string, string> = {
@@ -59,8 +60,9 @@ export default function QueryFeedTable({ district }: { district: string }) {
           (data.queries ?? []).map((q) => ({
             name: q.responseSource === "telephony-live" ? "Live caller" : "Platform user",
             village: q.responseSource === "telephony-live" ? "via +1 254 272 6372" : "via web demo",
-            district: "Sehore",
-            state: "Madhya Pradesh",
+            // The query log keeps no district, so this node's own rows show under its home district.
+            district: HOME_DISTRICT.district,
+            state: HOME_DISTRICT.state,
             channel: q.channel,
             lang: LANG_LABEL[q.lang ?? "hi"] ?? q.lang ?? "Hindi",
             crop: "—",
