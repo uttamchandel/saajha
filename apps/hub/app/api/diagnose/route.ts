@@ -2,7 +2,7 @@
 // Request:  { image: base64 (no data: prefix), mimeType: "image/jpeg" | ..., lang: "hi" | ... }
 // Response: { is_plant, is_rice, class_key, confidence, alternatives, visible_symptoms, model }
 // Failure:  HTTP 503 { error, retryable } — never a canned diagnosis.
-// (Route shape modelled on KisanVaani's diagnose route, Team Vishwakarma Devs, Ed. 1.)
+// (Route shape modelled on the state node's diagnose route; see NOTICE.)
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI, Type, type Schema } from "@google/genai";
 import {

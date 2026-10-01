@@ -40,7 +40,7 @@ export default function Reach() {
             </h2>
           </div>
           <p className={`${lede} max-w-[62ch] text-pretty lg:col-span-5`}>
-            Each state&apos;s node is KisanVaani: voice calls, SMS, WhatsApp and the web, in the farmer&apos;s own language. Tickets
+            Each state&apos;s node answers by voice call, SMS, WhatsApp and the web, in the farmer&apos;s own language. Tickets
             go to the state&apos;s own experts, and alerts to its own district officers.
           </p>
         </div>

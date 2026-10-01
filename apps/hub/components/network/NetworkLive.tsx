@@ -1,4 +1,4 @@
-// The network, live: where a visitor goes next after the flip. The state node (KisanVaani) is a
+// The network, live: where a visitor goes next after the flip. The state node is a
 // separate deployment that downloads this hub's model release, checks its fingerprint and lets it
 // decide every paddy photo; the hub serves releases and the advice-card library, never farmer data.
 import { btnPrimary, btnSecondary, card, label, link } from "@/lib/ui";
@@ -26,7 +26,7 @@ export default function NetworkLive({ round, sha256 }: { round: number; sha256: 
       <div className="mt-8 grid gap-6 md:grid-cols-2">
         <div className={`${card} p-6`}>
           <p className={label}>State nodes · Telangana and Maharashtra, live</p>
-          <h3 className="display mt-1 text-2xl text-forest">KisanVaani</h3>
+          <h3 className="display mt-1 text-2xl text-forest">The state node</h3>
           <p className="mt-2 text-[15px]">
             The farmer layer: voice, SMS and WhatsApp in 12+ languages, expert tickets and the district officer&apos;s console.
             Its paddy photos are decided by this hub&apos;s national model, round {round} (fingerprint{" "}

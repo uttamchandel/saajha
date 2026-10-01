@@ -1,4 +1,4 @@
-// The family's shared class recipes. The hub and the state node (apps/node, KisanVaani) use the same
+// The family's shared class recipes. The hub and the state node (apps/node) use the same
 // shapes: soft cards, rounded-xl buttons, round pills, forest on paper. Padding is left to the caller
 // for cards, so one recipe fits a tile and a panel. Night variants sit on bg-night or bg-forest.
 

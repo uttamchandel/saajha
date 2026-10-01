@@ -1,13 +1,13 @@
 # Setup guide
 
-Everything needed to run, deploy, and operate KisanVaani. Written for teammates
+Everything needed to run, deploy, and operate a Saajha state node. Written for teammates
 joining the project cold.
 
 ## 1. Quick start (five minutes)
 
 ```bash
-git clone https://github.com/frenchfryfeatures/kisan-vaani.git
-cd kisan-vaani
+git clone https://github.com/uttamchandel/saajha.git
+cd saajha/apps/node
 npm install
 cp .env.example .env.local     # fill in GEMINI_API_KEY at minimum
 npm run dev -- -p 3100
@@ -59,8 +59,8 @@ Full telephony reference, curl simulations, and the Exotel/DLT production path:
 
 ## 5. Current production instance
 
-- App: https://saajha-node.vercel.app (Saajha state node; Edition 1 ran at kisan-vaani.vercel.app)
-- Phone line: none connected to this deployment (Edition 1's +1 254 272 6372 served the Ed1 app);
+- App: https://saajha-node.vercel.app (Telangana) · https://saajha-node-mh.vercel.app (Maharashtra)
+- Phone line: none connected to this deployment;
   a state connects its own with `scripts/configure-twilio.mjs`; production plan is an Indian 1800 line via Exotel
 - Database: none yet (tickets and logs are per-instance memory); Neon Postgres (tables namespaced `kv_`) when `DATABASE_URL` is set
 

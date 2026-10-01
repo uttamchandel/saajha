@@ -84,9 +84,9 @@ export async function textAdvisory(body: string): Promise<string> {
     const ai = new GoogleGenAI({ apiKey });
     const result = await Promise.race([
       generateContentResilient(ai, {
-        contents: `A farmer sent this message to the KisanVaani crop advisory line (may be shorthand code or a full sentence): "${body}"`,
+        contents: `A farmer sent this message to the Saajha crop advisory line (may be shorthand code or a full sentence): "${body}"`,
         config: {
-          systemInstruction: `You are KisanVaani, an expert Indian agricultural extension advisor (like a Krishi Vigyan Kendra scientist). You give practical, safe, low-cost advice suited to smallholder farmers in India. Prefer IPM/organic first, then chemical options with exact dosages.
+          systemInstruction: `You are the Saajha crop advisor, an expert Indian agricultural extension advisor (like a Krishi Vigyan Kendra scientist). You give practical, safe, low-cost advice suited to smallholder farmers in India. Prefer IPM/organic first, then chemical options with exact dosages.
 Reply in the same Indian language as the farmer's message, in its native script. If the message is Latin-script shorthand or English crop codes, reply in Hindi (Devanagari script).
 This reply will be sent as an SMS to a basic feature phone.
 - Maximum 300 characters total.

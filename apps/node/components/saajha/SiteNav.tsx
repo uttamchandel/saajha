@@ -1,5 +1,5 @@
 // The node's one navigation bar, on every farmer-facing page. The lockup reads the way the product is
-// built: Saajha, the network (it links to the hub), then KisanVaani, this state's node in it.
+// built: Saajha, the network (it links to the hub), then this state's node in it.
 import Link from "next/link";
 import { ArrowUpRight, Sprout } from "lucide-react";
 import { NODE_STATE } from "@/lib/node";
@@ -16,7 +16,7 @@ export default function SiteNav({ current }: { current?: string }) {
   return (
     <nav aria-label="Main" className="border-b border-forest/10 bg-paper sticky top-0 z-20">
       <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between gap-3">
-        <div className="flex min-w-0 items-center gap-2.5">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
           <a
             href={HUB_URL}
             title="The Saajha network"
@@ -29,12 +29,10 @@ export default function SiteNav({ current }: { current?: string }) {
             </span>
           </a>
           <span aria-hidden="true" className="h-5 w-px shrink-0 bg-forest/25" />
-          <Link href="/" className="font-display text-xl font-semibold text-forest truncate hover:text-leaf transition">
-            KisanVaani
+          <Link href="/" className="font-display text-base sm:text-xl font-semibold text-forest truncate hover:text-leaf transition">
+            {NODE_STATE}
+            <span className="hidden sm:inline"> node</span>
           </Link>
-          <span className="hidden lg:inline font-sans text-[11px] font-semibold uppercase tracking-wider text-ink-soft whitespace-nowrap">
-            {NODE_STATE} node
-          </span>
         </div>
         <div className="flex shrink-0 items-center gap-4 text-sm whitespace-nowrap">
           {LINKS.map((l) => (

@@ -75,7 +75,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 </Link>
               ))}
               <a href={NODE_URL} className="inline-flex items-center gap-0.5 text-ink-soft transition-colors hover:text-forest">
-                KisanVaani node <ArrowUpRight size={14} aria-hidden="true" />
+                State node <ArrowUpRight size={14} aria-hidden="true" />
               </a>
             </nav>
             <Link
@@ -108,7 +108,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 </Link>
               ))}
               <a href={NODE_URL} className="inline-flex items-center gap-0.5 hover:text-paper">
-                KisanVaani node <ArrowUpRight size={14} aria-hidden="true" />
+                State node <ArrowUpRight size={14} aria-hidden="true" />
               </a>
             </nav>
           </div>

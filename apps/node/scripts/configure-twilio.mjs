@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Point the Twilio number's Voice and SMS webhooks at the deployed KisanVaani app.
+// Point the Twilio number's Voice and SMS webhooks at a deployed state node.
 // Reads credentials from .env.local; idempotent (re-running sets the same URLs).
 //
 //   node scripts/configure-twilio.mjs [base-url]

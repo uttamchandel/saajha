@@ -1,6 +1,6 @@
-# KisanVaani Real Telephony (Twilio)
+# Real telephony (Twilio)
 
-**No public number is connected to the Saajha deployment (saajha-node.vercel.app).** Edition 1's trial number (+1 254 272 6372) belonged to the Ed1 deployment. A state connects its own number with the script below; until then, use the browser simulators at `/demo` and `/whatsapp`.
+**No public number is connected to the Saajha deployment (saajha-node.vercel.app).** A state connects its own number with the script below; until then, use the browser simulators at `/demo` and `/whatsapp`.
 
 ## Endpoints
 
@@ -15,7 +15,7 @@ All three validate `X-Twilio-Signature` (HMAC-SHA1 over the URL + sorted form pa
 ## Pointing the number at a deployment
 
 ```bash
-node scripts/configure-twilio.mjs                     # defaults to https://kisan-vaani.vercel.app
+node scripts/configure-twilio.mjs                     # defaults to https://saajha-node.vercel.app
 node scripts/configure-twilio.mjs https://my-preview.vercel.app
 ```
 
@@ -32,7 +32,7 @@ Reads `.env.local`, lists the account's incoming numbers, sets the number's Voic
 1. Twilio Console → Messaging → Try it out → **Send a WhatsApp message**.
 2. From your WhatsApp, send the sandbox join code (e.g. `join <two-words>`) to **+1 415 523 8886**.
 3. In **Sandbox settings**, set *"When a message comes in"* to
-   `https://kisan-vaani.vercel.app/api/telephony/whatsapp` (method POST) and save.
+   `https://<your-node>/api/telephony/whatsapp` (method POST) and save.
 4. Send a crop photo or a text like "कपास के पत्ते पीले हो रहे हैं" to the sandbox number.
 
 Sandbox sessions expire after 72 hours; re-send the join code to reconnect.

@@ -218,7 +218,7 @@ export default function Home() {
               <span className="text-turmeric">even on a ₹1,500 phone.</span>
             </h1>
             <p className="mt-6 text-lg text-ink-soft max-w-2xl leading-relaxed">
-              KisanVaani is how farmers reach their state&rsquo;s node in <b className="text-ink">Saajha</b>: crop advice over
+              This is how farmers reach their state&rsquo;s node in <b className="text-ink">Saajha</b>: crop advice over
               ordinary <b className="text-ink">voice calls, SMS and WhatsApp</b> in the farmer&rsquo;s own language, with photo
               diagnosis, crop recommendations and weather alerts. Every state runs its own node, so farmers&rsquo; records stay
               in their state; states share only what they learn.
@@ -320,7 +320,7 @@ export default function Home() {
           <p className="mt-4 text-ink-soft max-w-3xl leading-relaxed">
             Advisory apps assume a smartphone, a data plan and comfort with text in English or Hindi. Many of the farmers
             losing the most to crop disease would rather talk than type, share one phone across a household, or farm where
-            coverage is patchy. KisanVaani meets them on an ordinary call or SMS, in their own language.
+            coverage is patchy. A Saajha node meets them on an ordinary call or SMS, in their own language.
           </p>
 
           <div className="mt-10 border-y border-forest/10 py-8">
@@ -471,7 +471,7 @@ export default function Home() {
       <footer className="bg-forest text-paper/75">
         <div className="mx-auto max-w-6xl px-4 py-10 flex flex-wrap items-start justify-between gap-x-12 gap-y-8 text-sm">
           <div className="max-w-xl">
-            <span className="font-display text-lg text-paper font-semibold">KisanVaani</span>
+            <span className="font-display text-lg text-paper font-semibold">Saajha · {NODE_STATE} node</span>
             <span className="ml-3">
               <span lang="hi">आवाज़ ही असली ऐप है</span> · the voice is the real app.
             </span>
@@ -483,8 +483,7 @@ export default function Home() {
               : states share what they&rsquo;ve learned, not who their farmers are.
             </p>
             <div className="mt-3 text-xs text-paper/65 leading-relaxed">
-              KisanVaani was first built by Team Vishwakarma Devs for Build with AI: Code for Communities (Edition 1). In
-              Edition 2 (PS-04 Agricultural Intelligence) it is the farmer layer of each Saajha state node.
+              Build with AI: Code for Communities, Edition 2 · PS-04 Agricultural Intelligence.
             </div>
           </div>
           <div className="flex gap-x-12 gap-y-6">

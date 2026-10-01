@@ -64,10 +64,10 @@ type Msg = {
 const SAMPLE_VOICE_TRANSCRIPT = "मेरी टमाटर की फसल में पत्ते पीले होकर मुड़ रहे हैं, क्या करूँ?";
 
 const CACHED_TEXT_REPLY =
-  "नमस्ते! 🌾 मैं KisanVaani हूँ। अपनी फसल की समस्या बताइए, फोटो भेजिए 📷 या mic दबाकर अपनी भाषा में बोलिए 🎙 — मैं तुरंत सलाह दूँगा। आपात स्थिति में किसान कॉल सेंटर: 1800-180-1551.";
+  "नमस्ते! 🌾 यह साझा की कृषि सलाह सेवा है। अपनी फसल की समस्या बताइए, फोटो भेजिए 📷 या mic दबाकर अपनी भाषा में बोलिए 🎙 — मैं तुरंत सलाह दूँगा। आपात स्थिति में किसान कॉल सेंटर: 1800-180-1551.";
 
 const GREETING =
-  "Namaste! 🙏 KisanVaani mein aapka swagat hai. Apni fasal ki photo bhejein 📷, mic dabakar apni bhasha mein boliye 🎙, ya apna sawaal likhiye — turant salah milegi.";
+  "Namaste! 🙏 Saajha mein aapka swagat hai. Apni fasal ki photo bhejein 📷, mic dabakar apni bhasha mein boliye 🎙, ya apna sawaal likhiye — turant salah milegi.";
 
 // ---------- Helpers ----------
 const uid = () =>
@@ -611,7 +611,7 @@ export default function WhatsAppClient() {
         <div className="rounded-lg overflow-hidden -mx-1 -mt-0.5 mb-2" style={{ background: "#f0f2f5" }}>
           <div className="px-3 py-2 border-l-4" style={{ borderColor: WA.header }}>
             <div className="text-[11px] font-semibold" style={{ color: WA.header }}>
-              KISANVAANI · SAAJHA STATE NODE
+              SAAJHA STATE NODE
             </div>
             <div className="text-[12px]" style={{ color: WA.tsGray }}>
               {head}
@@ -693,7 +693,7 @@ export default function WhatsAppClient() {
                 </div>
                 <div className="min-w-0 flex-1 leading-tight">
                   <div className="flex items-center gap-1">
-                    <span className="font-semibold text-[15px] truncate">KisanVaani</span>
+                    <span className="font-semibold text-[15px] truncate">Saajha</span>
                     <BadgeCheck className="w-4 h-4 shrink-0" style={{ color: "#a7f3d0", fill: "rgba(255,255,255,0.25)" }} />
                   </div>
                   <div className="text-[11.5px] text-white/80 truncate">
@@ -901,11 +901,11 @@ export default function WhatsAppClient() {
               <div className="text-xs font-semibold text-ink-soft mb-3">1. SMS invite — reaches feature phones</div>
               <div className="rounded-xl bg-zinc-100 border border-zinc-200 p-3 max-w-sm">
                 <div className="text-[10px] font-semibold text-zinc-500 mb-1.5 flex items-center justify-between">
-                  <span>KVAANI</span>
+                  <span>SAAJHA</span>
                   <span>{smsTime}</span>
                 </div>
                 <div className="rounded-lg rounded-tl-none bg-white shadow-sm px-3 py-2 text-[13px] leading-snug text-zinc-800">
-                  KisanVaani: Namaste! Apni fasal ki photo bhejein aur turant salah paayein:{" "}
+                  Saajha: Namaste! Apni fasal ki photo bhejein aur turant salah paayein:{" "}
                   <span className="text-sky underline">{smsHost}/whatsapp</span> — {HOME_KENDRA}
                 </div>
               </div>
@@ -928,7 +928,7 @@ export default function WhatsAppClient() {
                 <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden>
                   <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.7 1.6.3.2.5.1.7-.1l.9-1c.2-.3.5-.2.8-.1l2 1c.3.1.5.2.6.4 0 .1 0 .7-.1 1.3z" />
                 </svg>
-                Message the KisanVaani sandbox
+                Message the Saajha sandbox
                 <ExternalLink className="w-4 h-4 opacity-80" />
               </a>
               <p className="text-xs text-ink-soft mt-3">

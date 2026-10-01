@@ -1,12 +1,12 @@
-# KisanVaani — किसानवाणी
+# Saajha state node
 
-> **In this repository, KisanVaani is the Saajha state node.** One copy runs per state; it holds that state's farmers, tickets and expert desk. The shared layer is `apps/hub`; see the [root README](../../README.md).
+> **This is the Saajha state node.** One copy runs per state; it holds that state's farmers, tickets and expert desk. The shared layer is `apps/hub`; see the [root README](../../README.md).
 
-KisanVaani is a farm-advisory platform for Indian farmers who do not own smartphones. It delivers AI-assisted advice over voice calls and SMS in 12+ Indian languages with automatic spoken-language detection, diagnoses crop disease from photos, recommends crops from satellite and Soil Health Card data, issues dry-spell and heavy-rain zone alerts, reads out live mandi prices, and escalates uncertain or severe cases to human experts at Rythu Seva Kendras (RSKs) and Krishi Vigyan Kendras (KVKs).
+The state node is a farm-advisory platform for Indian farmers who do not own smartphones. It delivers AI-assisted advice over voice calls and SMS in 12+ Indian languages with automatic spoken-language detection, diagnoses crop disease from photos, recommends crops from satellite and Soil Health Card data, issues dry-spell and heavy-rain zone alerts, reads out live mandi prices, and escalates uncertain or severe cases to human experts at Rythu Seva Kendras (RSKs) and Krishi Vigyan Kendras (KVKs).
 
 ## Problem
 
-India has more than 146 million farm holdings; 86% are smallholders. Roughly 45% of rural users carry feature phones — no apps, no data plans, oral-first. Existing agri-apps assume a smartphone the farmer does not have, while an estimated 15–25% of yield is lost to pests, disease, and mistimed irrigation. KisanVaani works on the phones farmers already own, and aggregates every interaction into district-level intelligence for agriculture officers.
+India has more than 146 million farm holdings; 86% are smallholders. Roughly 45% of rural users carry feature phones — no apps, no data plans, oral-first. Existing agri-apps assume a smartphone the farmer does not have, while an estimated 15–25% of yield is lost to pests, disease, and mistimed irrigation. The node works on the phones farmers already own, and aggregates every interaction into district-level intelligence for agriculture officers.
 
 ## Modules
 
@@ -23,7 +23,7 @@ The operations console at `/command` serves the District Agriculture Officer and
 
 ## Telephony and persistence
 
-**No public phone number is connected to this deployment (saajha-node.vercel.app).** In Edition 1 a Twilio trial number answered the Ed1 deployment; each Saajha state node plugs in its own number with `node scripts/configure-twilio.mjs <node-url>` (see `docs/TELEPHONY.md`). Try the flows in the browser simulators at `/demo` and `/whatsapp`. Inbound calls reach a stateless TwiML IVR (`/api/telephony/voice`) — a Hindi greeting, speech capture, a Gemini-generated spoken advisory, and a mandi-price option; inbound SMS (`/api/telephony/sms`) returns a native-script advisory; the WhatsApp webhook (`/api/telephony/whatsapp`) handles photo diagnosis via Twilio media. All webhooks validate Twilio's HMAC-SHA1 signature and, in production, refuse every request when Twilio is not configured. Photo diagnoses follow Saajha's decision rule (`lib/fed/decide.ts`): the federated model decides paddy, Gemini checks and gives a second opinion, and a failure sends the case to an expert, never a canned diagnosis. A Twilio trial number is US-based (a Twilio notice plays first; international rates apply from India); the production path is an Indian toll-free line via Exotel with DLT-registered SMS — see `docs/TELEPHONY.md`.
+**No public phone number is connected to this deployment (saajha-node.vercel.app).** Each Saajha state node plugs in its own number with `node scripts/configure-twilio.mjs <node-url>` (see `docs/TELEPHONY.md`). Try the flows in the browser simulators at `/demo` and `/whatsapp`. Inbound calls reach a stateless TwiML IVR (`/api/telephony/voice`) — a Hindi greeting, speech capture, a Gemini-generated spoken advisory, and a mandi-price option; inbound SMS (`/api/telephony/sms`) returns a native-script advisory; the WhatsApp webhook (`/api/telephony/whatsapp`) handles photo diagnosis via Twilio media. All webhooks validate Twilio's HMAC-SHA1 signature and, in production, refuse every request when Twilio is not configured. Photo diagnoses follow Saajha's decision rule (`lib/fed/decide.ts`): the federated model decides paddy, Gemini checks and gives a second opinion, and a failure sends the case to an expert, never a canned diagnosis. A Twilio trial number is US-based (a Twilio notice plays first; international rates apply from India); the production path is an Indian toll-free line via Exotel with DLT-registered SMS — see `docs/TELEPHONY.md`.
 
 Escalation tickets, broadcasts, and the query log persist to Postgres (`kv_tickets`, `kv_broadcasts`, `kv_queries`). Farmer referrals from the demo and WhatsApp flows create real tickets that appear in the operations queue with SLA tracking; every advisory, diagnosis, voice, and telephony interaction is logged and surfaces in the console's live feed. Without `DATABASE_URL`, all of it degrades to per-instance memory so the application still runs.
 
@@ -79,4 +79,4 @@ environment verification commands: [docs/SETUP.md](docs/SETUP.md).
 
 `research/*.json` contains the verified data-source research (endpoints, quirks, thresholds) this build is grounded on.
 
-Originally built by Team Vishwakarma Devs for Build with AI: Code for Communities, Edition 1 (Google Cloud × Hack2Skill), Track 4: Kisan Alert. In Edition 2 it is the farmer layer of each Saajha state node.
+Where this code began is recorded in the repository's [NOTICE](../../NOTICE).

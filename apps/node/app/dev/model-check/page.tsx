@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ModelCheck from "@/components/ModelCheck";
 
 export const metadata: Metadata = {
-  title: "Model check — KisanVaani state node",
+  title: "Model check — Saajha state node",
   description: "Checks that this state node runs the Saajha hub's released model exactly as Python did.",
   robots: { index: false, follow: false },
 };

@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
   const body = (params.Body ?? "").trim();
   if (!body) {
     return twiml(
-      `<Message>${escapeXml("किसानवाणी: फसल का नाम और समस्या लिखकर भेजें। उदाहरण: KAPAS PILA PATTA")}</Message>`,
+      `<Message>${escapeXml("साझा: फसल का नाम और समस्या लिखकर भेजें। उदाहरण: KAPAS PILA PATTA")}</Message>`,
     );
   }
 

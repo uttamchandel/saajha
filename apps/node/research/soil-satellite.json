@@ -9,7 +9,7 @@
    "url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=77.10&lat=23.25&property=phh2o&property=nitrogen&property=soc&property=clay&property=sand&property=cec&depth=0-5cm&depth=5-15cm&value=mean&value=uncertainty",
    "access": "open",
    "verified": true,
-   "verification_note": "Fetched live. GeoJSON Feature; properties.layers[] each has name, unit_measure{d_factor,mapped_units,target_units}, depths[]{label:'0-5cm', values:{mean,uncertainty}}. At 77.10,23.25 got phh2o mean=74 (÷d_factor 10 = pH 7.4), clay=387 (38.7%), cec=405 (40.5 cmol/kg). CORS header access-control-allow-origin: * confirmed via preflight with Origin kisanvaani.vercel.app. Keyless.",
+   "verification_note": "Fetched live. GeoJSON Feature; properties.layers[] each has name, unit_measure{d_factor,mapped_units,target_units}, depths[]{label:'0-5cm', values:{mean,uncertainty}}. At 77.10,23.25 got phh2o mean=74 (÷d_factor 10 = pH 7.4), clay=387 (38.7%), cec=405 (40.5 cmol/kg). CORS header access-control-allow-origin: * confirmed via preflight with a third-party Origin. Keyless.",
    "use": "demo",
    "notes": "TRAP: both obvious test points (77.08,23.20 and Ludhiana 75.85,30.90) returned values.mean=null (nodata pixels). Demo MUST null-check and retry with ~0.05 deg offset or fall back to district defaults. Repeat property= and depth= params (not comma lists). Divide mean by d_factor (10 for most; 100 for nitrogen). Fair-use rate limit — cache per point."
   },
@@ -27,7 +27,7 @@
    "url": "POST https://soilhealth4.dac.gov.in/ (also /graphql) — queries: getState, getCycles, getNutrientDashboardForPortal(state:\"<ObjectId>\", cycle:\"2025-26\")",
    "access": "open",
    "verified": true,
-   "verification_note": "Fetched live. getState returned 34 states with _id/name/code (MP=63f8e729dbc0f7fe0670d050). getCycles returned ['2026-27']. getNutrientDashboardForPortal(state:MP, cycle:'2025-26') returned every MP district with results.{n,p,k:{High,Low,Medium}, OC:{High,Low,Medium}, pH:{Alkaline,Acidic,Neutral}, EC:{Saline,NonSaline}, S,Fe,Zn,Cu,B,Mn:{Sufficient,Deficient}}, district{_id,name,code}, updatedAt='2026-07-07T17:27:08Z' — updated YESTERDAY. CORS preflight reflects arbitrary origin (access-control-allow-origin echoed kisanvaani.vercel.app). Keyless.",
+   "verification_note": "Fetched live. getState returned 34 states with _id/name/code (MP=63f8e729dbc0f7fe0670d050). getCycles returned ['2026-27']. getNutrientDashboardForPortal(state:MP, cycle:'2025-26') returned every MP district with results.{n,p,k:{High,Low,Medium}, OC:{High,Low,Medium}, pH:{Alkaline,Acidic,Neutral}, EC:{Saline,NonSaline}, S,Fe,Zn,Cu,B,Mn:{Sufficient,Deficient}}, district{_id,name,code}, updatedAt='2026-07-07T17:27:08Z' — updated YESTERDAY. CORS preflight reflects arbitrary origin (access-control-allow-origin echoed the Origin sent). Keyless.",
    "use": "demo",
    "notes": "This is the actual backend of the official SHC public dashboard — real live Indian govt nutrient data, the credibility centerpiece. Undocumented/unofficial, so cache a seed snapshot at build time as fallback. Values are sample COUNTS per class — compute percentages (e.g. % of district samples Low in N). Unknown query names return masked error 'Unable to connect to the server'; passing state NAME instead of ObjectId returns a mongodb-objectid validation error."
   },

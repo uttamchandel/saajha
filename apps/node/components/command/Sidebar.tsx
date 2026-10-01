@@ -26,8 +26,8 @@ export default function Sidebar({ tab, onTab, badges }: {
           <Sprout className="size-4" aria-hidden="true" />
         </span>
         <div className="leading-tight">
-          <p className="text-sm font-semibold text-slate-900">KisanVaani Ops</p>
-          <p className="text-[10px] uppercase tracking-wider text-slate-500">Saajha node · {NODE_STATE}</p>
+          <p className="text-sm font-semibold text-slate-900">Saajha Ops</p>
+          <p className="text-[10px] uppercase tracking-wider text-slate-500">State node · {NODE_STATE}</p>
         </div>
       </div>
 

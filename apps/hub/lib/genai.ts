@@ -1,4 +1,4 @@
-// Adapted from KisanVaani (Team Vishwakarma Devs, Code for Communities Ed. 1)
+// Adapted from the state node's code (apps/node/lib/genai.ts); see NOTICE.
 //
 // Resilient Gemini call. Retryable failures come in two shapes:
 //  - 429 / RESOURCE_EXHAUSTED / quota  -> this key's bucket for the model is spent
@@ -106,7 +106,7 @@ export async function generateContentWithModel(
   }
 }
 
-/** Drop-in equivalent of the KisanVaani helper: returns only the response. */
+/** Drop-in equivalent of the state node's helper: returns only the response. */
 export async function generateContentResilient(
   ai: GoogleGenAI,
   params: GenParams,

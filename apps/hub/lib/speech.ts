@@ -1,6 +1,6 @@
 "use client";
 
-// Adapted from KisanVaani (Team Vishwakarma Devs, Code for Communities Ed. 1)
+// Adapted from the state node's code (apps/node/lib/speech.ts); see NOTICE.
 // Browser TTS wrapper (speechSynthesis). Speech recognition from the original is dropped.
 
 // Holds the live utterance so it isn't garbage-collected mid-speech (some browsers

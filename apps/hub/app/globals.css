@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
-  Saajha design tokens. The hub and the state node (apps/node, KisanVaani) are one product, so they
+  Saajha design tokens. The hub and the state node (apps/node) are one product, so they
   share one palette and one type pairing: the first block below is the node's, value for value.
   Forest is a paddy field; turmeric is what a farmer's hands are stained with. The hub's own names
   (carbon, straw, shoot, night, gold...) are kept as roles on top of that palette, not new colours.

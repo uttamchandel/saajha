@@ -4,7 +4,7 @@
 
 Saajha is a federated network for Indian agriculture. Each state runs its own **node**: farmers reach it by voice call, SMS, WhatsApp or the web in their own language, and the state's experts, tickets and records stay there. States share what they learn through a **shared layer**: a crop-disease model trained together by federated learning, expert-approved advice, and outbreak counts that warn a neighbouring state before a pest crosses the border. **One rule: raw farmer data never leaves its state.** Only models, counts and approved advice cross.
 
-- **State nodes (farmer + officer app, same code, one per state):** Telangana https://saajha-node.vercel.app · Maharashtra https://saajha-node-mh.vercel.app — KisanVaani, the farmer layer
+- **State nodes (farmer + officer app, same code, one per state):** Telangana https://saajha-node.vercel.app · Maharashtra https://saajha-node-mh.vercel.app — the farmer layer
 - **Shared layer (model releases, federation record, card library, early warning):** https://saajha-hub.vercel.app
 
 Built for Build with AI: Code for Communities, Second Edition (Google Cloud × Hack2skill × GDG India), track **PS-04 Agricultural Intelligence**.
@@ -24,7 +24,7 @@ Built for Build with AI: Code for Communities, Second Edition (Google Cloud × H
 
 ```mermaid
 flowchart TB
-  subgraph farmers["Farmer layer — KisanVaani"]
+  subgraph farmers["Farmer layer"]
     F1["Voice call / SMS"] --- F2["WhatsApp / web"]
   end
   subgraph node["State node (one per state) — apps/node"]
@@ -121,14 +121,14 @@ When a Gemini step fails, a photo goes to a state expert and the web routes retu
 
 ## What's new in Edition 2
 
-KisanVaani (voice, SMS and WhatsApp advisory in 12+ languages, crop recommendations, weather alerts, the district console) was built by Team Vishwakarma Devs for Code for Communities Edition 1 and is reused here with the team's agreement, starting from Ed1 commit `56afafb` (see [NOTICE](NOTICE)). This edition adds:
+The state node (voice, SMS and WhatsApp advisory in 12+ languages, crop recommendations, weather alerts, the district console) began as KisanVaani, which members of this team built for Code for Communities Edition 1 (Ed1 commit `56afafb`; see [NOTICE](NOTICE)). This edition adds:
 
 - **Saajha, the shared layer:** federated training across state nodes with Flower (40 real rounds, weights-only border inspector, per-round fingerprints, 0 farmer records moved), calibrated confidence, a measured Gemini-vs-federated benchmark, and a public, verifiable federation record.
-- **KisanVaani as a state node:** paddy photos are decided by the federated model the hub released, run on the farmer's device with Python-exact preprocessing; Gemini became a checker and second opinion instead of the decider; advice comes from the shared card library with doses grounded to the card; expert tickets for low confidence, other crops, disagreements and failures.
+- **The state node:** paddy photos are decided by the federated model the hub released, run on the farmer's device with Python-exact preprocessing; Gemini became a checker and second opinion instead of the decider; advice comes from the shared card library with doses grounded to the card; expert tickets for low confidence, other crops, disagreements and failures.
 - **The learning loop, live:** an expert verifies a farmer's photo at the state's desk; the photo and the model's reading stay in that state's database. A federated round asks every state node to train the released model on its newly verified cases (the recorded run's recipe, in TypeScript, checked against the Python/Flower code) and send only weights. The hub averages them (FedAvg) and takes the largest step toward the average that keeps accuracy on 516 validation photos (a server learning rate), refits the temperature and the 90%-precision threshold, and releases the round only if held-out accuracy has not fallen by more than 0.5 points; refused rounds are recorded with the reason. A follow-up call ("did it work?") that gets a "no" reopens the case and takes it out of training.
 - **Cross-border early warning:** two state nodes deployed from the same code (Telangana, Maharashtra; adding a state is one more deployment) publish k-anonymous district-week outbreak counts. The hub pulls them, checks each at the border (only four fields, at least 5, a real district of that state, a condition on the shared list; a refusal never repeats what it refused) and warns the neighbouring state's officer, who alerts farmers in their own language.
 - **Regenerative crop plans:** every recommended crop is scored for this season and for the soil over the next seasons, and practices (pulse rotation, green manure, no residue burning, water saving) are triggered by the plot's own numbers against Soil Health Card limits.
-- **Honesty and safety:** every canned diagnosis and canned voice reply from Ed1 removed; unverified claims and outdated statistics removed; unsigned telephony webhooks refused in production; Next.js upgraded past critical advisories; Gemini models moved to the ones new keys can use.
+- **Honesty and safety:** every canned diagnosis and canned voice reply removed; unverified claims and outdated statistics removed; unsigned telephony webhooks refused in production; Next.js upgraded past critical advisories; Gemini models moved to the ones new keys can use.
 
 ## What is real and what is not
 
@@ -141,7 +141,7 @@ KisanVaani (voice, SMS and WhatsApp advisory in 12+ languages, crop recommendati
 **Simulated or seeded**
 - States A–D are label-skewed partitions of one Tamil Nadu dataset (Paddy Doctor). They do not describe real pest prevalence in any state; "expert-verified" labels are the dataset's own labels.
 - The network is simulated: all federation nodes ran on one computer, and the hub replays that recorded run. No state government runs a node.
-- The expert desk is simulated: no RSK or KVK receives tickets; whoever opens `/command` plays the expert, and their verified labels do train live rounds. The follow-up call is a button, not a phone call. The learning-loop sample photos are two held-out Paddy Doctor photos of the same plant. Demo databases are Neon Postgres in Singapore (Neon has no India region); a state would keep its database in India. The command center's farmer registry, KPIs and past tickets are invented Ed1 sample data (its weather alerts are live).
+- The expert desk is simulated: no RSK or KVK receives tickets; whoever opens `/command` plays the expert, and their verified labels do train live rounds. The follow-up call is a button, not a phone call. The learning-loop sample photos are two held-out Paddy Doctor photos of the same plant. Demo databases are Neon Postgres in Singapore (Neon has no India region); a state would keep its database in India. The command center's farmer registry, KPIs and past tickets are invented sample data (its weather alerts are live).
 - The outbreak counts the two nodes publish are a seeded scenario (pink bollworm in Yavatmal rising 6 → 14 → 31 reports a week); no farmer reported them. The Yavatmal–Adilabad border along the Penganga river is real.
 - The phone and WhatsApp screens are browser simulators; no public number is connected to this deployment.
 - Mandi prices are typical values: the Agmarknet API now requires a captcha or token for automated access.
@@ -170,7 +170,7 @@ apps/hub/     Shared layer (Next.js 16): / (the flip), /federation, /diagnose, /
               step, calibration, release gate) · data/benchmark (held-out embeddings, generated, not committed)
               public/fl (run.json, every round's head), public/models (backbone.onnx, 16.8 MB),
               public/gallery (6 attributed photos)
-apps/node/    State node, KisanVaani (Next.js 16): / , /demo, /whatsapp, /recommend, /command,
+apps/node/    State node (Next.js 16): / , /demo, /whatsapp, /recommend, /command,
               /dev/model-check · api/diagnose (decision rule), api/voice, api/advisory, api/recommend,
               api/alerts, api/alerts/draft, api/exchange/counts, api/fl/update, api/fl/status, api/mandi, api/tickets,
               api/telephony/{voice,sms,whatsapp} · lib/node.ts (which state this copy serves)
@@ -216,7 +216,7 @@ Paddy Doctor is CC BY 4.0 under the Kaggle competition rules §7A. §7B restrict
 ## Credits and licences
 
 - **Paddy Doctor dataset:** Petchiammal A., Briskline Kiruba S., Murugan D., Pandarasamy Arjunan. "Paddy Doctor: A Visual Image Dataset for Automated Paddy Disease Classification and Benchmarking", [arXiv:2205.11108](https://arxiv.org/abs/2205.11108). CC BY 4.0 (Kaggle rules §7A).
-- **KisanVaani** (`apps/node`): Team Vishwakarma Devs, Code for Communities Ed. 1, reused with the team's agreement. The hub's Gemini retry wrapper, 12-language prompt map, speech wrapper and diagnosis-route pattern were also adapted from it. See [NOTICE](NOTICE).
+- **Earlier work by this team:** where the state node (`apps/node`) began, and the four hub helpers adapted from it (Gemini retry wrapper, 12-language prompt map, speech wrapper, diagnosis-route pattern). See [NOTICE](NOTICE).
 - **Backbone:** torchvision MobileNetV3-Large, IMAGENET1K_V2 weights (PyTorch and torchvision, BSD-3-Clause).
 - **Federated learning:** [Flower](https://flower.ai) 1.37 (Apache-2.0). Flower app layout and weights-only border inspector adapted from the author's SwasthSetu project, derived from Flower's quickstart-pytorch (Apache-2.0).
 - **Browser inference:** onnxruntime-web (MIT), loaded from jsDelivr.
@@ -224,4 +224,4 @@ Paddy Doctor is CC BY 4.0 under the Kaggle competition rules §7A. §7B restrict
 - **Advisory sources:** TNAU Agritech Portal, IRRI Rice Knowledge Bank, ICAR-National Rice Research Institute, NCIPM / NIPHM Integrated Pest Management package for rice, and others; each card in `apps/hub/lib/knowledge.json` lists its sources.
 - **Web and type:** Next.js, React, Tailwind CSS (MIT); Anek, Inter and Fraunces typefaces via Google Fonts (SIL Open Font License 1.1).
 
-Licensed under [Apache-2.0](LICENSE). Copyright 2026 Uttam Chandel; KisanVaani (`apps/node`) copyright 2026 Team Vishwakarma Devs. See [NOTICE](NOTICE).
+Licensed under [Apache-2.0](LICENSE). Copyright 2026 Uttam Chandel and contributors. See [NOTICE](NOTICE).

@@ -36,7 +36,7 @@ import type { VoiceResult, MandiResponse } from "@/lib/types";
 type Mode = "call" | "sms" | "photo";
 type CallState = "idle" | "dialing" | "menu" | "listening" | "mandi" | "thinking" | "answered";
 type Bubble = { who: "ivr" | "farmer"; text: string };
-type SmsMsg = { who: "farmer" | "kisanvaani"; text: string };
+type SmsMsg = { who: "farmer" | "service"; text: string };
 
 type Diagnosis = DiagnoseResponse;
 type Sample = { id: string; url: string; label: string };
@@ -336,7 +336,7 @@ export default function DemoClient() {
         body: JSON.stringify({ query: text, lang: uiLang, channel: "sms" }),
       });
       const data = await res.json();
-      setSmsThread((th) => [...th, { who: "kisanvaani", text: data.text }]);
+      setSmsThread((th) => [...th, { who: "service", text: data.text }]);
       setSmsSource(data.source);
     } catch {
       /* keep thread as-is */
@@ -536,7 +536,7 @@ export default function DemoClient() {
                             <div key={i} className={`rise max-w-[90%] rounded-lg px-2.5 py-1.5 ${
                               b.who === "ivr" ? "bg-white/80 text-ink" : "bg-forest text-paper ml-auto"
                             }`}>
-                              {b.who === "ivr" && <div className="text-[9px] font-semibold text-leaf mb-0.5">KISANVAANI</div>}
+                              {b.who === "ivr" && <div className="text-[9px] font-semibold text-leaf mb-0.5">SAAJHA</div>}
                               {b.text}
                             </div>
                           ))}
@@ -568,9 +568,9 @@ export default function DemoClient() {
                       )}
                       {smsThread.map((m, i) => (
                         <div key={i} className={`rise max-w-[92%] rounded-lg px-2.5 py-1.5 ${
-                          m.who === "kisanvaani" ? "bg-white/80 text-ink" : "bg-forest text-paper ml-auto"
+                          m.who === "service" ? "bg-white/80 text-ink" : "bg-forest text-paper ml-auto"
                         }`}>
-                          {m.who === "kisanvaani" && <div className="text-[9px] font-semibold text-leaf mb-0.5">KISAN 56070</div>}
+                          {m.who === "service" && <div className="text-[9px] font-semibold text-leaf mb-0.5">KISAN 56070</div>}
                           {m.text}
                         </div>
                       ))}

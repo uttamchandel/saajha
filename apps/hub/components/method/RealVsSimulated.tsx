@@ -80,7 +80,7 @@ export default function RealVsSimulated({ f, disclosure }: { f: MethodFigures; d
       lead: "A live state node uses this model.",
       body: (
         <>
-          KisanVaani, the farmer layer, runs as a separate deployment. It downloads this site&apos;s latest release, refuses a
+          The state node, the farmer layer, runs as a separate deployment. It downloads this site&apos;s latest release, refuses a
           file whose fingerprint does not match, and lets the model decide every paddy photo a farmer sends; its own model
           check matches Python on every test photo.{" "}
           <a href="https://saajha-node.vercel.app/demo" className={link}>

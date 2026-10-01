@@ -1,6 +1,6 @@
 "use client";
 
-// KisanVaani Ops — professional command center for District Agriculture Officers.
+// Saajha Ops — professional command center for District Agriculture Officers.
 // White-theme, data-first console: overview KPIs + charts, weather alerts,
 // disease outbreaks, RSK/KVK escalation queue, broadcast log, farmer registry.
 

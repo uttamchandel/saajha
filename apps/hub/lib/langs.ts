@@ -1,5 +1,5 @@
-// Adapted from KisanVaani (Team Vishwakarma Devs, Code for Communities Ed. 1)
-// Source: kisan-vaani/lib/i18n-full.ts (LANGS_FULL + LANG_NAME_FOR_PROMPT only).
+// Adapted from the state node's code; see NOTICE.
+// Source: apps/node/lib/i18n-full.ts (LANGS_FULL + LANG_NAME_FOR_PROMPT only).
 // 12 scheduled Indian languages. ttsLikely = browser speechSynthesis commonly ships a voice.
 
 export type Lang = {

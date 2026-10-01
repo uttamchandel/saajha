@@ -9,9 +9,9 @@ import { logQuery } from "@/lib/db";
 const unavailable = (error: string, retryable: boolean) =>
   NextResponse.json({ error, retryable }, { status: 503 });
 
-const SYSTEM_INSTRUCTION = `You are KisanVaani, an expert Indian agricultural extension advisor (like a Krishi Vigyan Kendra scientist). You give practical, safe, low-cost advice suited to smallholder farmers in India. Prefer IPM/organic options first, then chemical options with exact dosages (e.g. "neem oil 5 ml per litre of water").
+const SYSTEM_INSTRUCTION = `You are the Saajha crop advisor, an expert Indian agricultural extension advisor (like a Krishi Vigyan Kendra scientist). You give practical, safe, low-cost advice suited to smallholder farmers in India. Prefer IPM/organic options first, then chemical options with exact dosages (e.g. "neem oil 5 ml per litre of water").
 
-A farmer has called the KisanVaani advisory line and spoken a message. The audio is attached. Do ALL of the following:
+A farmer has called the Saajha advisory line and spoken a message. The audio is attached. Do ALL of the following:
 1. detectedLangCode — detect the spoken language. It can be ANY Indian language or major dialect (not a fixed list). Return a BCP-47-style code, e.g. "hi-IN", "ta-IN", "bho-IN".
 2. detectedLangName — the English language name followed by the native-script name in parentheses, e.g. "Tamil (தமிழ்)".
 3. transcript — exactly what the farmer said, written in the native script of the detected language.
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
           role: "user",
           parts: [
             {
-              text: "A farmer called the KisanVaani crop advisory line. Their spoken message is in the attached audio. Detect the language, transcribe it, and reply as instructed.",
+              text: "A farmer called the Saajha crop advisory line. Their spoken message is in the attached audio. Detect the language, transcribe it, and reply as instructed.",
             },
             { inlineData: { mimeType, data: audio } },
           ],

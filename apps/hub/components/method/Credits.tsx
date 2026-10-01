@@ -56,11 +56,11 @@ export default function Credits({ provenance }: { provenance: RunFile["provenanc
       ),
     },
     {
-      lead: "Code adapted from KisanVaani.",
+      lead: "Code shared with the state node.",
       body: (
         <>
-          Gemini retry wrapper, 12-language prompt map, speech wrapper and diagnosis-route pattern adapted from
-          KisanVaani (Team Vishwakarma Devs, Code for Communities Ed. 1).
+          Gemini retry wrapper, 12-language prompt map, speech wrapper and diagnosis-route pattern are adapted from
+          the state node&apos;s code. Where that code began is in the repository&apos;s NOTICE file.
         </>
       ),
     },

@@ -66,18 +66,18 @@ async function diagnosePhoto(req: NextRequest, mediaUrl: string): Promise<string
 
   switch (d.decision.outcome) {
     case "not_plant":
-      return "किसानवाणी: यह फोटो फसल या पत्ती की नहीं लग रही। कृपया प्रभावित पौधे की साफ़ फोटो भेजें।";
+      return "साझा: यह फोटो फसल या पत्ती की नहीं लग रही। कृपया प्रभावित पौधे की साफ़ फोटो भेजें।";
     case "unverified":
       return [
-        `किसानवाणी — ${d.plant || "फसल"}: संभावित समस्या (अभी सत्यापित नहीं): ${d.disease_local || "स्पष्ट नहीं"}`,
+        `साझा — ${d.plant || "फसल"}: संभावित समस्या (अभी सत्यापित नहीं): ${d.disease_local || "स्पष्ट नहीं"}`,
         ...d.treatment_organic.map((s) => `• ${s}`),
         "कोई दवा छिड़कने से पहले विशेषज्ञ की पुष्टि का इंतज़ार करें।",
         ticketLine,
       ].join("\n");
     case "advise":
-      return [`किसानवाणी निदान — ${d.disease_local}`, d.voice_summary, "मदद: किसान कॉल सेंटर 1800-180-1551"].filter(Boolean).join("\n");
+      return [`साझा निदान — ${d.disease_local}`, d.voice_summary, "मदद: किसान कॉल सेंटर 1800-180-1551"].filter(Boolean).join("\n");
     default:
-      return `किसानवाणी: आपकी धान की फोटो राज्य के कृषि विशेषज्ञ को भेज दी गई है। ${ticketLine}`;
+      return `साझा: आपकी धान की फोटो राज्य के कृषि विशेषज्ञ को भेज दी गई है। ${ticketLine}`;
   }
 }
 
@@ -96,14 +96,14 @@ export async function POST(req: NextRequest) {
     } catch (err) {
       console.error("telephony whatsapp diagnose error:", err instanceof Error ? err.message : err);
       reply =
-        "किसानवाणी: फोटो की जाँच अभी नहीं हो पाई। कृपया कुछ देर बाद दोबारा भेजें, या समस्या लिखकर भेजें। मदद: 1800-180-1551";
+        "साझा: फोटो की जाँच अभी नहीं हो पाई। कृपया कुछ देर बाद दोबारा भेजें, या समस्या लिखकर भेजें। मदद: 1800-180-1551";
     }
   } else if (body) {
     reply = await textAdvisory(body);
     logQuery({ channel: "sms", lang: "hi", query: body, responseSource: "telephony-live" });
   } else {
     reply =
-      "किसानवाणी में आपका स्वागत है। फसल की समस्या लिखकर भेजें, या प्रभावित पौधे की फोटो भेजें।";
+      "साझा में आपका स्वागत है। फसल की समस्या लिखकर भेजें, या प्रभावित पौधे की फोटो भेजें।";
   }
 
   return twiml(`<Message>${escapeXml(reply)}</Message>`);
