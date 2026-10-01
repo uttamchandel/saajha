@@ -6,7 +6,7 @@
 
 | Endpoint | Method | Purpose |
 | --- | --- | --- |
-| `/api/telephony/voice` | POST (form-encoded) | Voice IVR. Stateless: `?step=menu` and `?step=answer` drive the menu. Hindi greeting → press 1 / speak a problem (Gemini advisory read aloud) or press 2 (live soybean mandi price for Madhya Pradesh). |
+| `/api/telephony/voice` | POST (form-encoded) | Voice IVR. Stateless: `?step=menu` and `?step=answer` drive the menu. Hindi greeting → press 1 / speak a problem (Gemini advisory read aloud) or press 2 (soybean mandi price for this node's own state, `NEXT_PUBLIC_NODE_STATE`, from `/api/mandi`: Agmarknet when it answers, typical values otherwise). |
 | `/api/telephony/sms` | POST (form-encoded) | SMS advisory. `Body` → Gemini (≤300 chars, native script; Latin shorthand answered in Hindi Devanagari). |
 | `/api/telephony/whatsapp` | POST (form-encoded) | WhatsApp sandbox. Photo (`NumMedia>0`) → crop diagnosis via `/api/diagnose`; text → same advisory as SMS. |
 

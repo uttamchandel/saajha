@@ -11,6 +11,16 @@ export const NODE_DISTRICTS: District[] = DISTRICTS.filter((d) => d.state === NO
 /** Where tickets and defaults land when a farmer's own district is not known. */
 export const HOME_DISTRICT: District = NODE_DISTRICTS[0] ?? DISTRICTS[0];
 
+// A state with no district in the registry borrows the registry's first one as its home.
+// Say so in the build log and the server log (never in a visitor's browser) instead of silently.
+if (NODE_DISTRICTS.length === 0 && typeof window === "undefined") {
+  console.warn(
+    `node state: no district in lib/districts.ts has state "${NODE_STATE}" (NEXT_PUBLIC_NODE_STATE). ` +
+      `Tickets and defaults will use ${HOME_DISTRICT.district}, ${HOME_DISTRICT.state}. ` +
+      `Check the spelling, or add the state's districts to the registry.`,
+  );
+}
+
 // Routing mirrors the state escalation fabric: RSKs in AP, AEO clusters in TS,
 // district KVKs elsewhere.
 export function kendraFor(district: string, state: string): string {

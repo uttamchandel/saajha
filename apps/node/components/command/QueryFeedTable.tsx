@@ -59,7 +59,7 @@ export default function QueryFeedTable({ district }: { district: string }) {
         setLiveRows(
           (data.queries ?? []).map((q) => ({
             name: q.responseSource === "telephony-live" ? "Live caller" : "Platform user",
-            village: q.responseSource === "telephony-live" ? "via +1 254 272 6372" : "via web demo",
+            village: q.responseSource === "telephony-live" ? "via the phone line" : "via web demo",
             // The query log keeps no district, so this node's own rows show under its home district.
             district: HOME_DISTRICT.district,
             state: HOME_DISTRICT.state,

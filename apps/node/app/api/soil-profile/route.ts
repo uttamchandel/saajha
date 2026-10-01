@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { DISTRICTS } from "@/lib/districts";
+import { HOME_DISTRICT } from "@/lib/node";
 import { getSoilProfile } from "@/lib/soil-profile";
 
 export async function GET(req: NextRequest) {
@@ -16,11 +17,11 @@ export async function GET(req: NextRequest) {
   const district = sp.get("district") ?? undefined;
 
   // Missing/garbled coordinates: fall back to the named district's registry
-  // coordinates, then to the pilot's first district. Never an error UI.
+  // coordinates, then to this node's home district. Never an error UI.
   if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
     const match =
       (district && DISTRICTS.find((d) => d.district.toLowerCase() === district.toLowerCase())) ||
-      DISTRICTS[0];
+      HOME_DISTRICT;
     lat = match.lat;
     lon = match.lon;
   }

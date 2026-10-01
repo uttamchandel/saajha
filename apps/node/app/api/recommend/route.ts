@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
 import { generateContentResilient } from "@/lib/genai";
 import { DISTRICTS } from "@/lib/districts";
+import { HOME_DISTRICT } from "@/lib/node";
 import { LANG_NAME_FOR_PROMPT } from "@/lib/i18n-full";
 import { AGRONOMY_TABLE, scoreCrops, type WaterSource } from "@/lib/agronomy";
 import { getSoilProfile, type SoilProfile } from "@/lib/soil-profile";
@@ -94,7 +95,7 @@ export async function POST(req: NextRequest) {
 
   const registry =
     (body.district && DISTRICTS.find((d) => d.district.toLowerCase() === body.district!.toLowerCase())) ||
-    DISTRICTS[0];
+    HOME_DISTRICT;
   const lat = Number.isFinite(body.lat) ? (body.lat as number) : registry.lat;
   const lon = Number.isFinite(body.lon) ? (body.lon as number) : registry.lon;
   const state = body.state || registry.state;

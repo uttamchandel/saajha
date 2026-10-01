@@ -7,6 +7,7 @@ import { GoogleGenAI } from "@google/genai";
 import { generateContentResilient } from "@/lib/genai";
 import { FALLBACK_ADVISORY } from "@/lib/data";
 import { logQuery } from "@/lib/db";
+import { NODE_STATE } from "@/lib/node";
 import type { MandiResponse } from "@/lib/types";
 import {
   escapeXml,
@@ -42,7 +43,7 @@ function gather(action: string, inner: string, opts?: { speechOnly?: boolean }):
 async function mandiSayText(req: NextRequest): Promise<string> {
   try {
     const res = await fetch(
-      `${selfBaseUrl(req)}/api/mandi?crop=Soybean&state=Madhya+Pradesh`,
+      `${selfBaseUrl(req)}/api/mandi?crop=Soybean&state=${encodeURIComponent(NODE_STATE)}`,
       { signal: AbortSignal.timeout(MANDI_TIMEOUT_MS), cache: "no-store" },
     );
     if (!res.ok) throw new Error(`mandi HTTP ${res.status}`);
