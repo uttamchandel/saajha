@@ -1,0 +1,57 @@
+/*
+  Labels for the network drawing (NetworkField). SVG text is sized in viewBox units, so it scales with the
+  drawing. Here the drawing sits in a card about 420 px wide (310 px on a phone), smaller than on the hub's
+  hero, so the labels get more units to stay near 11-13 px on screen. Colours mirror the night tokens.
+*/
+.nodeName {
+  font-size: 19px;
+  font-weight: 600;
+  fill: #faf7f0;
+}
+.nodeSub {
+  font-size: 16.5px;
+  fill: #b7c9bc;
+}
+.hubSmall {
+  font-size: 16px;
+  fill: #b7c9bc;
+  letter-spacing: 0.06em;
+}
+.hubNum {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 36px;
+  font-weight: 600;
+  fill: #faf7f0;
+}
+@media (max-width: 519.98px) {
+  .nodeName {
+    font-size: 24px;
+  }
+  .nodeSub {
+    font-size: 21px;
+  }
+  .hubSmall {
+    font-size: 20px;
+  }
+  .hubNum {
+    font-size: 44px;
+  }
+}
+
+/* A night-coloured outline behind label text, so a lane passing under a label never cuts through it. */
+.halo {
+  paint-order: stroke;
+  stroke: #10241a;
+  stroke-width: 6px;
+  stroke-linejoin: round;
+}
+
+/* Shown only in the still frame used for prefers-reduced-motion. */
+.stillOnly {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .stillOnly {
+    display: inline;
+  }
+}

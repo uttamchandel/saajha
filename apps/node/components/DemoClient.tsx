@@ -14,7 +14,6 @@ import {
   Leaf,
   FlaskConical,
   Clock,
-  Sprout,
   ScanSearch,
   ImagePlus,
   BrainCircuit,
@@ -23,6 +22,7 @@ import {
   TriangleAlert,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import SiteNav from "@/components/saajha/SiteNav";
 import { HUB_URL, analysePhoto } from "@/lib/fed/federated";
 import type { LoadProgress } from "@/lib/fed/embed";
 import type { DiagnoseResponse } from "@/app/api/diagnose/route";
@@ -431,18 +431,7 @@ export default function DemoClient() {
   return (
     <div className="min-h-screen">
       {/* Nav */}
-      <nav className="border-b border-forest/10 bg-paper/90 backdrop-blur sticky top-0 z-20">
-        <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
-          <Link href="/" className="font-display text-xl font-semibold text-forest inline-flex items-center gap-1.5">
-            <Sprout className="text-leaf" size={18} aria-hidden />
-            KisanVaani
-          </Link>
-          <div className="flex items-center gap-4 text-sm">
-            <Link href="/command" className="text-ink-soft hover:text-forest">Command Center</Link>
-            <Link href="/" className="text-ink-soft hover:text-forest">About</Link>
-          </div>
-        </div>
-      </nav>
+      <SiteNav current="/demo" />
 
       <main className="mx-auto max-w-6xl px-4 py-8">
         <header className="mb-6">
@@ -903,7 +892,7 @@ export default function DemoClient() {
                     <div className="mt-4 grid sm:grid-cols-2 gap-3 text-sm">
                       <div className="rounded-xl border border-forest/15 p-3">
                         <div className="text-xs font-semibold text-forest flex items-center gap-1.5">
-                          <BrainCircuit size={14} aria-hidden /> Shared paddy model (decides)
+                          <BrainCircuit size={14} aria-hidden /> Saajha&rsquo;s shared paddy model (decides)
                         </div>
                         {diag.decision.federated ? (
                           <>
@@ -916,6 +905,16 @@ export default function DemoClient() {
                             </div>
                             <div className="mt-1 text-[11px] text-ink-soft">
                               Threshold {Math.round(diag.decision.federated.tau * 100)}% · national model, round {diag.decision.federated.round} · fingerprint {diag.decision.federated.sha256.slice(0, 12)}… checked
+                            </div>
+                            <div className="mt-2 flex items-start gap-1.5 rounded-lg bg-turmeric-soft/15 px-2 py-1.5 text-[11px] leading-snug text-ink">
+                              <span aria-hidden className="mt-1 inline-block size-1.5 shrink-0 rounded-full bg-turmeric-soft" />
+                              <span>
+                                The states trained this model together and it crossed the border as weights. This photo was
+                                not sent to the Saajha hub.{" "}
+                                <a href={`${HUB_URL}/federation`} className="font-medium text-forest underline underline-offset-2">
+                                  See its record
+                                </a>
+                              </span>
                             </div>
                           </>
                         ) : (

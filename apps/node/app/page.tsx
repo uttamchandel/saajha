@@ -14,11 +14,42 @@ import {
   ChartColumn,
   BookCheck,
   ShieldCheck,
+  ArrowRight,
   ArrowUpRight,
 } from "lucide-react";
-
+import type { ReactNode } from "react";
+import BorderWarning from "@/components/saajha/BorderWarning";
+import NetworkCard from "@/components/saajha/NetworkCard";
+import SiteNav from "@/components/saajha/SiteNav";
 // The Saajha shared layer (apps/hub). Each state node links back to it.
-const HUB_URL = process.env.NEXT_PUBLIC_HUB_URL ?? "https://saajha-hub.vercel.app";
+import { HUB_URL } from "@/components/saajha/hub";
+
+// What being in the network adds, measured on the hub's recorded federated run: the same four figures as the
+// hub's landing (apps/hub/components/landing/StatBand.tsx); keep the two in step. The run's four states are
+// simulated, which the line under the figures and "What's real" both say.
+const SAAJHA_RESULTS: { value: ReactNode; label: string }[] = [
+  {
+    value: (
+      <>
+        0%
+        <ArrowRight className="mx-1 inline-block size-[0.6em] align-[0.02em]" strokeWidth={2.6} aria-hidden="true" />
+        <span className="sr-only"> to </span>
+        82%
+      </>
+    ),
+    label: "One state's model on pests and diseases that state has never recorded, after 40 federated rounds",
+  },
+  {
+    value: (
+      <>
+        84% <span className="font-sans text-[0.5em] font-normal text-ink-soft">vs</span> 24%
+      </>
+    ),
+    label: "The shared model against Gemini alone, on 50 held-out paddy photos",
+  },
+  { value: "0", label: "Farmer records that crossed a state border, in 40 rounds" },
+  { value: "330 KB", label: "All a state sends per round: model weights (330,536 bytes)" },
+];
 
 // Every figure here has a source in STAT_SOURCES; keep the two in step.
 const STATS = [
@@ -85,6 +116,8 @@ const STEPS = [
   { n: "02", t: "Understood, then decided", d: "Gemini parses Indic speech and shorthand. For paddy photos the shared federated model decides; Gemini checks the photo and gives a second opinion." },
   { n: "03", t: "Advisory delivered", d: "Spoken or SMS reply in the farmer's language: IPM-first steps with exact, safe dosages." },
   { n: "04", t: "District learns", d: "Each query is a geotagged signal. Clusters of similar reports become outbreak alerts for nearby farmers." },
+  // The step Saajha adds. It is the only one where something crosses the state border, so its number is gold.
+  { n: "05", t: "Every state learns", d: "An expert's verified answer trains the state's model at home. Only the weights go to the Saajha hub, and the improved model comes back to every state.", crosses: true },
 ];
 
 const MODULES = [
@@ -165,89 +198,74 @@ const SIMULATED = [
   "Mandi prices are typical values, not today's.",
   "The outbreak counts this node publishes to the hub are a seeded scenario; the hub's pull, border check and warning are live.",
   "Advice cards are compiled from cited public sources and not yet reviewed by an agronomist; card approvals are simulated.",
+  "The four states in the shared model's recorded training run are simulated: label-skewed parts of one public Tamil Nadu paddy dataset (Paddy Doctor). The training, the weights and the accuracies are real.",
 ];
 
 export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Nav */}
-      <nav className="border-b border-forest/10 bg-paper/90 backdrop-blur sticky top-0 z-20">
-        <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between gap-3">
-          <span className="font-display text-xl font-semibold text-forest inline-flex items-center gap-2">
-            <Sprout size={18} className="text-forest" aria-hidden="true" />
-            KisanVaani
-            <span className="hidden sm:inline font-sans text-[11px] font-semibold uppercase tracking-wider text-ink-soft">
-              Saajha state node · {NODE_STATE}
-            </span>
-          </span>
-          <div className="flex items-center gap-4 text-sm">
-            <Link href="/demo" className="hidden md:inline text-ink-soft hover:text-forest">Demo</Link>
-            <Link href="/recommend" className="hidden md:inline text-ink-soft hover:text-forest">Crop advisor</Link>
-            <Link href="/whatsapp" className="hidden md:inline text-ink-soft hover:text-forest">WhatsApp</Link>
-            <Link href="/command" className="hidden md:inline text-ink-soft hover:text-forest">Command center</Link>
-            <a href={HUB_URL} className="hidden lg:inline-flex items-center gap-0.5 text-ink-soft hover:text-forest">
-              Saajha network <ArrowUpRight size={14} aria-hidden="true" />
-            </a>
-            <Link
-              href="/demo"
-              className="bg-forest text-paper rounded-full px-4 py-1.5 font-medium hover:bg-leaf transition whitespace-nowrap"
-            >
-              Open the live demo
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <SiteNav />
 
-      {/* Hero */}
-      <header className="mx-auto max-w-6xl px-4 pt-16 pb-12">
-        <div className="inline-flex items-center gap-2 rounded-full bg-leaf-mist text-forest text-xs font-semibold px-3 py-1.5 mb-6">
-          Saajha state node · {NODE_STATE} · Build with AI: Code for Communities, Edition 2 · PS-04 Agricultural Intelligence
-        </div>
-        <h1 className="font-display text-4xl sm:text-6xl font-semibold text-forest leading-[1.08] max-w-4xl">
-          Every farmer deserves an agronomist,<br className="hidden sm:block" />
-          <span className="text-turmeric">even on a ₹1,500 phone.</span>
-        </h1>
-        <p className="mt-6 text-lg text-ink-soft max-w-2xl leading-relaxed">
-          KisanVaani is how farmers reach their state&rsquo;s node in <b className="text-ink">Saajha</b>: crop advice over
-          ordinary <b className="text-ink">voice calls, SMS and WhatsApp</b> in the farmer&rsquo;s own language, with photo
-          diagnosis, crop recommendations and weather alerts. Every state runs its own node, so farmers&rsquo; records stay
-          in their state; states share only what they learn.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link
-            href="/demo"
-            className="bg-forest text-paper rounded-xl px-6 py-3.5 font-semibold hover:bg-leaf transition shadow-lg shadow-forest/20"
-          >
-            Open the live demo
-          </Link>
-          <Link
-            href="/command"
-            className="bg-white border border-forest/20 text-forest rounded-xl px-6 py-3.5 font-semibold hover:border-forest/50 transition"
-          >
-            View the district command center
-          </Link>
-          <a
-            href={HUB_URL}
-            className="inline-flex items-center gap-1 bg-white border border-forest/20 text-forest rounded-xl px-6 py-3.5 font-semibold hover:border-forest/50 transition"
-          >
-            See the Saajha network <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
+      {/* Hero: the farmer's promise on the left, the network that keeps it on the right */}
+      <header className="mx-auto max-w-6xl px-4 pt-12 pb-12 lg:pt-14">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+          <div className="min-w-0">
+            <div className="inline-flex items-center gap-2 rounded-full bg-leaf-mist text-forest text-xs font-semibold px-3 py-1.5 mb-6">
+              {NODE_STATE}&rsquo;s node in the Saajha network
+            </div>
+            <h1 className="font-display text-4xl sm:text-5xl xl:text-[3.4rem] font-semibold text-forest leading-[1.08]">
+              Every farmer deserves an agronomist,<br className="hidden sm:block" />{" "}
+              <span className="text-turmeric">even on a ₹1,500 phone.</span>
+            </h1>
+            <p className="mt-6 text-lg text-ink-soft max-w-2xl leading-relaxed">
+              KisanVaani is how farmers reach their state&rsquo;s node in <b className="text-ink">Saajha</b>: crop advice over
+              ordinary <b className="text-ink">voice calls, SMS and WhatsApp</b> in the farmer&rsquo;s own language, with photo
+              diagnosis, crop recommendations and weather alerts. Every state runs its own node, so farmers&rsquo; records stay
+              in their state; states share only what they learn.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/demo"
+                className="bg-forest text-paper rounded-xl px-6 py-3.5 font-semibold hover:bg-leaf transition shadow-lg shadow-forest/20"
+              >
+                Open the live demo
+              </Link>
+              <Link
+                href="/command"
+                className="bg-white border border-forest/20 text-forest rounded-xl px-6 py-3.5 font-semibold hover:border-forest/50 transition"
+              >
+                View the district command center
+              </Link>
+            </div>
+          </div>
+          <div className="min-w-0 w-full max-w-xl lg:max-w-none">
+            <NetworkCard />
+          </div>
         </div>
       </header>
 
-      {/* Stats */}
-      <section className="border-y border-forest/10 bg-paper-warm">
+      {/* What the network adds, measured */}
+      <section aria-labelledby="saajha-adds-h" className="border-y border-forest/10 bg-paper-warm">
         <div className="mx-auto max-w-6xl px-4 py-10">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {STATS.map((s) => (
-              <div key={s.label}>
-                <div className="font-display text-3xl font-semibold text-forest">{s.value}</div>
-                <div className="text-sm font-medium text-ink mt-1">{s.label}</div>
-                <div className="text-xs text-ink-soft mt-0.5">{s.sub}</div>
+          <h2 id="saajha-adds-h" className="text-xs font-semibold tracking-widest text-ink-soft uppercase">
+            What being in Saajha adds, measured
+          </h2>
+          <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
+            {SAAJHA_RESULTS.map((s) => (
+              <div key={s.label} className="flex flex-col-reverse justify-end">
+                <dt className="text-sm text-ink-soft mt-1.5 leading-snug">{s.label}</dt>
+                <dd className="font-display text-[1.65rem] sm:text-3xl font-semibold text-forest whitespace-nowrap">{s.value}</dd>
               </div>
             ))}
-          </div>
-          <p className="mt-6 text-[11px] text-ink-soft leading-relaxed">{STAT_SOURCES}</p>
+          </dl>
+          <p className="mt-6 text-[11px] text-ink-soft leading-relaxed">
+            From the federated training run recorded on the Saajha hub: four simulated states, each holding part of one
+            public paddy dataset.{" "}
+            <a href={`${HUB_URL}/federation`} className="font-medium text-forest underline underline-offset-2">
+              Check every round on the hub
+            </a>
+            .
+          </p>
         </div>
       </section>
 
@@ -305,6 +323,19 @@ export default function Home() {
             coverage is patchy. KisanVaani meets them on an ordinary call or SMS, in their own language.
           </p>
 
+          <div className="mt-10 border-y border-forest/10 py-8">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {STATS.map((s) => (
+                <div key={s.label}>
+                  <div className="font-display text-3xl font-semibold text-forest">{s.value}</div>
+                  <div className="text-sm font-medium text-ink mt-1">{s.label}</div>
+                  <div className="text-xs text-ink-soft mt-0.5">{s.sub}</div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-[11px] text-ink-soft leading-relaxed">{STAT_SOURCES}</p>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-5 mt-10">
             {CHANNELS.map((c) => (
               <div key={c.title} className="rounded-2xl bg-white border border-forest/15 p-6 hover:shadow-lg transition">
@@ -360,10 +391,10 @@ export default function Home() {
       <section className="bg-forest text-paper">
         <div className="mx-auto max-w-6xl px-4 py-16">
           <h2 className="font-display text-3xl font-semibold">How it works</h2>
-          <div className="grid md:grid-cols-4 gap-6 mt-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-10">
             {STEPS.map((s) => (
               <div key={s.n} className="relative">
-                <div className="font-display text-4xl text-leaf-bright/50 font-semibold">{s.n}</div>
+                <div className={`font-display text-4xl font-semibold ${s.crosses ? "text-turmeric-soft" : "text-leaf-bright/50"}`}>{s.n}</div>
                 <h3 className="font-semibold mt-2">{s.t}</h3>
                 <p className="text-sm text-paper/70 mt-1.5 leading-relaxed">{s.d}</p>
               </div>
@@ -394,25 +425,20 @@ export default function Home() {
               Every call, SMS and photo is a structured, geotagged data point. When similar reports cluster in one block,
               the node flags the outbreak and lets the District Agriculture Officer broadcast a voice and SMS alert to the
               farmers in the affected blocks. Saajha takes this across state borders: a neighbouring state&rsquo;s node
-              receives the count, never the farmers (being built).
+              receives the count, never the farmers. That is live between the Telangana and Maharashtra nodes, on
+              scenario counts.
             </p>
-            <Link href="/command" className="inline-block mt-6 bg-forest text-paper rounded-xl px-5 py-3 font-semibold hover:bg-leaf transition">
-              Open the command center
-            </Link>
-          </div>
-          <div className="rounded-2xl bg-[#10241a] text-paper p-6 shadow-2xl">
-            <div className="text-xs text-paper/50 mb-3 uppercase tracking-wide">Example · what the officer sees</div>
-            <div className="rounded-xl bg-red-950/50 border border-red-500/30 p-4">
-              <div className="font-semibold">Cotton Leaf Curl Virus</div>
-              <div className="text-sm text-paper/60">Sehore block · 23 reports · +187% week over week</div>
-              <div className="mt-3 rounded-lg bg-turmeric text-white text-center text-sm font-semibold py-2">
-                Broadcast alert to 1,240 farmers
-              </div>
-            </div>
-            <div className="mt-3 text-[11px] text-paper/40">
-              Illustrative figures. The command center shows the working screen.
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <Link href="/command" className="inline-block bg-forest text-paper rounded-xl px-5 py-3 font-semibold hover:bg-leaf transition">
+                Open the command center
+              </Link>
+              <a href={`${HUB_URL}/exchange`} className="inline-flex items-center gap-1 text-sm font-medium text-forest">
+                See counts cross on the hub <ArrowUpRight size={14} aria-hidden="true" />
+              </a>
             </div>
           </div>
+          {/* What the officer sees: the warning the hub is sending this state right now, not an invented example */}
+          <BorderWarning />
         </div>
       </section>
 
@@ -442,24 +468,50 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-forest text-paper/70">
-        <div className="mx-auto max-w-6xl px-4 py-10 flex flex-wrap items-center justify-between gap-4 text-sm">
+      <footer className="bg-forest text-paper/75">
+        <div className="mx-auto max-w-6xl px-4 py-10 flex flex-wrap items-start justify-between gap-x-12 gap-y-8 text-sm">
           <div className="max-w-xl">
             <span className="font-display text-lg text-paper font-semibold">KisanVaani</span>
-            <span className="ml-3">आवाज़ ही असली ऐप है · the voice is the real app.</span>
-            <div className="mt-1 text-xs text-paper/50 leading-relaxed">
+            <span className="ml-3">
+              <span lang="hi">आवाज़ ही असली ऐप है</span> · the voice is the real app.
+            </span>
+            <p className="mt-3 text-paper">
+              The farmer layer of{" "}
+              <a href={HUB_URL} className="font-semibold underline underline-offset-4">
+                Saajha <span lang="hi">साझा</span>
+              </a>
+              : states share what they&rsquo;ve learned, not who their farmers are.
+            </p>
+            <div className="mt-3 text-xs text-paper/65 leading-relaxed">
               KisanVaani was first built by Team Vishwakarma Devs for Build with AI: Code for Communities (Edition 1). In
-              Edition 2 it is the farmer layer of each Saajha state node.
+              Edition 2 (PS-04 Agricultural Intelligence) it is the farmer layer of each Saajha state node.
             </div>
           </div>
-          <div className="flex flex-wrap gap-4">
-            <Link href="/demo" className="hover:text-paper">Demo</Link>
-            <Link href="/recommend" className="hover:text-paper">Crop advisor</Link>
-            <Link href="/whatsapp" className="hover:text-paper">WhatsApp</Link>
-            <Link href="/command" className="hover:text-paper">Command center</Link>
-            <a href={HUB_URL} className="inline-flex items-center gap-0.5 hover:text-paper">
-              Saajha network <ArrowUpRight size={14} aria-hidden="true" />
-            </a>
+          <div className="flex gap-x-12 gap-y-6">
+            <div>
+              <div className="text-xs font-semibold tracking-widest text-paper/65 uppercase mb-2">This node</div>
+              <div className="flex flex-col gap-1.5">
+                <Link href="/demo" className="hover:text-paper">Demo</Link>
+                <Link href="/recommend" className="hover:text-paper">Crop advisor</Link>
+                <Link href="/whatsapp" className="hover:text-paper">WhatsApp</Link>
+                <Link href="/command" className="hover:text-paper">Command center</Link>
+              </div>
+            </div>
+            <div>
+              <div className="text-xs font-semibold tracking-widest text-paper/65 uppercase mb-2">Saajha network</div>
+              <div className="flex flex-col gap-1.5">
+                {[
+                  { href: HUB_URL, label: "The network" },
+                  { href: `${HUB_URL}/federation`, label: "Federation record" },
+                  { href: `${HUB_URL}/exchange`, label: "Early warning" },
+                  { href: `${HUB_URL}/method`, label: "Method and limits" },
+                ].map((l) => (
+                  <a key={l.href} href={l.href} className="inline-flex items-center gap-0.5 hover:text-paper">
+                    {l.label} <ArrowUpRight size={14} aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </footer>

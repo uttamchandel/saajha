@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import {
   ArrowLeft,
   BadgeCheck,
@@ -17,7 +16,6 @@ import {
   Play,
   Send,
   Smile,
-  Sprout,
   Square,
   Video,
 } from "lucide-react";
@@ -25,6 +23,7 @@ import type { VoiceResult } from "@/lib/types";
 import { speak, stopSpeaking } from "@/lib/speech";
 import { createLiveTicket } from "@/lib/ops-live";
 import { HOME_DISTRICT } from "@/lib/node";
+import SiteNav from "@/components/saajha/SiteNav";
 import { analysePhoto } from "@/lib/fed/federated";
 import type { DiagnoseResponse } from "@/app/api/diagnose/route";
 
@@ -667,22 +666,7 @@ export default function WhatsAppClient() {
   return (
     <div className="min-h-screen">
       {/* Site nav (outside the phone) */}
-      <nav className="border-b border-forest/10 bg-paper/90 backdrop-blur sticky top-0 z-20">
-        <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
-          <Link href="/" className="font-display text-xl font-semibold text-forest inline-flex items-center gap-2">
-            <Sprout className="w-[18px] h-[18px] text-forest/70" aria-hidden />
-            KisanVaani
-          </Link>
-          <div className="flex items-center gap-4 text-sm">
-            <Link href="/demo" className="text-ink-soft hover:text-forest">
-              Live demo
-            </Link>
-            <Link href="/command" className="text-ink-soft hover:text-forest">
-              Command center
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <SiteNav current="/whatsapp" />
 
       <main className="mx-auto max-w-6xl px-4 py-8">
         <header className="mb-6">

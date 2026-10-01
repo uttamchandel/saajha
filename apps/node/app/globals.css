@@ -13,6 +13,12 @@
   --turmeric-soft: #fbbf24;
   --clay: #9a3412;
   --sky: #0369a1;
+
+  /* The Saajha network is drawn at night, on the hub and here (same values as apps/hub/app/globals.css). */
+  --turmeric-deep: #b45309; /* turmeric for small text on paper */
+  --night: #10241a;
+  --haze: #b7c9bc;          /* secondary text on night */
+  --signal: #7dd3fc;        /* outbreak counts, on night */
 }
 
 @theme inline {
@@ -28,6 +34,10 @@
   --color-turmeric-soft: var(--turmeric-soft);
   --color-clay: var(--clay);
   --color-sky: var(--sky);
+  --color-turmeric-deep: var(--turmeric-deep);
+  --color-night: var(--night);
+  --color-haze: var(--haze);
+  --color-signal: var(--signal);
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-display: var(--font-fraunces), Georgia, serif;
 }
