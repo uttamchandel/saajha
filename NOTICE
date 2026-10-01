@@ -1,2 +1,12 @@
+Saajha
+Copyright 2026 Uttam Chandel
+
+This product includes KisanVaani (apps/node), built by Team Vishwakarma Devs
+for Build with AI: Code for Communities, Edition 1 (2026), and reused here
+with the team's agreement under the Apache License 2.0.
+Copyright 2026 Team Vishwakarma Devs.
+apps/node started as a copy of the Edition 1 code (last Ed1 commit 56afafb,
+22 Jul 2026); every change since then is part of this edition.
+
 Third-party software, models, datasets and advisory sources are credited in
 README.md under "Credits and licences".

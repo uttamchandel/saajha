@@ -224,4 +224,4 @@ Paddy Doctor is CC BY 4.0 under the Kaggle competition rules §7A. §7B restrict
 - **Advisory sources:** TNAU Agritech Portal, IRRI Rice Knowledge Bank, ICAR-National Rice Research Institute, NCIPM / NIPHM Integrated Pest Management package for rice, and others; each card in `apps/hub/lib/knowledge.json` lists its sources.
 - **Web and type:** Next.js, React, Tailwind CSS (MIT); Anek, Inter and Fraunces typefaces via Google Fonts (SIL Open Font License 1.1).
 
-Licensed under [Apache-2.0](LICENSE). Copyright 2026 Aditya Singh; KisanVaani (`apps/node`) copyright 2026 Team Vishwakarma Devs. See [NOTICE](NOTICE).
+Licensed under [Apache-2.0](LICENSE). Copyright 2026 Uttam Chandel; KisanVaani (`apps/node`) copyright 2026 Team Vishwakarma Devs. See [NOTICE](NOTICE).
