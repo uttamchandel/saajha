@@ -34,7 +34,7 @@ function Box({
 }) {
   return (
     <g>
-      <rect x={x} y={y} width={w} height={h} rx={5} fill={fill} stroke={stroke} strokeWidth={1.25} />
+      <rect x={x} y={y} width={w} height={h} rx={10} fill={fill} stroke={stroke} strokeWidth={1.25} />
       <text x={x + 14} y={y + 23} fontSize={15} fontWeight={600} fill={INK}>
         {title}
       </text>
@@ -110,7 +110,7 @@ export default function ArchitectureDiagram({ f }: { f: MethodFigures }) {
             </text>
             {states.map((s, i) => (
               <g key={s}>
-                <rect x={12 + i * 34} y={32} width={28} height={24} rx={4} fill={CARBON_WASH} stroke={RULE} />
+                <rect x={12 + i * 34} y={32} width={28} height={24} rx={12} fill={CARBON_WASH} stroke={RULE} />
                 <text x={26 + i * 34} y={49} fontSize={14} fontWeight={600} fill={INK} textAnchor="middle">
                   {s}
                 </text>
@@ -120,7 +120,7 @@ export default function ArchitectureDiagram({ f }: { f: MethodFigures }) {
               the same node, run by each state
             </text>
 
-            <rect x={12} y={70} width={376} height={222} rx={6} fill={SHEET} stroke={RULE} strokeWidth={1.25} />
+            <rect x={12} y={70} width={376} height={222} rx={14} fill={SHEET} stroke={RULE} strokeWidth={1.25} />
             <Box x={24} y={84} w={352} h={52} title="Expert-verified cases" lines={["photo and confirmed label, kept in the state"]} fill={PAPER} />
             <Arrow d="M 48 136 V 154" />
             <Box

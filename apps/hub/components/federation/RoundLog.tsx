@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import type { RoundEntry, RunFile, StateId } from "@/lib/contract";
 import { bytesLabel, grouped, pct } from "@/lib/fl";
 import { fetchHead, verifyHeadSha } from "@/lib/heads";
+import { card } from "@/lib/ui";
 import { btnPrimary, btnSecondary, capitalize, countWord, trainingRounds } from "./shared";
 
 type Check = { s: "checking" } | { s: "match" } | { s: "mismatch" } | { s: "error"; msg: string };
@@ -108,7 +109,7 @@ export default function RoundLog({ run }: { run: RunFile }) {
   const nStates = run.states.length;
   const example = rounds[0];
 
-  const th = "px-3 py-2 text-left align-bottom text-sm font-normal text-muted";
+  const th = "px-3 py-2 text-left align-bottom text-sm font-normal text-ink-soft";
   const td = "px-3 py-2 align-middle";
 
   return (
@@ -140,7 +141,7 @@ export default function RoundLog({ run }: { run: RunFile }) {
       <div className="mt-3 min-h-[1.75rem]" aria-live="polite">
         {bulk && (
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[15px]">
-            <progress value={bulk.done} max={bulk.total} className="h-2 w-48 accent-[var(--ink)]" aria-label="Verification progress" />
+            <progress value={bulk.done} max={bulk.total} className="h-2 w-48 accent-[var(--forest)]" aria-label="Verification progress" />
             <span>
               Checked {bulk.done} of {bulk.total}.{" "}
               {!bulk.running &&
@@ -160,7 +161,7 @@ export default function RoundLog({ run }: { run: RunFile }) {
       </div>
 
       <div
-        className="mt-4 relative overflow-x-auto rounded-md border border-rule bg-sheet"
+        className={`${card} relative mt-4 overflow-x-auto`}
         role="region"
         aria-labelledby="log-caption"
         tabIndex={0}
@@ -171,7 +172,7 @@ export default function RoundLog({ run }: { run: RunFile }) {
             round
           </caption>
           <thead>
-            <tr className="border-b border-rule">
+            <tr className="border-b border-rule bg-paper-warm">
               <th scope="col" className={th}>
                 Round
               </th>
@@ -217,7 +218,7 @@ export default function RoundLog({ run }: { run: RunFile }) {
                   <td className={td}>{pct(r.global.acc_all, 1)}</td>
                   <td className={td}>{pct(r.per_state[S]?.acc_unseen, 1)}</td>
                   <td className={td}>
-                    <span title={r.weights_sha256} className="tracking-wide">
+                    <span title={r.weights_sha256} className="font-mono text-[13px]">
                       {r.weights_sha256.slice(0, 12)}
                     </span>
                   </td>
@@ -261,7 +262,7 @@ export default function RoundLog({ run }: { run: RunFile }) {
           return (
             <li key={s.id} className="flex items-center gap-3 text-[15px]">
               <span>
-                State {s.id} <span className="text-muted" title={m.sha256}>{m.sha256.slice(0, 12)}</span>
+                State {s.id} <span className="font-mono text-[13px] text-muted" title={m.sha256}>{m.sha256.slice(0, 12)}</span>
               </span>
               <button
                 type="button"

@@ -9,6 +9,8 @@ import type { ClassKey } from "@/lib/classes";
 import { LANGS_FULL } from "@/lib/langs";
 import { advisoryKey, savedOn, type PregenFile } from "@/lib/pregen";
 import { speak, stopSpeaking } from "@/lib/speech";
+// `card` is aliased: Advisory and ReferenceCard take a `card` prop that would shadow the recipe.
+import { btnPrimarySm, btnSecondarySm, card as cardSurface, link, slip } from "@/lib/ui";
 
 type Result = { ok: true; data: AdvisoryResponse; saved?: boolean } | { ok: false; error: string; retryable: boolean };
 
@@ -16,11 +18,6 @@ type Audio =
   | { key: string; status: "loading" }
   | { key: string; status: "gemini"; url: string }
   | { key: string; status: "device"; reason: string; speaking: boolean };
-
-const btnPrimary =
-  "inline-flex items-center rounded-md bg-ink px-4 py-2 text-base font-semibold text-white hover:bg-[#2a3888] disabled:cursor-wait disabled:opacity-70";
-const btnSecondary =
-  "inline-flex items-center rounded-md border border-ink bg-sheet px-3 py-1.5 text-sm font-semibold text-ink hover:bg-carbon-wash";
 
 async function postJson<T>(url: string, body: unknown): Promise<T> {
   const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -133,7 +130,7 @@ export default function Advisory({
   const myAudio = audio && audio.key === key ? audio : null;
 
   return (
-    <section aria-labelledby="advice-h" className="rounded-md border border-rule bg-sheet p-5 sm:p-6">
+    <section aria-labelledby="advice-h" className={`${cardSurface} p-5 sm:p-6`}>
       <div className="flex flex-wrap items-end justify-between gap-3">
         <h2 id="advice-h" className="text-lg font-semibold">
           Advice for the farmer
@@ -146,7 +143,7 @@ export default function Advisory({
               stopSpeaking();
               setLang(e.target.value);
             }}
-            className="ml-1 rounded-md border border-rule bg-sheet px-2 py-1.5 text-base text-ink"
+            className="ml-1 rounded-xl border border-forest/20 bg-paper px-2 py-1.5 text-base text-ink focus:border-forest"
           >
             {LANGS_FULL.map((l) => (
               <option key={l.code} value={l.code}>
@@ -159,7 +156,7 @@ export default function Advisory({
 
       {!result && (
         <p className="mt-4 text-muted" aria-live="polite">
-          <span className="mr-2 inline-block size-2.5 animate-pulse rounded-full bg-carbon align-middle" aria-hidden="true" />
+          <span className="mr-2 inline-block size-2.5 animate-pulse rounded-full bg-leaf align-middle" aria-hidden="true" />
           Gemini is writing the advice in {langInfo.label} from the reference card.
         </p>
       )}
@@ -171,7 +168,7 @@ export default function Advisory({
             cited reference card it is written from.
           </p>
           {result.retryable && (
-            <button type="button" onClick={retry} className={`${btnSecondary} mt-3`}>
+            <button type="button" onClick={retry} className={`${btnSecondarySm} mt-3`}>
               Try writing it again
             </button>
           )}
@@ -181,12 +178,12 @@ export default function Advisory({
 
       {result && result.ok && (
         <div className="mt-4" lang={result.data.lang}>
-          <p className="display text-[clamp(1.4rem,3vw,1.9rem)]">{result.data.title_local}</p>
+          <p className="display text-forest text-[clamp(1.4rem,3vw,1.9rem)]">{result.data.title_local}</p>
           <p className="mt-3 max-w-[66ch] text-lg leading-relaxed">{result.data.spoken_summary}</p>
           {result.saved && saved && (
             <p className="mt-2 text-sm text-muted" lang="en">
               Written by Gemini on {savedOn(saved.generated_at)} and saved for this test photo.{" "}
-              <button type="button" onClick={retry} className="text-carbon underline underline-offset-4">
+              <button type="button" onClick={retry} className={link}>
                 Write it again, live
               </button>
             </p>
@@ -195,7 +192,7 @@ export default function Advisory({
           <div className="mt-4 flex flex-wrap items-center gap-3" lang="en">
             <button
               type="button"
-              className={btnPrimary}
+              className={btnPrimarySm}
               disabled={myAudio?.status === "loading"}
               onClick={() => listen(result.data.spoken_summary)}
             >
@@ -204,7 +201,7 @@ export default function Advisory({
             {myAudio?.status === "device" && myAudio.speaking && (
               <button
                 type="button"
-                className={btnSecondary}
+                className={btnSecondarySm}
                 onClick={() => {
                   stopSpeaking();
                   setAudio({ ...myAudio, speaking: false });
@@ -256,9 +253,7 @@ export default function Advisory({
             not yet been reviewed by an agronomist.
           </p>
           <details className="mt-4" lang="en">
-            <summary className="cursor-pointer text-carbon underline underline-offset-4">
-              Compare with the English reference card
-            </summary>
+            <summary className={`cursor-pointer ${link}`}>Compare with the English reference card</summary>
             <ReferenceCard card={card} className="mt-4" />
           </details>
         </div>
@@ -290,7 +285,7 @@ function Sources({ sources }: { sources: Card["sources"] }) {
       <ol className="mt-1 list-decimal space-y-1 pl-5 text-sm">
         {sources.map((s) => (
           <li key={s.url}>
-            <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-carbon underline underline-offset-4">
+            <a href={s.url} target="_blank" rel="noopener noreferrer" className={link}>
               {s.title}
             </a>{" "}
             <span className="text-muted">({s.publisher})</span>
@@ -303,8 +298,8 @@ function Sources({ sources }: { sources: Card["sources"] }) {
 
 export function ReferenceCard({ card, className = "" }: { card: Card; className?: string }) {
   return (
-    <div className={`rounded-md border border-dashed border-carbon bg-carbon-wash p-4 sm:p-5 ${className}`} lang="en">
-      <p className="text-sm font-semibold text-carbon">Reference card (English)</p>
+    <div className={`${slip} p-4 sm:p-5 ${className}`} lang="en">
+      <p className="text-sm font-semibold text-forest">Reference card (English)</p>
       <p className="mt-1 text-xl font-semibold">{card.name_en}</p>
       <p className="text-sm text-muted">Cause: {card.cause}</p>
       <AdviceList title="Symptoms" items={card.symptoms} />

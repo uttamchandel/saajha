@@ -3,6 +3,7 @@
 // Live rounds after the recorded run (Saajha step 3): every attempt the deployed network made to learn
 // from cases its state experts verified, released or refused, with why. Data: /api/rounds.
 import { useCallback, useEffect, useState } from "react";
+import { btnPrimary, card, lede, noteBad, noteGood } from "@/lib/ui";
 import { Section } from "./shared";
 
 type Contributor = { state: string; status: "included" | "no_cases" | "refused" | "unreachable"; n_cases?: number; bytes?: number; reason?: string };
@@ -76,7 +77,7 @@ export default function LiveRounds() {
 
   return (
     <Section id="live-rounds" title="Live rounds, after the recorded run">
-      <p className="mt-3 max-w-[70ch] text-lg text-muted">
+      <p className={`${lede} mt-3 max-w-[70ch]`}>
         The deployed network keeps learning. When a state&apos;s expert verifies a farmer&apos;s photo, the case stays in that
         state. A round asks every state node to train the released model on its newly verified cases and send back only the
         weights; the hub averages them, takes the largest step toward the average that keeps accuracy on 516 validation
@@ -89,13 +90,16 @@ export default function LiveRounds() {
       </p>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
-        <button type="button" onClick={run} disabled={running || registry !== "connected"} className="rounded-md bg-ink px-5 py-3 text-base font-semibold text-white hover:bg-[#2a3888] disabled:opacity-60">
+        <button type="button" onClick={run} disabled={running || registry !== "connected"} className={btnPrimary}>
           {running ? "Running a round across the state nodes…" : "Run a round now"}
         </button>
         <span className="text-sm text-muted">It learns only if a state has verified new cases: verify one at a state node&apos;s expert desk first.</span>
       </div>
       {last && (
-        <p className="mt-3 rounded-md bg-sheet px-4 py-3 text-[15px]" aria-live="polite">
+        <p
+          className={`${last.status === "released" ? noteGood : last.status === "refused" ? noteBad : card} mt-3 px-4 py-3 text-[15px]`}
+          aria-live="polite"
+        >
           {last.status === "released" ? `Round ${last.round} released.` : last.status === "refused" ? `Not released: ${last.reason}` : last.message}
         </p>
       )}
@@ -104,44 +108,46 @@ export default function LiveRounds() {
       {registry !== "connected" && <p className="mt-6">The model registry is not connected on this deployment.</p>}
       {rows && rows.length === 0 && <p className="mt-6 text-muted">No live round yet: round 40 of the recorded run is the model in use.</p>}
       {rows && rows.length > 0 && (
-        <div className="mt-6 overflow-x-auto">
-          <table className="w-full min-w-[760px] border-collapse text-left text-[15px]">
-            <caption className="sr-only">Live federated rounds, newest first</caption>
-            <thead>
-              <tr className="border-b border-ink text-sm text-muted">
-                <th scope="col" className="py-2 pr-4 font-normal">When</th>
-                <th scope="col" className="py-2 pr-4 font-normal">Outcome</th>
-                <th scope="col" className="py-2 pr-4 font-normal">Verified cases from</th>
-                <th scope="col" className="py-2 pr-4 font-normal">Held-out accuracy</th>
-                <th scope="col" className="py-2 pr-4 font-normal">Weights received</th>
-                <th scope="col" className="py-2 font-normal">Fingerprint</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r) => (
-                <tr key={r.id} className="border-b border-rule align-top">
-                  <td className="py-2 pr-4 whitespace-nowrap">{new Date(r.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</td>
-                  <td className="py-2 pr-4">
-                    {r.status === "released" ? (
-                      <span className="font-semibold text-shoot">Round {r.round} released</span>
-                    ) : (
-                      <span>
-                        <span className="font-semibold">Refused</span>
-                        <span className="block text-sm text-muted">{r.reason}</span>
-                      </span>
-                    )}
-                    {r.step != null && r.status === "released" && <span className="block text-sm text-muted">step {r.step} from round {r.base_round}</span>}
-                  </td>
-                  <td className="py-2 pr-4">{who(r.contributors)}</td>
-                  <td className="condensed py-2 pr-4 whitespace-nowrap">
-                    {pct(r.test_acc_base)} → {pct(r.test_acc)}
-                  </td>
-                  <td className="condensed py-2 pr-4">{r.bytes_received ? `${nf.format(r.bytes_received)} B` : "—"}</td>
-                  <td className="condensed py-2 text-sm">{r.sha256 ? `${r.sha256.slice(0, 12)}…` : "—"}</td>
+        <div className="mt-6">
+          <div className={`${card} overflow-x-auto`}>
+            <table className="w-full min-w-[760px] border-collapse text-left text-[15px]">
+              <caption className="sr-only">Live federated rounds, newest first</caption>
+              <thead>
+                <tr className="border-b border-rule bg-paper-warm text-sm text-ink-soft">
+                  <th scope="col" className="py-2 pl-4 pr-4 font-normal">When</th>
+                  <th scope="col" className="py-2 pr-4 font-normal">Outcome</th>
+                  <th scope="col" className="py-2 pr-4 font-normal">Verified cases from</th>
+                  <th scope="col" className="py-2 pr-4 font-normal">Held-out accuracy</th>
+                  <th scope="col" className="py-2 pr-4 font-normal">Weights received</th>
+                  <th scope="col" className="py-2 pr-4 font-normal">Fingerprint</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr key={r.id} className="border-b border-rule align-top last:border-b-0">
+                    <td className="py-2 pl-4 pr-4 whitespace-nowrap">{new Date(r.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</td>
+                    <td className="py-2 pr-4">
+                      {r.status === "released" ? (
+                        <span className="font-semibold text-shoot">Round {r.round} released</span>
+                      ) : (
+                        <span>
+                          <span className="font-semibold text-blight">Refused</span>
+                          <span className="block text-sm text-muted">{r.reason}</span>
+                        </span>
+                      )}
+                      {r.step != null && r.status === "released" && <span className="block text-sm text-muted">step {r.step} from round {r.base_round}</span>}
+                    </td>
+                    <td className="py-2 pr-4">{who(r.contributors)}</td>
+                    <td className="condensed py-2 pr-4 whitespace-nowrap">
+                      {pct(r.test_acc_base)} → {pct(r.test_acc)}
+                    </td>
+                    <td className="condensed py-2 pr-4">{r.bytes_received ? `${nf.format(r.bytes_received)} B` : "—"}</td>
+                    <td className="condensed py-2 pr-4 font-mono text-[13px]">{r.sha256 ? `${r.sha256.slice(0, 12)}…` : "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <p className="mt-3 text-sm text-muted">Farmer records moved in every live round: 0. Only weights, fingerprints and case counts crossed.</p>
         </div>
       )}

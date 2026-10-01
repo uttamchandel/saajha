@@ -17,6 +17,7 @@ import { decide, type FedVerdict, type GateDecision, type GeminiVerdict } from "
 import { decodeFloat32, fetchHead, runHead, topK, verifyHeadSha, type LoadedHead } from "@/lib/heads";
 import { fetchPregen, type PregenFile } from "@/lib/pregen";
 import { addTicket, type Ticket } from "@/lib/tickets";
+import { btnSecondarySm, card, link, noteBad } from "@/lib/ui";
 import Advisory from "./Advisory";
 import GatePanel from "./GatePanel";
 import GeminiPanel, { type GeminiState } from "./GeminiPanel";
@@ -104,13 +105,13 @@ export default function DiagnoseApp({ cards }: { cards: Record<ClassKey, Card> }
 
   if (loadError) {
     return (
-      <p className="mt-8 border-l-[3px] border-ink pl-3">
+      <p className={`${noteBad} mt-8 px-4 py-3`}>
         The federation record could not be loaded: {loadError}. Reload the page to try again.
       </p>
     );
   }
   if (!run) {
-    return <div className="mt-8 h-64 animate-pulse rounded-md bg-sheet" aria-label="Loading the federation record" />;
+    return <div className={`${card} mt-8 h-64 animate-pulse`} aria-label="Loading the federation record" />;
   }
 
   const stateId: StateId = run.hero.state;
@@ -326,10 +327,10 @@ export default function DiagnoseApp({ cards }: { cards: Record<ClassKey, Card> }
 
       {photo && (
         <div className="mt-10 grid gap-8 border-t border-rule pt-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-12">
-          <figure className="lg:sticky lg:top-6 lg:self-start">
+          <figure className="lg:sticky lg:top-20 lg:self-start">
             {photo.url ? (
               <div
-                className="relative w-full overflow-hidden rounded-md border border-rule bg-sheet"
+                className="relative w-full overflow-hidden rounded-xl border border-forest/15 bg-white"
                 style={{ aspectRatio: size ? `${size.w} / ${size.h}` : "3 / 4" }}
               >
                 <Image
@@ -364,11 +365,7 @@ export default function DiagnoseApp({ cards }: { cards: Record<ClassKey, Card> }
                 </span>
               )}
               {photo.kind === "gallery" && res?.features.source === "cached" && job?.status !== "loading" && (
-                <button
-                  type="button"
-                  onClick={onComputeLive}
-                  className="inline-flex items-center rounded-md border border-ink bg-sheet px-3 py-1.5 text-sm font-semibold text-ink hover:bg-carbon-wash"
-                >
+                <button type="button" onClick={onComputeLive} className={btnSecondarySm}>
                   Compute them in this browser instead
                 </button>
               )}
@@ -383,10 +380,10 @@ export default function DiagnoseApp({ cards }: { cards: Record<ClassKey, Card> }
           </figure>
 
           <div className="min-w-0 space-y-8">
-            {pErr && <p className="border-l-[3px] border-ink pl-3 font-semibold">{pErr}</p>}
+            {pErr && <p className={`${noteBad} px-4 py-3 font-semibold`}>{pErr}</p>}
             {job?.status === "loading" && <ModelProgress progress={job.progress} />}
             {job?.status === "error" && (
-              <div className="border-l-[3px] border-ink pl-3">
+              <div className={`${noteBad} px-4 py-3`}>
                 <p>The image model could not run in this browser: {job.error}</p>
                 {!res && (
                   <p className="mt-1 text-muted">
@@ -399,7 +396,7 @@ export default function DiagnoseApp({ cards }: { cards: Record<ClassKey, Card> }
 
             {notRice ? (
               <section aria-labelledby="notrice-h" aria-live="polite">
-                <h2 id="notrice-h" className="display text-[clamp(1.4rem,3vw,1.9rem)]">
+                <h2 id="notrice-h" className="display text-forest text-[clamp(1.4rem,3vw,1.9rem)]">
                   Saajha&apos;s model covers paddy only
                 </h2>
                 <p className="mt-2 max-w-[62ch]">
@@ -409,9 +406,7 @@ export default function DiagnoseApp({ cards }: { cards: Record<ClassKey, Card> }
                 </p>
                 {verdicts && (
                   <details className="mt-3">
-                    <summary className="cursor-pointer text-carbon underline underline-offset-4">
-                      Show the model&apos;s output anyway
-                    </summary>
+                    <summary className={`cursor-pointer ${link}`}>Show the model&apos;s output anyway</summary>
                     <div className="mt-4">{verdicts}</div>
                   </details>
                 )}
@@ -419,7 +414,7 @@ export default function DiagnoseApp({ cards }: { cards: Record<ClassKey, Card> }
             ) : (
               verdicts ??
               (!job && !pErr ? (
-                <div className="h-48 animate-pulse rounded-md bg-sheet" aria-label="Scoring the photo" />
+                <div className={`${card} h-48 animate-pulse`} aria-label="Scoring the photo" />
               ) : null)
             )}
 

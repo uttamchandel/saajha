@@ -4,6 +4,7 @@ import type { Card } from "@/app/api/advisory/route";
 import DiagnoseApp from "@/components/diagnose/DiagnoseApp";
 import type { ClassKey } from "@/lib/classes";
 import knowledge from "@/lib/knowledge.json";
+import { h1, lede, link } from "@/lib/ui";
 
 export const metadata: Metadata = {
   title: "Try a photo — Saajha",
@@ -24,8 +25,8 @@ const CARDS = Object.fromEntries(
 export default function DiagnosePage() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-      <h1 className="display max-w-[22ch] text-[clamp(2rem,4.8vw,3.3rem)]">Try it on a photo of your own</h1>
-      <p className="mt-5 max-w-[64ch] text-lg text-muted">
+      <h1 className={`${h1} max-w-[22ch]`}>Try it on a photo of your own</h1>
+      <p className={`${lede} mt-5 max-w-[64ch]`}>
         Your photo is scored by State C&apos;s model twice: trained only on its own experts&apos; cases, and after federation.
         The federated model decides. When it clears its calibrated threshold and Gemini confirms the photo shows paddy,
         you get advice in your language. Gemini also names the condition as a second opinion; if it differs, the advice
@@ -34,7 +35,7 @@ export default function DiagnosePage() {
       </p>
       <p className="mt-3 max-w-[64ch] text-[15px] text-muted">
         The models are the recorded ones from the federation run, replayed with their real weights; nothing trains here.{" "}
-        <Link href="/method" className="text-carbon underline underline-offset-4">
+        <Link href="/method" className={link}>
           What is real and what is simulated
         </Link>
         .

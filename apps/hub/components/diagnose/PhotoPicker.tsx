@@ -6,9 +6,11 @@ import Image from "next/image";
 import { useId } from "react";
 import { classLabel } from "@/lib/classes";
 import type { GalleryItem } from "@/lib/contract";
+import { btnPrimary, btnSecondary, choice, choiceOn } from "@/lib/ui";
 
-const btn =
-  "inline-flex cursor-pointer items-center rounded-md px-4 py-2.5 text-base font-semibold focus-within:outline focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-carbon";
+// The buttons are labels around hidden file inputs: the focus ring is drawn on the label when its input has focus.
+const labelFocus =
+  "cursor-pointer focus-within:outline focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-leaf";
 
 export default function PhotoPicker({
   gallery,
@@ -35,7 +37,7 @@ export default function PhotoPicker({
 
   return (
     <section aria-labelledby="pick-h" className="border-t border-rule pt-8">
-      <h2 id="pick-h" className="display text-[clamp(1.4rem,3vw,1.9rem)]">
+      <h2 id="pick-h" className="display text-forest text-[clamp(1.4rem,3vw,1.9rem)]">
         Choose a paddy photo
       </h2>
       <p className="mt-2 max-w-[62ch] text-muted">
@@ -44,11 +46,11 @@ export default function PhotoPicker({
       </p>
 
       <div className="mt-5 flex flex-wrap gap-3">
-        <label htmlFor={uploadId} className={`${btn} bg-ink text-white hover:bg-[#2a3888]`}>
+        <label htmlFor={uploadId} className={`${btnPrimary} ${labelFocus}`}>
           Upload a photo
           <input id={uploadId} type="file" accept="image/*" className="sr-only" onChange={pick} disabled={busy} />
         </label>
-        <label htmlFor={cameraId} className={`${btn} border border-ink bg-sheet text-ink hover:bg-carbon-wash`}>
+        <label htmlFor={cameraId} className={`${btnSecondary} ${labelFocus}`}>
           Take a photo with your phone
           <input
             id={cameraId}
@@ -77,9 +79,7 @@ export default function PhotoPicker({
                 onClick={() => onGallery(g)}
                 aria-pressed={on}
                 disabled={busy}
-                className={`group block w-full overflow-hidden rounded-md border text-left disabled:cursor-wait ${
-                  on ? "border-ink ring-2 ring-ink" : "border-rule hover:border-carbon"
-                } bg-sheet`}
+                className={`group flex h-full w-full flex-col overflow-hidden text-left disabled:cursor-wait ${on ? choiceOn : choice}`}
               >
                 <Image
                   src={g.image_url}

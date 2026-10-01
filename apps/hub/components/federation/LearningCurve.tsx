@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { classLabel, isClassKey } from "@/lib/classes";
 import type { RunFile } from "@/lib/contract";
 import { pct } from "@/lib/fl";
+import { card } from "@/lib/ui";
 
 const M = { top: 14, right: 16, bottom: 44, left: 48 };
 
@@ -111,7 +112,7 @@ export default function LearningCurve({ run }: { run: RunFile }) {
     `${pct(rounds[lastIdx].global.acc_all, 1)} after round ${rN}. State ${S}'s own model on those classes: ${pct(ref)}.`;
 
   return (
-    <div className="mt-6 max-w-4xl">
+    <div className={`${card} mt-6 max-w-4xl p-4 sm:p-6`}>
       <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[15px]" aria-label="Chart key">
         <li className="inline-flex items-center gap-2">
           <svg width="22" height="10" aria-hidden="true">
@@ -121,7 +122,7 @@ export default function LearningCurve({ run }: { run: RunFile }) {
         </li>
         <li className="inline-flex items-center gap-2">
           <svg width="22" height="10" aria-hidden="true">
-            <line x1="0" y1="5" x2="22" y2="5" stroke="var(--carbon)" strokeWidth="2" />
+            <line x1="0" y1="5" x2="22" y2="5" stroke="var(--leaf-bright)" strokeWidth="2" />
           </svg>
           All states, all classes
         </li>
@@ -205,12 +206,12 @@ export default function LearningCurve({ run }: { run: RunFile }) {
           )}
 
           {/* Series */}
-          <path d={paths.all} fill="none" stroke="var(--carbon)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+          <path d={paths.all} fill="none" stroke="var(--leaf-bright)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
           <path d={paths.hero} fill="none" stroke="var(--ink)" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
 
           {/* Crosshair */}
           <line x1={x(cur.round)} x2={x(cur.round)} y1={M.top} y2={y(0)} stroke="var(--ink)" strokeOpacity={0.35} strokeWidth={1} />
-          <circle cx={x(cur.round)} cy={y(allV)} r={4.5} fill="var(--carbon)" stroke="var(--sheet)" strokeWidth={2} />
+          <circle cx={x(cur.round)} cy={y(allV)} r={4.5} fill="var(--leaf-bright)" stroke="var(--sheet)" strokeWidth={2} />
           {heroV != null && <circle cx={x(cur.round)} cy={y(heroV)} r={5} fill="var(--ink)" stroke="var(--sheet)" strokeWidth={2} />}
         </svg>
       </div>

@@ -5,6 +5,7 @@
 import type { DiagnoseResponse } from "@/app/api/diagnose/route";
 import { classLabel } from "@/lib/classes";
 import { savedOn } from "@/lib/pregen";
+import { btnSecondarySm, card, figure, link, noteBad } from "@/lib/ui";
 
 export type GeminiState =
   | { status: "idle" }
@@ -20,29 +21,25 @@ export default function GeminiPanel({
   onRetry: () => void;
 }) {
   return (
-    <section aria-labelledby="gemini-h" className="rounded-md border border-rule bg-sheet p-5 sm:p-6" aria-live="polite">
+    <section aria-labelledby="gemini-h" className={`${card} p-5 sm:p-6`} aria-live="polite">
       <h2 id="gemini-h" className="text-lg font-semibold">
         Gemini&apos;s second opinion
       </h2>
       {state.status === "idle" && <p className="mt-2 text-muted">Waiting for a photo.</p>}
       {state.status === "loading" && (
         <p className="mt-2 text-muted">
-          <span className="mr-2 inline-block size-2.5 animate-pulse rounded-full bg-carbon align-middle" aria-hidden="true" />
+          <span className="mr-2 inline-block size-2.5 animate-pulse rounded-full bg-leaf align-middle" aria-hidden="true" />
           Asking Gemini to look at the photo. This usually takes a few seconds.
         </p>
       )}
       {state.status === "error" && (
-        <div className="mt-2">
+        <div className={`${noteBad} mt-3 px-4 py-3`}>
           <p>
             Gemini is unavailable right now ({state.error.replace(/\.$/, "")}). The federated model&apos;s result above is
             still valid.
           </p>
           {state.retryable && (
-            <button
-              type="button"
-              onClick={onRetry}
-              className="mt-3 inline-flex items-center rounded-md border border-ink bg-sheet px-3 py-1.5 text-sm font-semibold text-ink hover:bg-carbon-wash"
-            >
+            <button type="button" onClick={onRetry} className={`${btnSecondarySm} mt-3`}>
               Ask Gemini again
             </button>
           )}
@@ -53,7 +50,7 @@ export default function GeminiPanel({
         <p className="mt-3 text-sm text-muted">
           Gemini gave this answer on {savedOn(state.savedAt)}; it is saved for this test photo so the page works when
           Gemini is busy.{" "}
-          <button type="button" onClick={onRetry} className="text-carbon underline underline-offset-4">
+          <button type="button" onClick={onRetry} className={link}>
             Ask Gemini again, live
           </button>
         </p>
@@ -74,8 +71,8 @@ function GeminiResult({ data }: { data: DiagnoseResponse }) {
   return (
     <div className="mt-3">
       <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span className="display text-[clamp(1.4rem,3vw,1.9rem)]">{classLabel(data.class_key)}</span>
-        <span className="condensed text-2xl font-semibold">{data.confidence}%</span>
+        <span className="display text-forest text-[clamp(1.4rem,3vw,1.9rem)]">{classLabel(data.class_key)}</span>
+        <span className={`${figure} text-2xl text-forest`}>{data.confidence}%</span>
         <span className="text-sm text-muted">Gemini&apos;s own confidence</span>
       </p>
       {data.alternatives.length > 0 && (

@@ -5,11 +5,13 @@
 // compared with the features Python computed (cosine), then both heads run in JS on those
 // features and their top-1 compared with the Python top-k recorded in gallery.json.
 import { useState } from "react";
+import { CircleCheck, CircleX } from "lucide-react";
 import { CLASS_KEYS, classLabel, type ClassKey } from "@/lib/classes";
 import type { GalleryItem, RunFile } from "@/lib/contract";
 import { ORT_VERSION, cosine, decodeImage, embedImage, loadBackbone, type Backbone, type LoadProgress } from "@/lib/embed";
 import { fetchGallery, fetchRun } from "@/lib/fl";
 import { decodeFloat32, fetchHead, runHead, topK, verifyHeadSha } from "@/lib/heads";
+import { btnPrimary, card, noteBad } from "@/lib/ui";
 
 const COS_MIN = 0.99;
 
@@ -75,6 +77,12 @@ async function checkItem(run: RunFile, bb: Backbone, item: GalleryItem, shaHeads
   return { id: item.id, trueKey: item.true_key, cos, ms, heads, pass };
 }
 
+/** A tick or a cross, so a match never rests on colour alone. */
+function Mark({ ok }: { ok: boolean }) {
+  const Icon = ok ? CircleCheck : CircleX;
+  return <Icon size={16} className="mr-1.5 inline-block align-[-0.15em]" aria-hidden="true" />;
+}
+
 export default function Parity() {
   const [progress, setProgress] = useState<LoadProgress | null>(null);
   const [status, setStatus] = useState<"idle" | "running" | "done" | "error">("idle");
@@ -120,7 +128,7 @@ export default function Parity() {
           type="button"
           onClick={start}
           disabled={status === "running"}
-          className="rounded-md bg-ink px-5 py-3 text-base font-semibold text-white hover:bg-[#2a3888] disabled:cursor-wait disabled:opacity-70"
+          className={`${btnPrimary} disabled:cursor-wait! disabled:opacity-70!`}
         >
           {status === "running" ? "Running the check" : status === "idle" ? "Run the parity check" : "Run it again"}
         </button>
@@ -142,37 +150,39 @@ export default function Parity() {
             : `Model: ${progress.stage}`}
         </p>
       )}
-      {error && <p className="mt-4 border-l-[3px] border-ink pl-3 font-semibold">Error: {error}</p>}
+      {error && <p className={`${noteBad} mt-4 px-4 py-3 font-semibold text-blight`}>Error: {error}</p>}
 
       {rows.length > 0 && (
-        <div className="mt-6 relative overflow-x-auto">
+        <div className={`${card} relative mt-6 overflow-x-auto`}>
           <table className="w-full min-w-[760px] border-collapse text-left text-[15px]">
             <caption className="sr-only">Parity per gallery photo</caption>
             <thead>
-              <tr className="border-b border-ink text-sm text-muted">
-                <th scope="col" className="py-2 pr-4 font-normal">Photo</th>
-                <th scope="col" className="py-2 pr-4 font-normal">Expert label</th>
-                <th scope="col" className="py-2 pr-4 font-normal">Cosine</th>
-                <th scope="col" className="py-2 pr-4 font-normal">Backbone time</th>
-                <th scope="col" className="py-2 pr-4 font-normal">Head: Python top-1 / browser top-1 (live features) / max prob diff</th>
-                <th scope="col" className="py-2 font-normal">Result</th>
+              <tr className="border-b border-rule bg-paper-warm text-sm text-ink-soft">
+                <th scope="col" className="px-4 py-2 font-normal">Photo</th>
+                <th scope="col" className="px-4 py-2 font-normal">Expert label</th>
+                <th scope="col" className="px-4 py-2 font-normal">Cosine</th>
+                <th scope="col" className="px-4 py-2 font-normal">Backbone time</th>
+                <th scope="col" className="px-4 py-2 font-normal">Head: Python top-1 / browser top-1 (live features) / max prob diff</th>
+                <th scope="col" className="px-4 py-2 font-normal">Result</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r) => (
-                <tr key={r.id} className="border-b border-rule align-top">
-                  <td className="py-2 pr-4 font-semibold">{r.id}</td>
-                  <td className="py-2 pr-4">{classLabel(r.trueKey)}</td>
-                  <td className={`condensed py-2 pr-4 font-semibold ${r.cos >= COS_MIN ? "text-shoot" : "text-blight"}`}>
+                <tr key={r.id} className="border-b border-rule align-top last:border-b-0">
+                  <td className="px-4 py-2 font-semibold">{r.id}</td>
+                  <td className="px-4 py-2">{classLabel(r.trueKey)}</td>
+                  <td className={`condensed px-4 py-2 font-semibold ${r.cos >= COS_MIN ? "text-shoot" : "text-blight"}`}>
+                    <Mark ok={r.cos >= COS_MIN} />
                     {r.cos.toFixed(6)}
                   </td>
-                  <td className="py-2 pr-4">{r.ms} ms</td>
-                  <td className="py-2 pr-4">
+                  <td className="px-4 py-2">{r.ms} ms</td>
+                  <td className="px-4 py-2">
                     <ul className="space-y-1">
                       {r.heads.map((h) => (
                         <li key={h.key}>
                           <span className="text-muted">{h.key}:</span> {classLabel(h.python[0])} {(h.python[1] * 100).toFixed(1)}% /{" "}
                           <span className={h.jsLive[0] === h.python[0] ? "text-shoot" : "text-blight"}>
+                            <Mark ok={h.jsLive[0] === h.python[0]} />
                             {classLabel(h.jsLive[0])} {(h.jsLive[1] * 100).toFixed(1)}%
                           </span>{" "}
                           / {h.maxProbDiff.toFixed(4)}
@@ -180,7 +190,7 @@ export default function Parity() {
                       ))}
                     </ul>
                   </td>
-                  <td className={`py-2 font-semibold ${r.pass ? "text-shoot" : "text-blight"}`}>{r.pass ? "Pass" : "Fail"}</td>
+                  <td className={`px-4 py-2 font-semibold ${r.pass ? "text-shoot" : "text-blight"}`}>{r.pass ? "Pass" : "Fail"}</td>
                 </tr>
               ))}
             </tbody>

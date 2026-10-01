@@ -1,6 +1,8 @@
 // The network, live: where a visitor goes next after the flip. The state node (KisanVaani) is a
 // separate deployment that downloads this hub's model release, checks its fingerprint and lets it
 // decide every paddy photo; the hub serves releases and the advice-card library, never farmer data.
+import { btnPrimary, btnSecondary, card, label, link } from "@/lib/ui";
+
 const NODE_URL = (process.env.NEXT_PUBLIC_NODE_URL ?? "https://saajha-node.vercel.app").replace(/\/+$/, "");
 
 const CROSSINGS = [
@@ -12,7 +14,7 @@ const CROSSINGS = [
 export default function NetworkLive({ round, sha256 }: { round: number; sha256: string }) {
   return (
     <section aria-labelledby="network-h" className="mt-16 border-t border-rule pt-10">
-      <h2 id="network-h" className="display text-[clamp(1.6rem,3.6vw,2.4rem)]">
+      <h2 id="network-h" className="display text-[clamp(1.6rem,3.6vw,2.4rem)] text-forest">
         The network, live
       </h2>
       <p className="mt-3 max-w-[70ch] text-lg text-muted">
@@ -22,9 +24,9 @@ export default function NetworkLive({ round, sha256 }: { round: number; sha256: 
       </p>
 
       <div className="mt-8 grid gap-6 md:grid-cols-2">
-        <div className="rounded-md border border-rule bg-sheet p-6">
-          <p className="text-sm font-semibold uppercase tracking-wide text-muted">State nodes · Telangana and Maharashtra, live</p>
-          <h3 className="display mt-1 text-2xl">KisanVaani</h3>
+        <div className={`${card} p-6`}>
+          <p className={label}>State nodes · Telangana and Maharashtra, live</p>
+          <h3 className="display mt-1 text-2xl text-forest">KisanVaani</h3>
           <p className="mt-2 text-[15px]">
             The farmer layer: voice, SMS and WhatsApp in 12+ languages, expert tickets and the district officer&apos;s console.
             Its paddy photos are decided by this hub&apos;s national model, round {round} (fingerprint{" "}
@@ -32,20 +34,20 @@ export default function NetworkLive({ round, sha256 }: { round: number; sha256: 
             and gives a second opinion; it never decides.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <a href={`${NODE_URL}/demo`} className="rounded-md bg-ink px-5 py-3 text-base font-semibold text-white no-underline hover:bg-[#2a3888]">
+            <a href={`${NODE_URL}/demo`} className={btnPrimary}>
               Try it as a farmer
             </a>
-            <a href={`${NODE_URL}/whatsapp`} className="rounded-md border border-ink px-5 py-3 text-base font-semibold text-ink no-underline">
+            <a href={`${NODE_URL}/whatsapp`} className={btnSecondary}>
               WhatsApp
             </a>
-            <a href={`${NODE_URL}/dev/model-check`} className="rounded-md border border-ink px-5 py-3 text-base font-semibold text-ink no-underline">
+            <a href={`${NODE_URL}/dev/model-check`} className={btnSecondary}>
               Check it runs our model
             </a>
           </div>
         </div>
 
-        <div className="rounded-md border border-rule p-6">
-          <p className="text-sm font-semibold uppercase tracking-wide text-muted">What may cross a state border</p>
+        <div className={`${card} p-6`}>
+          <p className={label}>What may cross a state border</p>
           <ul className="mt-3 space-y-4">
             {CROSSINGS.map((c) => (
               <li key={c.what}>
@@ -60,7 +62,7 @@ export default function NetworkLive({ round, sha256 }: { round: number; sha256: 
                   {c.href && (
                     <>
                       {" "}
-                      <a href={c.href} className="text-carbon underline underline-offset-4">
+                      <a href={c.href} className={link}>
                         {c.cta}
                       </a>
                     </>

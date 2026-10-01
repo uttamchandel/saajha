@@ -1,8 +1,7 @@
 // The problem, on night, straight after the hero: why states can't simply pool their farmers'
 // records, and the one idea that answers it (only the model travels). Every figure is sourced below.
+import { btnGhostNight, figure, pillNight } from "@/lib/ui";
 import { ArrowDown } from "./sectionIcons";
-
-const EYEBROW = "text-[13px] font-semibold uppercase tracking-[0.14em] text-haze";
 
 const STATS = [
   { value: "146.5M", label: "farm holdings in India", note: "86% small or marginal, under 2 ha" },
@@ -14,8 +13,8 @@ export default function Problem() {
   return (
     <section aria-labelledby="problem-h" className="border-t border-night-line bg-night text-starlight">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-        <p className={EYEBROW}>The problem</p>
-        <h2 id="problem-h" className="display mt-5 max-w-[22ch] text-balance text-[clamp(2rem,4.4vw,3.4rem)]">
+        <p className={pillNight}>The problem</p>
+        <h2 id="problem-h" className="display mt-4 max-w-[22ch] text-balance text-[clamp(2rem,4.4vw,3.4rem)]">
           Pests cross state borders. Farmer data shouldn&apos;t have to.
         </h2>
 
@@ -32,7 +31,7 @@ export default function Problem() {
                   key={s.value}
                   className="grid gap-y-3 border-b border-night-line py-7 sm:col-span-2 sm:grid-cols-subgrid sm:items-baseline"
                 >
-                  <p className="condensed text-[clamp(2.75rem,5.4vw,4.25rem)] font-semibold leading-none tracking-tight">
+                  <p className={`${figure} text-[clamp(2.75rem,5.4vw,4.25rem)] tracking-tight`}>
                     {s.value}
                   </p>
                   <div>
@@ -56,10 +55,7 @@ export default function Problem() {
             back.
           </p>
           <div className="lg:col-span-3 lg:justify-self-end">
-            <a
-              href="#flip"
-              className="group inline-flex items-center gap-3 rounded-md border border-night-line px-5 py-3 text-base font-semibold text-starlight no-underline transition-colors hover:border-haze"
-            >
+            <a href="#flip" className={`group ${btnGhostNight}`}>
               See it happen
               <ArrowDown className="size-4 transition-transform group-hover:translate-y-0.5" />
             </a>

@@ -10,6 +10,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { classLabel, type ClassKey } from "@/lib/classes";
 import type { GalleryItem, RunFile } from "@/lib/contract";
 import { fetchGallery, fetchRun, grouped, pct, prob } from "@/lib/fl";
+import { btnPrimary, card, figure, link } from "@/lib/ui";
 import TransitSlip from "./TransitSlip";
 
 const STEP_MS = 140;
@@ -81,7 +82,7 @@ export default function FlipDemo() {
     return <p className="text-blight">The federation record could not be loaded: {error}. Reload the page to try again.</p>;
   }
   if (!run || !hero || !verdict) {
-    return <div className="h-[560px] animate-pulse rounded-md bg-sheet" aria-label="Loading the federation record" />;
+    return <div className={`h-[560px] animate-pulse ${card}`} aria-label="Loading the federation record" />;
   }
 
   const correct = verdict.top === hero.true_key;
@@ -96,8 +97,8 @@ export default function FlipDemo() {
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12">
-      <figure className="lg:sticky lg:top-6 lg:self-start">
-        <div className="relative overflow-hidden rounded-md border border-rule bg-sheet">
+      <figure className="lg:sticky lg:top-20 lg:self-start">
+        <div className={`relative overflow-hidden ${card}`}>
           <Image
             src={hero.image_url}
             alt={`Paddy leaves photographed in a Tamil Nadu field, showing ${classLabel(hero.true_key).toLowerCase()} damage: pale feeding streaks along the leaf.`}
@@ -114,7 +115,7 @@ export default function FlipDemo() {
       </figure>
 
       <div className="min-w-0">
-        <h2 className="display text-[clamp(2.1rem,5.2vw,3.6rem)]">
+        <h2 className="display text-forest text-[clamp(2.1rem,5.2vw,3.6rem)]">
           State {stateId} has never recorded {classLabel(hero.true_key).toLowerCase()}. Its model learns to see it anyway.
         </h2>
         <p className="mt-5 max-w-[62ch] text-lg text-muted">
@@ -124,7 +125,7 @@ export default function FlipDemo() {
           back.
         </p>
 
-        <section aria-labelledby="verdict-h" className="mt-8 rounded-md border border-rule bg-sheet p-5 sm:p-6">
+        <section aria-labelledby="verdict-h" className={`mt-8 ${card} p-5 sm:p-6`}>
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h3 id="verdict-h" className="text-lg font-semibold">
               State {stateId}&apos;s diagnosis of this photo
@@ -138,7 +139,7 @@ export default function FlipDemo() {
             <span className={`display text-[clamp(1.9rem,4.4vw,2.8rem)] ${correct ? "text-shoot" : "text-blight"}`}>
               {classLabel(verdict.top)}
             </span>
-            <span className="condensed text-3xl font-semibold">{prob(verdict.p)}</span>
+            <span className={`${figure} text-3xl text-forest`}>{prob(verdict.p)}</span>
             <span className="text-base text-muted">
               {correct ? (unsure ? "right, but not yet confident" : "right and confident") : unsure ? "wrong, and unsure" : "wrong"}
             </span>
@@ -165,7 +166,7 @@ export default function FlipDemo() {
                 stop();
                 setRound(Number(e.target.value));
               }}
-              className="mt-2 w-full accent-[var(--ink)]"
+              className="mt-2 w-full accent-[var(--forest)]"
               aria-valuetext={round === 0 ? "Own data only" : `Round ${round}`}
             />
             <div className="mt-1 flex justify-between text-xs text-muted">
@@ -175,14 +176,10 @@ export default function FlipDemo() {
           </div>
 
           <div className="mt-5 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={playing ? stop : play}
-              className="rounded-md bg-ink px-5 py-3 text-base font-semibold text-white hover:bg-[#2a3888]"
-            >
+            <button type="button" onClick={playing ? stop : play} className={btnPrimary}>
               {playing ? "Pause" : round === last ? "Replay the federation" : "Run the federation"}
             </button>
-            <Link href="/diagnose" className="text-carbon underline underline-offset-4">
+            <Link href="/diagnose" className={link}>
               Try it with your own photo
             </Link>
           </div>
@@ -193,23 +190,23 @@ export default function FlipDemo() {
         <dl className="mt-10 grid gap-x-8 gap-y-6 border-t border-rule pt-6 sm:grid-cols-3">
           <div>
             <dt className="text-sm text-muted">State {stateId}, on pests and diseases it has never recorded</dt>
-            <dd className="condensed mt-1 text-3xl font-semibold">
+            <dd className={`${figure} mt-1 text-3xl text-forest`}>
               {pct(local.acc_unseen)} <span className="text-muted">to</span>{" "}
               <span className="text-shoot">{pct(final.per_state[stateId].acc_unseen)}</span>
             </dd>
           </div>
           <div>
             <dt className="text-sm text-muted">All states together, on held-out photos</dt>
-            <dd className="condensed mt-1 text-3xl font-semibold">{pct(final.global.acc_all, 1)}</dd>
-            <dd className="text-sm text-muted">
+            <dd className={`${figure} mt-1 text-3xl text-forest`}>{pct(final.global.acc_all, 1)}</dd>
+            <dd className="mt-2 text-sm text-muted">
               Pooling every photo in one place would reach {pct(run.centralized_upper_bound.acc_all, 1)}.
             </dd>
           </div>
           <div>
             <dt className="text-sm text-muted">Farmer records that crossed a state border</dt>
-            <dd className="condensed mt-1 text-3xl font-semibold">{grouped(run.totals.records_moved)}</dd>
-            <dd className="text-sm text-muted">
-              in {last} rounds. <Link href="/federation" className="text-carbon underline underline-offset-4">Check every round</Link>
+            <dd className={`${figure} mt-1 text-3xl text-forest`}>{grouped(run.totals.records_moved)}</dd>
+            <dd className="mt-2 text-sm text-muted">
+              in {last} rounds. <Link href="/federation" className={link}>Check every round</Link>
             </dd>
           </div>
         </dl>

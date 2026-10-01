@@ -8,6 +8,7 @@ import Hero from "@/components/landing/Hero";
 import LiveNow from "@/components/landing/LiveNow";
 import Problem from "@/components/landing/Problem";
 import Reach from "@/components/landing/Reach";
+import { pill } from "@/lib/ui";
 
 // The latest recorded release, read at build time; the hero swaps in the live one once it loads.
 function latestRelease(): { round: number; sha256: string } {
@@ -26,9 +27,7 @@ export default function Home() {
       <Problem />
       <section id="flip" aria-label="The proof: a replay of the real run" className="scroll-mt-4 bg-paper">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-          <p className="mb-6 text-[13px] font-semibold uppercase tracking-[0.14em] text-muted">
-            The proof · a replay of the real run
-          </p>
+          <p className={`${pill} mb-6`}>The proof · a replay of the real run</p>
           <FlipDemo />
         </div>
       </section>

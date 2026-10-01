@@ -1,6 +1,7 @@
 // Section 1: the run in one paragraph, and the ledger of what crossed a state border.
 import type { RunFile } from "@/lib/contract";
 import { bytesLabel, grouped } from "@/lib/fl";
+import { card, figure, lede } from "@/lib/ui";
 import { andList, capitalize, countWord, trainingRounds, updateBytesSummary } from "./shared";
 
 const PAYLOAD_MEANING: Record<string, string> = {
@@ -19,23 +20,23 @@ export default function Summary({ run }: { run: RunFile }) {
 
   return (
     <div>
-      <p className="mt-5 max-w-[62ch] text-xl leading-relaxed">
+      <p className={`${lede} mt-5 max-w-[62ch]`}>
         {capitalize(countWord(nStates))} state nodes trained together for {rounds.length} rounds. Each round, each state
         sent {perState} of model weights to the national aggregator and received the averaged model back. Farmer records
-        sent: <strong className="font-semibold">{grouped(recordsMoved)}</strong>.
+        sent: <strong className="font-semibold text-ink">{grouped(recordsMoved)}</strong>.
       </p>
 
-      <dl className="mt-8 grid max-w-4xl overflow-hidden rounded-md border border-rule sm:grid-cols-2">
+      <dl className={`${card} mt-8 grid max-w-4xl overflow-hidden sm:grid-cols-2`}>
         <div className="border-b border-rule bg-straw-wash p-5 sm:border-b-0 sm:border-r sm:p-6">
           <dt className="text-[15px]">Crossed state borders, whole run</dt>
-          <dd className="condensed mt-1 text-5xl font-semibold">{bytesLabel(run.totals.bytes_on_wire)}</dd>
+          <dd className={`${figure} mt-1 text-5xl text-forest`}>{bytesLabel(run.totals.bytes_on_wire)}</dd>
           <dd className="mt-1 text-[15px] text-muted">
             {grouped(run.totals.bytes_on_wire)} bytes of model weights, up and back, over {rounds.length} rounds
           </dd>
         </div>
         <div className="bg-sheet p-5 sm:p-6">
           <dt className="text-[15px]">Farmer records that crossed</dt>
-          <dd className="condensed mt-1 text-5xl font-semibold">{grouped(recordsMoved)}</dd>
+          <dd className={`${figure} mt-1 text-5xl text-forest`}>{grouped(recordsMoved)}</dd>
           <dd className="mt-1 text-[15px] text-muted">
             {roundsWithRecords === 0
               ? `in every one of the ${rounds.length} rounds`

@@ -1,6 +1,7 @@
 // Section 1: the Saajha loop, as the sequence it really is.
 import { LANGS_FULL } from "@/lib/langs";
 import { grouped, pct } from "@/lib/fl";
+import { figure } from "@/lib/ui";
 import type { MethodFigures } from "./figures";
 import Section from "./Section";
 
@@ -108,11 +109,11 @@ export default function HowItWorks({ f }: { f: MethodFigures }) {
         {steps.map((s, i) => (
           <li
             key={s.title}
-            className={`grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-4 border-t border-rule px-2 py-5 sm:grid-cols-[3rem_minmax(0,1fr)_13rem] sm:gap-x-6 sm:px-4 ${
-              s.crosses ? "bg-straw-wash" : ""
+            className={`grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-4 border-t px-2 py-5 sm:grid-cols-[3rem_minmax(0,1fr)_13rem] sm:gap-x-6 sm:px-4 ${
+              s.crosses ? "rounded-xl border-transparent bg-straw-wash" : "border-rule"
             }`}
           >
-            <span aria-hidden="true" className="condensed text-4xl font-semibold leading-none text-carbon">
+            <span aria-hidden="true" className={`${figure} text-4xl text-leaf`}>
               {i + 1}
             </span>
             <div>

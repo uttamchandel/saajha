@@ -17,11 +17,11 @@ type Quad = readonly [Pt, Pt, Pt];
 type Win = readonly [number, number];
 
 // Night tokens (mirror app/globals.css; SMIL colour animation needs literal values).
-const NIGHT = "#0a0f2c";
-const STAR = "#eef0fb";
-const HAZE = "#aab1d8";
-const GOLD = "#f0c542";
-const SIGNAL = "#7fb0ff";
+const NIGHT = "#10241a";
+const STAR = "#faf7f0";
+const HAZE = "#b7c9bc";
+const GOLD = "#fbbf24";
+const SIGNAL = "#7dd3fc";
 
 // ---------------------------------------------------------------- geometry (viewBox units)
 const VB = { x: 0, y: 56, w: 600, h: 396 };
@@ -413,7 +413,7 @@ export default function NetworkField({ round }: { round: number }) {
       <text x={HUB.x} y={HUB.y} dy="-0.8em" textAnchor="middle" className={s.hubSmall}>
         round
       </text>
-      <text x={HUB.x} y={HUB.y} dy="0.74em" textAnchor="middle" className={`condensed ${s.hubNum}`}>
+      <text x={HUB.x} y={HUB.y} dy="0.74em" textAnchor="middle" className={s.hubNum}>
         {round}
       </text>
       <text x={HUB.x} y={HUB.y - HUB.r} dy="-0.62em" textAnchor="middle" className={`${s.nodeName} ${s.halo}`}>

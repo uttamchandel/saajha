@@ -1,5 +1,6 @@
 // Section 6: what a state needs to join. Written for a policy reader; claims kept modest.
 import { grouped } from "@/lib/fl";
+import { card } from "@/lib/ui";
 import type { MethodFigures } from "./figures";
 import Section from "./Section";
 
@@ -56,7 +57,7 @@ export default function JoiningState({ f }: { f: MethodFigures }) {
             </li>
           ))}
         </ul>
-        <div className="self-start rounded-md border border-rule bg-sheet p-5 sm:p-6">
+        <div className={`${card} self-start p-5 sm:p-6`}>
           <h3 className="text-lg font-semibold">What it does not need</h3>
           <p className="mt-2 text-[17px] leading-relaxed">
             A data-sharing agreement for raw farmer records, because none move.

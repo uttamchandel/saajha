@@ -6,6 +6,7 @@ import { classLabel } from "@/lib/classes";
 import type { RunFile } from "@/lib/contract";
 import type { GateDecision } from "@/lib/gate";
 import type { Ticket } from "@/lib/tickets";
+import { slip } from "@/lib/ui";
 
 export default function GatePanel({
   decision,
@@ -46,7 +47,7 @@ export default function GatePanel({
   if (decision.outcome === "not_rice") {
     return (
       <section aria-labelledby="gate-h" className="border-t border-rule pt-6" aria-live="polite">
-        <h2 id="gate-h" className="display text-[clamp(1.4rem,3vw,1.9rem)]">
+        <h2 id="gate-h" className="display text-forest text-[clamp(1.4rem,3vw,1.9rem)]">
           Saajha&apos;s model covers paddy only
         </h2>
         <p className="mt-2 max-w-[62ch]">
@@ -62,14 +63,14 @@ export default function GatePanel({
       decision.secondOpinion === "agrees" ? "Confident, and Gemini agrees" : "Confident: the federated model decides";
     return (
       <section aria-labelledby="gate-h" className="border-t border-rule pt-6" aria-live="polite">
-        <h2 id="gate-h" className="display text-[clamp(1.4rem,3vw,1.9rem)]">
+        <h2 id="gate-h" className="display text-forest text-[clamp(1.4rem,3vw,1.9rem)]">
           {heading}
         </h2>
         <p className="mt-2 max-w-[62ch]">
           {decision.reason} Advice for {classLabel(decision.classKey).toLowerCase()} follows.
         </p>
         {ticket && (
-          <p className="mt-3 inline-block rounded-md border border-dashed border-ink px-3 py-1.5 text-[15px]">
+          <p className={`mt-3 inline-block ${slip} px-3 py-1.5 text-[15px]`}>
             Logged for expert audit as ticket <span className="font-semibold">{ticket.ticket.id}</span>
             {!ticket.stored && <span className="text-muted"> (this browser blocks storage, so it is not kept)</span>}
           </p>
@@ -81,14 +82,14 @@ export default function GatePanel({
 
   return (
     <section aria-labelledby="gate-h" className="border-t border-rule pt-6" aria-live="polite">
-      <h2 id="gate-h" className="display text-[clamp(1.4rem,3vw,1.9rem)]">
+      <h2 id="gate-h" className="display text-forest text-[clamp(1.4rem,3vw,1.9rem)]">
         Sent to a State {stateId} expert for review
       </h2>
       <p className="mt-2 max-w-[62ch]">
         {decision.reason} Saajha does not guess: no advice is shown until the expert has looked at the case.
       </p>
       {ticket && (
-        <p className="mt-3 inline-block rounded-md border border-dashed border-ink px-3 py-1.5 text-[15px]">
+        <p className={`mt-3 inline-block ${slip} px-3 py-1.5 text-[15px]`}>
           Ticket <span className="font-semibold">{ticket.ticket.id}</span>, pending
           {!ticket.stored && <span className="text-muted"> (this browser blocks storage, so it is not kept)</span>}
         </p>

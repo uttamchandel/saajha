@@ -1,5 +1,6 @@
 // The close, on night: three things to try, each a whole-tile link.
 import Link from "next/link";
+import { cardNight } from "@/lib/ui";
 import { ArrowRight } from "./sectionIcons";
 
 const TILES = [
@@ -33,7 +34,7 @@ export default function FinalCta() {
             <li key={t.href}>
               <Link
                 href={t.href}
-                className="group flex h-full min-h-52 flex-col rounded-2xl border border-night-line bg-night-2 p-6 text-starlight no-underline transition-colors duration-200 hover:border-haze sm:min-h-60 sm:p-8"
+                className={`${cardNight} group flex h-full min-h-52 flex-col p-6 text-starlight no-underline transition-colors duration-200 hover:border-white/25 hover:bg-white/10 sm:min-h-60 sm:p-8`}
               >
                 <h3 className="display text-balance text-[clamp(1.5rem,2.3vw,1.9rem)]" style={{ lineHeight: 1.1 }}>
                   {t.title}

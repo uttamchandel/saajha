@@ -3,19 +3,19 @@
 // blue), and the measured case against "just ask Gemini" (the shared model's bar is gold).
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { cardNight, figure, labelNight, linkNight, pillNight } from "@/lib/ui";
 import css from "./sections.module.css";
 import { ArrowRight, ArrowUpRight, LiveDot } from "./sectionIcons";
 
 const NODE_URL = (process.env.NEXT_PUBLIC_NODE_URL ?? "https://saajha-node.vercel.app").replace(/\/+$/, "");
 
-const EYEBROW = "text-[13px] font-semibold uppercase tracking-[0.14em]";
-const CARD = "rounded-2xl border border-night-line bg-night-2 p-6 sm:p-8";
-// `.display` is unlayered CSS (line-height 1.02), so a Tailwind leading-* class can't loosen it;
+const CARD = `${cardNight} p-6 sm:p-8`;
+// `.display` is unlayered CSS (line-height 1.08), so a Tailwind leading-* class can't loosen it;
 // multi-line card titles get a little more air through an inline style instead.
 const CARD_TITLE = "display mt-4 text-balance";
-const TITLE_AIR = { lineHeight: 1.1 } as const;
+const TITLE_AIR = { lineHeight: 1.15 } as const;
 const CARD_TITLE_SIZE = "text-[clamp(1.4rem,2.3vw,1.85rem)]";
-const LINK = "group inline-flex items-center gap-2 font-semibold text-starlight underline-offset-4 hover:underline";
+const LINK = `${linkNight} group inline-flex items-center gap-2 font-semibold`;
 
 const HI = "font-semibold text-starlight";
 
@@ -52,19 +52,19 @@ export default function LiveNow() {
   return (
     <section aria-labelledby="live-h" className="bg-night text-starlight">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-        <p className={`${EYEBROW} flex items-center gap-3 text-haze`}>
+        <p className={pillNight}>
           <LiveDot />
           Running right now
         </p>
-        <h2 id="live-h" className="display mt-5 text-balance text-[clamp(2rem,4.4vw,3.4rem)]">
+        <h2 id="live-h" className="display mt-4 text-balance text-[clamp(2rem,4.4vw,3.4rem)]">
           Not a slide. A working network.
         </h2>
 
         <div className="mt-12 grid gap-5 sm:mt-16 lg:grid-cols-2">
           {/* (a) Learning loop, full width */}
           <article aria-labelledby="loop-h" className={`${CARD} sm:p-10 lg:col-span-2`}>
-            <p className={`${EYEBROW} flex items-center gap-2.5 text-starlight`}>
-              <span aria-hidden="true" className="size-2 rounded-full bg-gold shadow-[0_0_10px_2px_rgba(240,197,66,0.45)]" />
+            <p className={`${labelNight} flex items-center gap-2.5`}>
+              <span aria-hidden="true" className="size-2 rounded-full bg-gold shadow-[0_0_10px_2px_rgba(251,191,36,0.45)]" />
               Learning loop
             </p>
             <h3 id="loop-h" className={`${CARD_TITLE} max-w-[24ch] text-[clamp(1.6rem,3vw,2.35rem)]`} style={TITLE_AIR}>
@@ -77,10 +77,10 @@ export default function LiveNow() {
                   {s.crossing && (
                     <span
                       aria-hidden="true"
-                      className="absolute -top-[4px] left-8 size-[7px] rounded-full bg-gold shadow-[0_0_12px_3px_rgba(240,197,66,0.5)]"
+                      className="absolute -top-[4px] left-8 size-[7px] rounded-full bg-gold shadow-[0_0_12px_3px_rgba(251,191,36,0.5)]"
                     />
                   )}
-                  <span aria-hidden="true" className="condensed block text-4xl font-semibold leading-none text-haze">
+                  <span aria-hidden="true" className={`${figure} block text-4xl text-haze`}>
                     {i + 1}
                   </span>
                   <p className="mt-4 text-pretty text-[15px] leading-relaxed text-haze">{s.body}</p>
@@ -105,8 +105,8 @@ export default function LiveNow() {
 
           {/* (b) Early warning */}
           <article aria-labelledby="warn-h" className={`${CARD} flex flex-col`}>
-            <p className={`${EYEBROW} flex items-center gap-2.5 text-starlight`}>
-              <span aria-hidden="true" className="size-2 rounded-full bg-signal shadow-[0_0_10px_2px_rgba(127,176,255,0.45)]" />
+            <p className={`${labelNight} flex items-center gap-2.5`}>
+              <span aria-hidden="true" className="size-2 rounded-full bg-signal shadow-[0_0_10px_2px_rgba(125,211,252,0.45)]" />
               Early warning
             </p>
             <h3 id="warn-h" className={`${CARD_TITLE} ${CARD_TITLE_SIZE}`} style={TITLE_AIR}>
@@ -121,7 +121,7 @@ export default function LiveNow() {
               >
                 {WEEKLY.map((v) => (
                   <div key={v} className="flex h-full flex-1 flex-col items-center justify-end">
-                    <span aria-hidden="true" className="condensed mb-2 text-3xl font-semibold leading-none text-signal">
+                    <span aria-hidden="true" className={`${figure} mb-2 text-3xl text-signal`}>
                       {v}
                     </span>
                     <span
@@ -152,7 +152,7 @@ export default function LiveNow() {
 
           {/* (c) Why not just ask Gemini? */}
           <article aria-labelledby="gemini-h" className={`${CARD} flex flex-col`}>
-            <p className={`${EYEBROW} text-starlight`}>Accuracy on 50 held-out paddy photos</p>
+            <p className={labelNight}>Accuracy on 50 held-out paddy photos</p>
             <h3 id="gemini-h" className={`${CARD_TITLE} ${CARD_TITLE_SIZE}`} style={TITLE_AIR}>
               Why not just ask Gemini?
             </h3>
@@ -185,7 +185,7 @@ function Bar({ label, value, barClass }: { label: string; value: number; barClas
     <li>
       <p className="flex items-baseline justify-between gap-4">
         <span className="text-[15px] font-semibold text-starlight">{label}</span>
-        <span className="condensed text-[2.6rem] font-semibold leading-none">{value}%</span>
+        <span className={`${figure} text-[2.6rem]`}>{value}%</span>
       </p>
       <div aria-hidden="true" className="mt-3 h-3 overflow-hidden rounded-full bg-night-line">
         <div className={`h-full rounded-full ${barClass} ${css.barX}`} style={{ width: `${value}%` }} />

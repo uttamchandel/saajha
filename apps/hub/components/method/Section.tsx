@@ -1,4 +1,6 @@
-// Section frame for /method: a hairline above, a wide headline, an optional lede.
+// Section frame for /method: a hairline above, a headline, an optional lede.
+import { h2, lede as ledeStyle } from "@/lib/ui";
+
 export default function Section({
   id,
   title,
@@ -12,10 +14,10 @@ export default function Section({
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-h`} className="scroll-mt-6 border-t border-rule py-10 sm:py-14">
-      <h2 id={`${id}-h`} className="display text-[clamp(1.5rem,3.2vw,2.1rem)]">
+      <h2 id={`${id}-h`} className={h2}>
         {title}
       </h2>
-      {lede && <p className="mt-4 max-w-[64ch] text-lg leading-relaxed text-muted">{lede}</p>}
+      {lede && <p className={`mt-4 max-w-[64ch] ${ledeStyle}`}>{lede}</p>}
       {children}
     </section>
   );

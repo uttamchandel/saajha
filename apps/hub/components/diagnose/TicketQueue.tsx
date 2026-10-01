@@ -5,6 +5,7 @@
 import { useMemo, useSyncExternalStore } from "react";
 import { classLabel } from "@/lib/classes";
 import { clearTickets, parseTickets, subscribeTickets, ticketsSnapshot } from "@/lib/tickets";
+import { btnSecondarySm, card, pillWarn } from "@/lib/ui";
 
 const timeFmt = new Intl.DateTimeFormat("en-IN", {
   timeZone: "Asia/Kolkata",
@@ -22,15 +23,11 @@ export default function TicketQueue() {
   return (
     <section aria-labelledby="queue-h" className="border-t border-rule pt-8">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h2 id="queue-h" className="display text-[clamp(1.4rem,3vw,1.9rem)]">
+        <h2 id="queue-h" className="display text-forest text-[clamp(1.4rem,3vw,1.9rem)]">
           Expert review queue
         </h2>
         {tickets.length > 0 && (
-          <button
-            type="button"
-            onClick={() => clearTickets()}
-            className="inline-flex items-center rounded-md border border-ink bg-sheet px-3 py-1.5 text-sm font-semibold text-ink hover:bg-carbon-wash"
-          >
+          <button type="button" onClick={() => clearTickets()} className={btnSecondarySm}>
             Clear this browser&apos;s tickets
           </button>
         )}
@@ -42,11 +39,11 @@ export default function TicketQueue() {
       {tickets.length === 0 ? (
         <p className="mt-4 text-[15px]">No cases escalated from this browser yet.</p>
       ) : (
-        <div className="mt-4 relative overflow-x-auto">
+        <div className={`${card} relative mt-4 overflow-x-auto p-4`}>
           <table className="w-full min-w-[640px] border-collapse text-left text-[15px]">
             <caption className="sr-only">Escalated cases, newest first</caption>
             <thead>
-              <tr className="border-b border-ink text-sm text-muted">
+              <tr className="border-b border-forest/20 text-sm text-muted">
                 <th scope="col" className="py-2 pr-4 font-normal">Ticket</th>
                 <th scope="col" className="py-2 pr-4 font-normal">Raised</th>
                 <th scope="col" className="py-2 pr-4 font-normal">Federated model</th>
@@ -57,7 +54,7 @@ export default function TicketQueue() {
             </thead>
             <tbody>
               {tickets.map((t) => (
-                <tr key={t.id} className="border-b border-rule align-top">
+                <tr key={t.id} className="border-b border-rule align-top last:border-b-0">
                   <td className="py-2 pr-4 font-semibold whitespace-nowrap">{t.id}</td>
                   <td className="py-2 pr-4 whitespace-nowrap">
                     {Number.isNaN(Date.parse(t.createdAt)) ? t.createdAt : `${timeFmt.format(new Date(t.createdAt))} IST`}
@@ -76,7 +73,9 @@ export default function TicketQueue() {
                     )}
                   </td>
                   <td className="py-2 pr-4 text-sm">{t.reason}</td>
-                  <td className="py-2 whitespace-nowrap">Pending</td>
+                  <td className="py-2 whitespace-nowrap">
+                    <span className={pillWarn}>Pending</span>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -18,21 +18,22 @@
 .nodeName {
   font-size: 16px;
   font-weight: 600;
-  fill: #eef0fb;
+  fill: #faf7f0;
 }
 .nodeSub {
   font-size: 13px;
-  fill: #aab1d8;
+  fill: #b7c9bc;
 }
 .hubSmall {
   font-size: 12.5px;
-  fill: #aab1d8;
+  fill: #b7c9bc;
   letter-spacing: 0.06em;
 }
 .hubNum {
+  font-family: var(--stack-display);
   font-size: 34px;
   font-weight: 600;
-  fill: #eef0fb;
+  fill: #faf7f0;
 }
 @media (max-width: 519.98px) {
   .nodeName {
@@ -52,7 +53,7 @@
 /* A night-coloured outline behind label text, so a lane passing under a label never cuts through it. */
 .halo {
   paint-order: stroke;
-  stroke: #0a0f2c;
+  stroke: #10241a;
   stroke-width: 6px;
   stroke-linejoin: round;
 }

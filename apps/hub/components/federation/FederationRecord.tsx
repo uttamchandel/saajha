@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import type { RunFile } from "@/lib/contract";
 import { fetchRun } from "@/lib/fl";
+import { card, lede } from "@/lib/ui";
 import AccuracyMatrix from "./AccuracyMatrix";
 import GeminiBenchmark from "./GeminiBenchmark";
 import LearningCurve from "./LearningCurve";
@@ -40,8 +41,8 @@ export default function FederationRecord() {
   if (!run) {
     return (
       <div aria-busy="true" className="mt-5">
-        <p className="text-lg text-muted">Loading the recorded run…</p>
-        <div className="mt-8 h-40 max-w-4xl animate-pulse rounded-md bg-sheet motion-reduce:animate-none" />
+        <p className={lede}>Loading the recorded run…</p>
+        <div className={`${card} mt-8 h-40 max-w-4xl animate-pulse motion-reduce:animate-none`} />
       </div>
     );
   }

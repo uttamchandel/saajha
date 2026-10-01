@@ -1,47 +1,83 @@
 @import "tailwindcss";
 
 /*
-  Saajha design tokens.
-  Indigo is the ink of Indian government rubber stamps and carbon-copy forms —
-  the paperwork of things crossing a state border. Straw is ripe paddy. Green and
-  rust are reserved for right and wrong diagnoses and are used nowhere else.
+  Saajha design tokens. The hub and the state node (apps/node, KisanVaani) are one product, so they
+  share one palette and one type pairing: the first block below is the node's, value for value.
+  Forest is a paddy field; turmeric is what a farmer's hands are stained with. The hub's own names
+  (carbon, straw, shoot, night, gold...) are kept as roles on top of that palette, not new colours.
 */
 :root {
-  --ink: #1f2a6b;        /* stamp indigo: text, structure */
-  --carbon: #4b5bc8;     /* carbon-copy blue: links, secondary marks */
-  --straw: #e3b930;      /* ripe paddy: the one highlight (what crossed the border) */
-  --paper: #f7f8fa;      /* cool paper */
-  --sheet: #ffffff;      /* surfaces that sit on paper */
-  --shoot: #2f7a2b;      /* correct (AA on white) */
-  --blight: #b5462e;     /* wrong */
-  --muted: #5b6386;      /* secondary text (indigo-grey, AA on paper) */
-  --rule: #d9dcea;       /* hairlines */
-  --straw-wash: #fbf1cf;
-  --carbon-wash: #e9ecfb;
+  /* The family palette: identical to apps/node/app/globals.css */
+  --paper: #faf7f0;
+  --paper-warm: #f4efe3;
+  --ink: #1c2a1f;          /* body text, line work in diagrams */
+  --ink-soft: #47554a;     /* secondary text */
+  --forest: #1b4332;       /* headings, primary buttons, the wordmark, the stamp */
+  --leaf: #2d6a4f;         /* links, hover on forest */
+  --leaf-bright: #40916c;  /* fills and large marks only (3.8:1 on white) */
+  --leaf-mist: #d8f3dc;    /* pills, icon tiles */
+  --turmeric: #d97706;     /* fills and large display text only (3:1 on paper) */
+  --turmeric-soft: #fbbf24;
+  --clay: #9a3412;
+  --sky: #0369a1;          /* outbreak counts, on paper */
 
-  /* Night: the network itself (landing hero and live sections). Gold is what crosses a border
-     (model weights); signal blue is outbreak counts; starlight dots are farmers, who never move. */
-  --night: #0a0f2c;
-  --night-2: #121a48;
-  --night-line: #28336e;
-  --starlight: #eef0fb;
-  --haze: #aab1d8;
-  --gold: #f0c542;
-  --signal: #7fb0ff;
+  /* Hub additions that the node does not need */
+  --turmeric-deep: #b45309; /* turmeric for small text on paper (4.7:1) */
+  --sheet: #ffffff;         /* cards that sit on paper */
+  --rule: #dbdfd5;          /* hairlines on paper and on cards */
+
+  /* Roles on paper */
+  --muted: var(--ink-soft);
+  --carbon: var(--leaf);            /* links, secondary marks */
+  --carbon-wash: #eaf6ec;           /* a half-strength leaf mist, for larger surfaces */
+  --straw: var(--turmeric-soft);    /* the one highlight: what crossed the border */
+  --straw-wash: #fdf1cd;
+  --shoot: var(--leaf);             /* a right diagnosis: always paired with a word or a tick */
+  --blight: var(--clay);            /* a wrong one */
+
+  /* Night: the network itself (landing hero and the live sections). A paddy field after dark.
+     Gold is what crosses a border (model weights); signal blue is outbreak counts; the paper-white
+     dots are farmers, who never move. */
+  --night: #10241a;
+  --night-2: var(--forest);
+  --night-line: rgb(250 247 240 / 0.16);
+  --starlight: var(--paper);
+  --haze: #b7c9bc;                  /* secondary text on night: 9.4:1 on night, 6.4:1 on forest */
+  --gold: var(--turmeric-soft);
+  --signal: #7dd3fc;
+
+  /* Type: Fraunces for display and Inter for text, as on the node. Neither has Indic glyphs, so
+     every Indian script falls through to its own Anek cut. */
+  --stack-indic: var(--font-anek-deva), var(--font-anek-tamil), var(--font-anek-telugu), var(--font-anek-kannada),
+    var(--font-anek-malayalam), var(--font-anek-bangla), var(--font-anek-gujarati), var(--font-anek-gurmukhi),
+    var(--font-anek-odia), "Nirmala UI";
+  --stack-sans: var(--font-inter), var(--stack-indic), system-ui, sans-serif;
+  --stack-display: var(--font-fraunces), var(--stack-indic), Georgia, serif;
 }
 
 @theme inline {
-  --color-ink: var(--ink);
-  --color-carbon: var(--carbon);
-  --color-straw: var(--straw);
   --color-paper: var(--paper);
+  --color-paper-warm: var(--paper-warm);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-forest: var(--forest);
+  --color-leaf: var(--leaf);
+  --color-leaf-bright: var(--leaf-bright);
+  --color-leaf-mist: var(--leaf-mist);
+  --color-turmeric: var(--turmeric);
+  --color-turmeric-soft: var(--turmeric-soft);
+  --color-turmeric-deep: var(--turmeric-deep);
+  --color-clay: var(--clay);
+  --color-sky: var(--sky);
   --color-sheet: var(--sheet);
+  --color-rule: var(--rule);
+  --color-muted: var(--muted);
+  --color-carbon: var(--carbon);
+  --color-carbon-wash: var(--carbon-wash);
+  --color-straw: var(--straw);
+  --color-straw-wash: var(--straw-wash);
   --color-shoot: var(--shoot);
   --color-blight: var(--blight);
-  --color-muted: var(--muted);
-  --color-rule: var(--rule);
-  --color-straw-wash: var(--straw-wash);
-  --color-carbon-wash: var(--carbon-wash);
   --color-night: var(--night);
   --color-night-2: var(--night-2);
   --color-night-line: var(--night-line);
@@ -49,9 +85,8 @@
   --color-haze: var(--haze);
   --color-gold: var(--gold);
   --color-signal: var(--signal);
-  --font-sans: var(--font-anek), var(--font-anek-deva), var(--font-anek-tamil), var(--font-anek-telugu),
-    var(--font-anek-kannada), var(--font-anek-malayalam), var(--font-anek-bangla), var(--font-anek-gujarati),
-    var(--font-anek-gurmukhi), var(--font-anek-odia), "Nirmala UI", system-ui, sans-serif;
+  --font-sans: var(--stack-sans);
+  --font-display: var(--stack-display);
 }
 
 html {
@@ -59,33 +94,41 @@ html {
   color: var(--ink);
 }
 
+/* The header is sticky on wide screens: keep anchored sections clear of it. */
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: 4.5rem;
+  }
+}
+
 body {
-  font-family: var(--font-anek), var(--font-anek-deva), var(--font-anek-tamil), var(--font-anek-telugu),
-    var(--font-anek-kannada), var(--font-anek-malayalam), var(--font-anek-bangla), var(--font-anek-gujarati),
-    var(--font-anek-gurmukhi), var(--font-anek-odia), "Nirmala UI", system-ui, sans-serif;
+  font-family: var(--stack-sans);
   font-feature-settings: "tnum" 1;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Display type: Anek's width axis does the work — wide and heavy for headlines. */
+/* Display type: Fraunces, semibold, set tight. The node's `font-display` headlines, by another name. */
 .display {
-  font-variation-settings: "wdth" 125;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.02;
+  font-family: var(--stack-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
 }
 
+/* Figures that line up in columns. (The name is from the first build; the markup still uses it.) */
 .condensed {
-  font-variation-settings: "wdth" 80;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
+/* No radius here: this rule is unlayered, so it would square off every rounded button and card on focus. */
 :focus-visible {
-  outline: 3px solid var(--carbon);
+  outline: 3px solid var(--leaf);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 .bg-night :focus-visible,
-.bg-night-2 :focus-visible {
+.bg-night-2 :focus-visible,
+.bg-forest :focus-visible {
   outline-color: var(--gold);
 }
 

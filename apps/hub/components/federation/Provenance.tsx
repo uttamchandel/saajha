@@ -1,6 +1,7 @@
 // Section 7: where the numbers on this page come from.
 import type { RunFile } from "@/lib/contract";
 import { grouped } from "@/lib/fl";
+import { card } from "@/lib/ui";
 import { formatIST, link } from "./shared";
 
 export default function Provenance({ run }: { run: RunFile }) {
@@ -60,9 +61,9 @@ export default function Provenance({ run }: { run: RunFile }) {
 
   return (
     <div>
-      <dl className="mt-6 grid max-w-5xl border-t border-rule">
+      <dl className={`${card} mt-6 grid max-w-5xl`}>
         {items.map(([k, v]) => (
-          <div key={k} className="grid gap-1 border-b border-rule py-3 sm:grid-cols-[12rem_minmax(0,1fr)] sm:gap-6">
+          <div key={k} className="grid gap-1 border-b border-rule px-4 py-3 last:border-b-0 sm:grid-cols-[12rem_minmax(0,1fr)] sm:gap-6 sm:px-5">
             <dt className="text-[15px] text-muted">{k}</dt>
             <dd className="min-w-0 break-words text-[15px]">{v}</dd>
           </div>

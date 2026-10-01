@@ -1,5 +1,6 @@
 // Small shared pieces for the federation record. Every figure is derived from run.json.
 import type { PerStateAcc, RunFile, StateId } from "@/lib/contract";
+import { h2 as h2Class } from "@/lib/ui";
 
 export function Section({
   id,
@@ -12,7 +13,7 @@ export function Section({
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-h`} className="scroll-mt-6 border-t border-rule py-10 sm:py-14">
-      <h2 id={`${id}-h`} className="display text-[clamp(1.5rem,3.2vw,2.1rem)]">
+      <h2 id={`${id}-h`} className={h2Class}>
         {title}
       </h2>
       {children}
@@ -97,10 +98,5 @@ export function moveTone(before: number | null | undefined, after: number | null
   return after > before ? "text-shoot" : "text-blight";
 }
 
-export const btnPrimary =
-  "inline-flex items-center rounded-md bg-ink px-4 py-2 text-[15px] font-semibold text-white hover:bg-[#2a3888] disabled:cursor-not-allowed disabled:bg-muted";
-
-export const btnSecondary =
-  "inline-flex items-center rounded-md border border-ink bg-sheet px-3 py-1.5 text-sm font-semibold text-ink hover:bg-carbon-wash disabled:cursor-not-allowed disabled:border-rule disabled:text-muted disabled:hover:bg-sheet";
-
-export const link = "text-carbon underline underline-offset-4 hover:text-ink";
+// The family recipes under the names this folder already imports (the same sizes as before).
+export { btnPrimarySm as btnPrimary, btnSecondarySm as btnSecondary, link } from "@/lib/ui";

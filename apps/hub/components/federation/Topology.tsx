@@ -2,6 +2,7 @@
 import { classLabel } from "@/lib/classes";
 import type { RunFile } from "@/lib/contract";
 import { grouped } from "@/lib/fl";
+import { card } from "@/lib/ui";
 import { andList, capitalize, casesHeld, countWord, plural } from "./shared";
 
 type Pt = [number, number];
@@ -117,7 +118,7 @@ function Diagram({ run, L, label, className }: { run: RunFile; L: Layout; label:
       })}
 
       {/* National aggregator */}
-      <rect x={G.x} y={G.y} width={G.w} height={G.h} rx={6} fill="var(--carbon-wash)" stroke="var(--ink)" strokeWidth={1.5} />
+      <rect x={G.x} y={G.y} width={G.w} height={G.h} rx={12} fill="var(--carbon-wash)" stroke="var(--ink)" strokeWidth={1.5} />
       <text x={G.x + G.w / 2} y={G.y + G.h * 0.34} textAnchor="middle" fontSize={G.title} fontWeight={700} fill="var(--ink)">
         National aggregator
       </text>
@@ -137,7 +138,7 @@ function Diagram({ run, L, label, className }: { run: RunFile; L: Layout; label:
         const afterStrip = stripY + N.cell + N.text * 1.8;
         return (
           <g key={`n-${s.id}`}>
-            <rect x={x} y={y} width={N.w} height={N.h} rx={6} fill="var(--sheet)" stroke="var(--ink)" strokeWidth={1.5} />
+            <rect x={x} y={y} width={N.w} height={N.h} rx={12} fill="var(--sheet)" stroke="var(--ink)" strokeWidth={1.5} />
             <text x={tx} y={y + N.title + N.pad * 0.5} fontSize={N.title} fontWeight={700} fill="var(--ink)">
               State {s.id}
             </text>
@@ -205,9 +206,9 @@ export default function Topology({ run }: { run: RunFile }) {
         abstract nodes, not places on a map.
       </p>
 
-      <figure className="mt-8">
+      <figure className={`${card} mt-8 max-w-5xl p-3 sm:p-6`}>
         <Diagram run={run} L={WIDE} label={label} className="hidden h-auto w-full max-w-5xl lg:block" />
-        <Diagram run={run} L={NARROW} label={label} className="block h-auto w-full max-w-[420px] lg:hidden" />
+        <Diagram run={run} L={NARROW} label={label} className="mx-auto block h-auto w-full max-w-[420px] lg:hidden" />
         <figcaption className="mt-4 max-w-[64ch] text-sm text-muted">
           <span className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <span className="inline-flex items-center gap-2">

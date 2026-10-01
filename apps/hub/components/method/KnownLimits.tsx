@@ -1,5 +1,6 @@
 // Section 5: known limits. Said plainly, with the numbers that qualify the headline.
 import { grouped, pct } from "@/lib/fl";
+import { link } from "@/lib/ui";
 import type { MethodFigures } from "./figures";
 import Section from "./Section";
 
@@ -12,7 +13,7 @@ export default function KnownLimits({ f, origin }: { f: MethodFigures; origin: s
       body: (
         <>
           Every photo comes from {origin.replace(/^Paddy/, "paddy")}: according to the{" "}
-          <a href={PAPER_URL} className="text-carbon underline underline-offset-4">
+          <a href={PAPER_URL} className={link}>
             dataset paper
           </a>
           , a single village, photographed from February to April 2021 and labelled with the help of one agricultural

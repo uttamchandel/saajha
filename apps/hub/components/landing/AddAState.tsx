@@ -1,6 +1,7 @@
 // Deployability, on night-2: two live state nodes running the same code, and the empty slot for the
 // next state, which is one deploy with one setting. The node glyphs echo the hero's network: a halo
 // with farmer dots that stay inside it.
+import { cardNight, chipNight, labelNight, pillNight } from "@/lib/ui";
 import { ArrowUpRight, LiveDot } from "./sectionIcons";
 
 const NODE_URL = (process.env.NEXT_PUBLIC_NODE_URL ?? "https://saajha-node.vercel.app").replace(/\/+$/, "");
@@ -21,17 +22,14 @@ const BUILT_WITH = [
   "Postgres per state",
 ];
 
-// Small eyebrow text sits on night-2, so it uses starlight (haze is kept to 15px and up here).
-const EYEBROW = "text-[13px] font-semibold uppercase tracking-[0.14em] text-starlight/80";
-
 export default function AddAState() {
   return (
     <section aria-labelledby="add-h" className="bg-night-2 text-starlight">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
           <div className="lg:col-span-6">
-            <p className={EYEBROW}>Deployability</p>
-            <h2 id="add-h" className="display mt-5 text-balance text-[clamp(2rem,4.4vw,3.4rem)]">
+            <p className={pillNight}>Deployability</p>
+            <h2 id="add-h" className="display mt-4 text-balance text-[clamp(2rem,4.4vw,3.4rem)]">
               Adding a state is one deploy.
             </h2>
           </div>
@@ -46,11 +44,11 @@ export default function AddAState() {
             <li key={n.state}>
               <a
                 href={n.url}
-                className="group flex h-full flex-col rounded-2xl border border-night-line bg-night p-6 text-starlight no-underline transition-colors hover:border-haze sm:p-7"
+                className={`${cardNight} group flex h-full flex-col p-6 text-starlight no-underline transition-colors hover:border-white/25 hover:bg-white/10 sm:p-7`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <NodeGlyph live />
-                  <span className="inline-flex items-center gap-2 rounded-full border border-night-line px-3 py-1 text-[13px] font-semibold">
+                  <span className={pillNight}>
                     <LiveDot />
                     Live
                   </span>
@@ -67,12 +65,12 @@ export default function AddAState() {
             </li>
           ))}
 
-          <li className="flex flex-col rounded-2xl border-2 border-dashed border-haze/35 p-6 sm:p-7 md:col-span-2 lg:col-span-1">
+          <li className="flex flex-col rounded-2xl border border-dashed border-white/25 p-6 sm:p-7 md:col-span-2 lg:col-span-1">
             <NodeGlyph />
             <h3 className="display mt-8 text-[1.9rem]">Your state</h3>
             <p className="mt-1 text-base text-haze">One more deploy</p>
             <p className="mt-auto pt-6">
-              <code className="block break-all rounded-md border border-night-line bg-night px-3 py-2.5 font-mono text-[12px] leading-relaxed text-starlight sm:text-[13px]">
+              <code className="block break-all rounded-lg bg-black/25 px-3 py-2.5 font-mono text-[12px] leading-relaxed text-starlight sm:text-[13px]">
                 NEXT_PUBLIC_NODE_STATE=&quot;Karnataka&quot;
               </code>
             </p>
@@ -80,14 +78,11 @@ export default function AddAState() {
         </ul>
 
         <div className="mt-14 grid gap-6 border-t border-night-line pt-10 sm:mt-16 lg:grid-cols-12 lg:gap-10">
-          <h3 className={`${EYEBROW} lg:col-span-2 lg:pt-2.5`}>Built with</h3>
+          <h3 className={`${labelNight} lg:col-span-2 lg:pt-2`}>Built with</h3>
           <div className="lg:col-span-10">
             <ul className="flex flex-wrap gap-2.5">
               {BUILT_WITH.map((b) => (
-                <li
-                  key={b}
-                  className="rounded-full border border-night-line bg-night px-4 py-2 text-[15px] font-semibold text-starlight"
-                >
+                <li key={b} className={chipNight}>
                   {b}
                 </li>
               ))}

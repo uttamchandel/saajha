@@ -1,15 +1,19 @@
 // Section 4: what is real and what is not. Scannable, specific, no hedging.
 import Link from "next/link";
 import { grouped } from "@/lib/fl";
+import { card, link } from "@/lib/ui";
 import type { MethodFigures } from "./figures";
 import Section from "./Section";
 
 type Item = { lead: string; body: React.ReactNode };
 
-function Column({ id, heading, items }: { id: string; heading: string; items: Item[] }) {
+function Column({ id, heading, items, tone }: { id: string; heading: string; items: Item[]; tone: "real" | "simulated" }) {
   return (
-    <div className="rounded-md border border-rule bg-sheet p-5 sm:p-6">
-      <h3 id={id} className="display text-xl">
+    <div className={`${card} p-5 sm:p-6`}>
+      <h3
+        id={id}
+        className={`text-xs font-semibold uppercase tracking-widest ${tone === "real" ? "text-forest" : "text-clay"}`}
+      >
         {heading}
       </h3>
       <ul aria-labelledby={id} className="mt-4">
@@ -61,7 +65,7 @@ export default function RealVsSimulated({ f, disclosure }: { f: MethodFigures; d
       body: (
         <>
           A photo you upload on{" "}
-          <Link href="/diagnose" className="text-carbon underline underline-offset-4">
+          <Link href="/diagnose" className={link}>
             Try a photo
           </Link>{" "}
           is sent to Gemini live. If Gemini is unavailable, you get an error, never a made-up diagnosis.
@@ -79,7 +83,7 @@ export default function RealVsSimulated({ f, disclosure }: { f: MethodFigures; d
           KisanVaani, the farmer layer, runs as a separate deployment. It downloads this site&apos;s latest release, refuses a
           file whose fingerprint does not match, and lets the model decide every paddy photo a farmer sends; its own model
           check matches Python on every test photo.{" "}
-          <a href="https://saajha-node.vercel.app/demo" className="text-carbon underline underline-offset-4">
+          <a href="https://saajha-node.vercel.app/demo" className={link}>
             Try it as a farmer
           </a>
           .
@@ -135,8 +139,8 @@ export default function RealVsSimulated({ f, disclosure }: { f: MethodFigures; d
   return (
     <Section id="real" title="What is real and what is not">
       <div className="mt-8 grid max-w-5xl gap-6 md:grid-cols-2">
-        <Column id="real-list" heading="Real" items={real} />
-        <Column id="simulated-list" heading="Simulated or seeded" items={simulated} />
+        <Column id="real-list" heading="Real" items={real} tone="real" />
+        <Column id="simulated-list" heading="Simulated or seeded" items={simulated} tone="simulated" />
       </div>
     </Section>
   );

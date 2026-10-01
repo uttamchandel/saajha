@@ -1,8 +1,7 @@
 // Section 7: credits and licences. Everything reused is named, with its licence.
 import type { RunFile } from "@/lib/contract";
+import { link } from "@/lib/ui";
 import Section from "./Section";
-
-const link = "text-carbon underline underline-offset-4";
 
 export default function Credits({ provenance }: { provenance: RunFile["provenance"] }) {
   const ds = provenance.dataset;
@@ -78,8 +77,8 @@ export default function Credits({ provenance }: { provenance: RunFile["provenanc
       lead: "Web and type.",
       body: (
         <>
-          Next.js, React and Tailwind CSS (MIT). The Anek typeface by Ek Type, served by Google Fonts (SIL Open Font
-          License 1.1).
+          Next.js, React and Tailwind CSS (MIT). Typefaces served by Google Fonts under the SIL Open Font License 1.1:
+          Fraunces by Undercase Type, Inter by Rasmus Andersson, and Anek by Ek Type for the Indian scripts.
         </>
       ),
     },

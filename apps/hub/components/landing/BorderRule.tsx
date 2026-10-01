@@ -2,6 +2,7 @@
 // the right, and the border itself between them (drawn dash-dot, the way maps draw a boundary),
 // stamped by the hub's border check. Gold marks only what crosses.
 import Link from "next/link";
+import { btnPrimary, pill } from "@/lib/ui";
 import css from "./sections.module.css";
 import { ArrowRight, Lock, Tick } from "./sectionIcons";
 
@@ -24,10 +25,10 @@ const STAYS = ["Photos of farmers' fields", "Names and phone numbers", "Tickets,
 
 export default function BorderRule() {
   return (
-    <section aria-labelledby="rule-h" className="border-t border-rule bg-sheet text-ink">
+    <section aria-labelledby="rule-h" className="border-y border-forest/10 bg-paper-warm text-ink">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-        <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-muted">The one rule</p>
-        <h2 id="rule-h" className="display mt-5 max-w-[20ch] text-balance text-[clamp(2rem,4.4vw,3.4rem)]">
+        <p className={pill}>The one rule</p>
+        <h2 id="rule-h" className="display mt-4 max-w-[20ch] text-balance text-forest text-[clamp(2rem,4.4vw,3.4rem)]">
           Raw farmer data never leaves its state.
         </h2>
 
@@ -52,14 +53,14 @@ export default function BorderRule() {
 
           {/* The border: dash-dot line with the stamp on it. Horizontal when the columns stack. */}
           <div aria-hidden="true" className="relative my-12 flex items-center justify-center md:my-0">
-            <svg className="absolute inset-x-0 top-1/2 h-1 w-full -translate-y-1/2 text-ink/45 md:hidden">
+            <svg className="absolute inset-x-0 top-1/2 h-1 w-full -translate-y-1/2 text-forest/45 md:hidden">
               <line x1="0" y1="2" x2="100%" y2="2" stroke="currentColor" strokeWidth="2" strokeDasharray="14 7 0.5 7" strokeLinecap="round" />
             </svg>
-            <svg className="absolute inset-y-0 left-1/2 hidden h-full w-1 -translate-x-1/2 text-ink/45 md:block">
+            <svg className="absolute inset-y-0 left-1/2 hidden h-full w-1 -translate-x-1/2 text-forest/45 md:block">
               <line x1="2" y1="0" x2="2" y2="100%" stroke="currentColor" strokeWidth="2" strokeDasharray="14 7 0.5 7" strokeLinecap="round" />
             </svg>
-            <div className="relative rounded-full bg-sheet p-2">
-              <div className={`size-32 text-ink md:size-36 lg:size-40 ${css.stamp}`}>
+            <div className="relative rounded-full bg-paper-warm p-2">
+              <div className={`size-32 text-forest md:size-36 lg:size-40 ${css.stamp}`}>
                 <BorderStamp />
               </div>
             </div>
@@ -68,7 +69,7 @@ export default function BorderRule() {
           {/* What stays */}
           <div>
             <h3 className="flex items-center gap-3 text-2xl font-semibold">
-              <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border-2 border-ink text-ink">
+              <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border-2 border-forest text-forest">
                 <Lock className="size-[18px]" />
               </span>
               Stays in the state
@@ -85,10 +86,7 @@ export default function BorderRule() {
         </div>
 
         <div className="mt-14 flex flex-col gap-5 border-t border-rule pt-10 sm:flex-row sm:items-center sm:gap-10 md:mt-20">
-          <Link
-            href="/exchange"
-            className="group inline-flex shrink-0 items-center gap-3 self-start rounded-md bg-ink px-6 py-3.5 text-base font-semibold text-white no-underline transition-colors hover:bg-[#2a3888] sm:self-auto"
-          >
+          <Link href="/exchange" className={`${btnPrimary} group shrink-0 self-start sm:self-auto`}>
             Test the border yourself
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>

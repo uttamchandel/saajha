@@ -2,6 +2,7 @@
 // has never recorded, trained on its own data only versus after federation. All values from run.json.
 import type { PerStateAcc, RunFile, StateId } from "@/lib/contract";
 import { grouped, pct } from "@/lib/fl";
+import { card, figure } from "@/lib/ui";
 import { andList, finalRound, localOnHardSubset, moveTone, pointsDelta } from "./shared";
 
 type Row = { id: StateId; seen: number; unseen: number; before?: PerStateAcc; after: PerStateAcc };
@@ -77,7 +78,7 @@ export default function AccuracyMatrix({ run }: { run: RunFile }) {
   const pooled = run.centralized_upper_bound.acc_all;
   const fed = last.global.acc_all;
 
-  const th = "px-3 py-2 text-left align-bottom text-sm font-normal text-muted sm:px-4";
+  const th = "px-3 py-2 text-left align-bottom text-sm font-normal text-ink-soft sm:px-4";
 
   return (
     <div>
@@ -89,7 +90,7 @@ export default function AccuracyMatrix({ run }: { run: RunFile }) {
       </p>
 
       <div
-        className="mt-6 max-w-5xl relative overflow-x-auto rounded-md border border-rule bg-sheet"
+        className={`${card} mt-6 max-w-5xl relative overflow-x-auto`}
         role="region"
         aria-labelledby="matrix-caption"
         tabIndex={0}
@@ -99,7 +100,7 @@ export default function AccuracyMatrix({ run }: { run: RunFile }) {
             Accuracy of each state&apos;s model on held-out photos, own data only versus after federation, for the classes
             the state holds and the classes it has never recorded
           </caption>
-          <thead>
+          <thead className="bg-paper-warm">
             <tr>
               <th rowSpan={2} scope="col" className={th}>
                 State
@@ -111,7 +112,7 @@ export default function AccuracyMatrix({ run }: { run: RunFile }) {
                 Classes it has never recorded
               </th>
             </tr>
-            <tr>
+            <tr className="border-b border-rule">
               <th scope="col" className={`${th} border-l border-rule`}>
                 Own data only
               </th>
@@ -141,7 +142,7 @@ export default function AccuracyMatrix({ run }: { run: RunFile }) {
       <div className="mt-10 grid max-w-5xl gap-x-10 gap-y-8 border-t border-rule pt-8 md:grid-cols-2">
         <div>
           <p className="text-[15px] text-muted">Federated model, all states and classes</p>
-          <p className="condensed mt-1 text-5xl font-semibold">{pct(fed, 1)}</p>
+          <p className={`${figure} mt-1 text-5xl text-forest`}>{pct(fed, 1)}</p>
           <p className="mt-2 text-[15px] text-muted">
             Pooled upper bound: <span className="condensed text-xl font-semibold text-ink">{pct(pooled, 1)}</span>
             {pooled > fed && <> ({((pooled - fed) * 100).toFixed(1)} points higher)</>}
@@ -153,7 +154,7 @@ export default function AccuracyMatrix({ run }: { run: RunFile }) {
         </div>
         <div>
           <p className="text-[15px] text-muted">Federated model on the hard subset</p>
-          <p className="condensed mt-1 text-5xl font-semibold">{pct(hs.fed_acc_all, 1)}</p>
+          <p className={`${figure} mt-1 text-5xl text-forest`}>{pct(hs.fed_acc_all, 1)}</p>
           <p className="mt-2 text-[15px] text-muted">
             {grouped(hs.n)} of {grouped(hs.n_test)} held-out photos
           </p>

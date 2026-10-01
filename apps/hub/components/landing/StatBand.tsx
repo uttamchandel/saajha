@@ -1,6 +1,7 @@
 // The run's four headline results, on night. Each number is from the recorded federated run (see /federation)
 // or the held-out comparison with Gemini (see /method); nothing here is estimated.
 import type { ReactNode } from "react";
+import { figure } from "@/lib/ui";
 
 function Arrow() {
   return (
@@ -25,7 +26,7 @@ const STATS: { value: ReactNode; label: string }[] = [
   {
     value: (
       <>
-        84% <span className="text-[0.55em] font-normal text-haze">vs</span> 24%
+        84% <span className="font-sans text-[0.5em] font-normal text-haze">vs</span> 24%
       </>
     ),
     label: "The federated model vs Gemini alone, on 50 held-out paddy photos",
@@ -48,7 +49,7 @@ export default function StatBand() {
       {STATS.map((st, i) => (
         <div key={st.label} className={`flex flex-col-reverse justify-end border-night-line py-5 pr-3 sm:py-6 sm:pr-6 ${CELL[i]}`}>
           <dt className="mt-2 text-[13.5px] leading-snug text-haze sm:text-[14px]">{st.label}</dt>
-          <dd className="condensed whitespace-nowrap text-[clamp(1.75rem,3.1vw,2.6rem)] font-semibold leading-none text-starlight">
+          <dd className={`${figure} whitespace-nowrap text-[clamp(1.75rem,3.1vw,2.6rem)] text-starlight`}>
             {st.value}
           </dd>
         </div>

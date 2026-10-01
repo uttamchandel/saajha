@@ -4,20 +4,14 @@
 // behind it — the model round every node runs now, and any warning crossing a state border — read from this
 // hub's own APIs. Until they answer, it shows the release the page was built with.
 import Link from "next/link";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { btnGhostNight, btnGold, pillNight } from "@/lib/ui";
 import NetworkField from "./NetworkField";
 import StatBand from "./StatBand";
 import s from "./hero.module.css";
 import { useLiveNetwork } from "./useLiveNetwork";
 
 const NODE_URL = (process.env.NEXT_PUBLIC_NODE_URL ?? "https://saajha-node.vercel.app").replace(/\/+$/, "");
-
-function ArrowDown() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 4v15M6 13l6 6 6-6" />
-    </svg>
-  );
-}
 
 function SignalIcon() {
   return (
@@ -54,14 +48,12 @@ export default function Hero({ round, sha256 }: { round: number; sha256: string 
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,11fr)_minmax(0,12fr)] lg:gap-10">
           {/* The promise */}
           <div className="min-w-0">
-            <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-haze">
-              Saajha ·{" "}
-              <span lang="hi" className="normal-case tracking-normal">
-                साझा
-              </span>{" "}
-              means shared
+            <p className={pillNight}>
+              <span>
+                Saajha · <span lang="hi">साझा</span> means shared
+              </span>
             </p>
-            <h1 id="hero-title" className={`display mt-5 text-starlight ${s.h1}`}>
+            <h1 id="hero-title" className={`display mt-6 text-starlight ${s.h1}`}>
               <span className="block">
                 States share <span className="text-gold">what they’ve learned.</span>
               </span>
@@ -73,24 +65,18 @@ export default function Hero({ round, sha256 }: { round: number; sha256: string 
               together: the model crosses state borders, farmers’ photos and records never do.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-              <Link
-                href="/#flip"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-gold px-6 py-3 text-[16px] font-semibold text-night transition-colors hover:bg-[#f6d46a]"
-              >
+              <Link href="/#flip" className={btnGold}>
                 Watch a state learn
-                <ArrowDown />
+                <ArrowDown size={18} aria-hidden="true" />
               </Link>
-              <Link
-                href="/diagnose"
-                className="inline-flex min-h-12 items-center justify-center rounded-md border border-starlight/60 px-6 py-3 text-[16px] font-semibold text-starlight transition-colors hover:border-starlight hover:bg-starlight/10"
-              >
+              <Link href="/diagnose" className={btnGhostNight}>
                 Diagnose a paddy photo
               </Link>
               <a
                 href={NODE_URL}
-                className="inline-flex min-h-12 items-center px-1 text-[16px] text-haze underline decoration-haze/40 underline-offset-4 transition-colors hover:text-starlight hover:decoration-starlight sm:px-2"
+                className="inline-flex min-h-12 items-center gap-1 px-1 text-[16px] text-haze underline decoration-haze/40 underline-offset-4 transition-colors hover:text-starlight hover:decoration-starlight sm:px-2"
               >
-                Open the Telangana node ↗
+                Open the Telangana node <ArrowUpRight size={16} aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -114,7 +100,10 @@ export default function Hero({ round, sha256 }: { round: number; sha256: string 
                 </span>
                 <span className="group-hover:underline group-hover:underline-offset-4">
                   <span className="font-semibold text-starlight">Live</span> · Every node runs model round {liveRound},{" "}
-                  {origin} · sha256 <span className="font-mono text-[13px] text-starlight">{sha.slice(0, 10)}…</span>
+                  {origin} ·{" "}
+                  <span className="whitespace-nowrap">
+                    sha256 <span className="font-mono text-[13px] text-starlight">{sha.slice(0, 10)}…</span>
+                  </span>
                 </span>
               </Link>
               {warning && (
